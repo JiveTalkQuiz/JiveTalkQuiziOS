@@ -1,0 +1,6 @@
+framework module Pods_JiveTalkQuiz {
+  umbrella header "Pods-JiveTalkQuiz-umbrella.h"
+
+  export *
+  module * { export * }
+}

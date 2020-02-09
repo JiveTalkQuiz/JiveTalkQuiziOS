@@ -1,0 +1,445 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7F69343EBBAFD83CCD2F90AB /* Pods_JiveTalkQuiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D80DBFF1D43F9D479D8C7C /* Pods_JiveTalkQuiz.framework */; };
+		A820D62823EC451400726E52 /* QuizListLevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820D62723EC451400726E52 /* QuizListLevelCell.swift */; };
+		A82C7B8123EFF22A00A24FF0 /* BMDOHYEON_otf.otf in Resources */ = {isa = PBXBuildFile; fileRef = A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */; };
+		A82C7B8423F0037A00A24FF0 /* QuizListTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */; };
+		A8723E0C23EFE3180042BD82 /* JiveTalkQuizColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */; };
+		A874179823E70CBC00361723 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874179723E70CBC00361723 /* AppDelegate.swift */; };
+		A874179A23E70CBC00361723 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874179923E70CBC00361723 /* SceneDelegate.swift */; };
+		A874179C23E70CBC00361723 /* QuizListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874179B23E70CBC00361723 /* QuizListViewController.swift */; };
+		A87417A123E70CC100361723 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A87417A023E70CC100361723 /* Assets.xcassets */; };
+		A87417A423E70CC100361723 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A87417A223E70CC100361723 /* LaunchScreen.storyboard */; };
+		A87417AC23E70F9B00361723 /* QuizListViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AB23E70F9B00361723 /* QuizListViewReactor.swift */; };
+		A87417AE23E7160500361723 /* QuizListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AD23E7160500361723 /* QuizListCell.swift */; };
+		A87417B023E7168C00361723 /* QuizListCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AF23E7168C00361723 /* QuizListCellReactor.swift */; };
+		A875EAD823EEB42300704A39 /* QuizShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD723EEB42300704A39 /* QuizShowViewController.swift */; };
+		A875EADA23EEB75500704A39 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD923EEB75500704A39 /* QuizView.swift */; };
+		A875EADC23EEB78A00704A39 /* QuizExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EADB23EEB78A00704A39 /* QuizExampleView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		51D076D129684B7C385110B3 /* Pods-JiveTalkQuiz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveTalkQuiz.debug.xcconfig"; path = "Target Support Files/Pods-JiveTalkQuiz/Pods-JiveTalkQuiz.debug.xcconfig"; sourceTree = "<group>"; };
+		9150DD920CC49D7D5E074599 /* Pods-JiveTalkQuiz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveTalkQuiz.release.xcconfig"; path = "Target Support Files/Pods-JiveTalkQuiz/Pods-JiveTalkQuiz.release.xcconfig"; sourceTree = "<group>"; };
+		A820D62723EC451400726E52 /* QuizListLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListLevelCell.swift; sourceTree = "<group>"; };
+		A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMDOHYEON_otf.otf; sourceTree = "<group>"; };
+		A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListTitleCell.swift; sourceTree = "<group>"; };
+		A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizColor.swift; sourceTree = "<group>"; };
+		A874179423E70CBC00361723 /* JiveTalkQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JiveTalkQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A874179723E70CBC00361723 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A874179923E70CBC00361723 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		A874179B23E70CBC00361723 /* QuizListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListViewController.swift; sourceTree = "<group>"; };
+		A87417A023E70CC100361723 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A87417A323E70CC100361723 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A87417A523E70CC100361723 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A87417AB23E70F9B00361723 /* QuizListViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListViewReactor.swift; sourceTree = "<group>"; };
+		A87417AD23E7160500361723 /* QuizListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListCell.swift; sourceTree = "<group>"; };
+		A87417AF23E7168C00361723 /* QuizListCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListCellReactor.swift; sourceTree = "<group>"; };
+		A875EAD723EEB42300704A39 /* QuizShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowViewController.swift; sourceTree = "<group>"; };
+		A875EAD923EEB75500704A39 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		A875EADB23EEB78A00704A39 /* QuizExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizExampleView.swift; sourceTree = "<group>"; };
+		F7D80DBFF1D43F9D479D8C7C /* Pods_JiveTalkQuiz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JiveTalkQuiz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A874179123E70CBC00361723 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7F69343EBBAFD83CCD2F90AB /* Pods_JiveTalkQuiz.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		13EAA99E9100C4469763D6A2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				51D076D129684B7C385110B3 /* Pods-JiveTalkQuiz.debug.xcconfig */,
+				9150DD920CC49D7D5E074599 /* Pods-JiveTalkQuiz.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A820D62923EC519A00726E52 /* QuizList */ = {
+			isa = PBXGroup;
+			children = (
+				A874179B23E70CBC00361723 /* QuizListViewController.swift */,
+				A87417AB23E70F9B00361723 /* QuizListViewReactor.swift */,
+				A87417AD23E7160500361723 /* QuizListCell.swift */,
+				A87417AF23E7168C00361723 /* QuizListCellReactor.swift */,
+				A820D62723EC451400726E52 /* QuizListLevelCell.swift */,
+				A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */,
+			);
+			path = QuizList;
+			sourceTree = "<group>";
+		};
+		A8723E0D23EFE9DF0042BD82 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		A874178B23E70CBC00361723 = {
+			isa = PBXGroup;
+			children = (
+				A874179623E70CBC00361723 /* JiveTalkQuiz */,
+				A874179523E70CBC00361723 /* Products */,
+				13EAA99E9100C4469763D6A2 /* Pods */,
+				BDE175C191FC74EE8BD37A00 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A874179523E70CBC00361723 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A874179423E70CBC00361723 /* JiveTalkQuiz.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A874179623E70CBC00361723 /* JiveTalkQuiz */ = {
+			isa = PBXGroup;
+			children = (
+				A875EAD623EEB40600704A39 /* QuizShow */,
+				A820D62923EC519A00726E52 /* QuizList */,
+				A874179723E70CBC00361723 /* AppDelegate.swift */,
+				A874179923E70CBC00361723 /* SceneDelegate.swift */,
+				A87417A023E70CC100361723 /* Assets.xcassets */,
+				A87417A223E70CC100361723 /* LaunchScreen.storyboard */,
+				A87417A523E70CC100361723 /* Info.plist */,
+				A8723E0D23EFE9DF0042BD82 /* SupportingFiles */,
+				A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */,
+			);
+			path = JiveTalkQuiz;
+			sourceTree = "<group>";
+		};
+		A875EAD623EEB40600704A39 /* QuizShow */ = {
+			isa = PBXGroup;
+			children = (
+				A875EAD723EEB42300704A39 /* QuizShowViewController.swift */,
+				A875EAD923EEB75500704A39 /* QuizView.swift */,
+				A875EADB23EEB78A00704A39 /* QuizExampleView.swift */,
+			);
+			path = QuizShow;
+			sourceTree = "<group>";
+		};
+		BDE175C191FC74EE8BD37A00 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7D80DBFF1D43F9D479D8C7C /* Pods_JiveTalkQuiz.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A874179323E70CBC00361723 /* JiveTalkQuiz */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A87417A823E70CC100361723 /* Build configuration list for PBXNativeTarget "JiveTalkQuiz" */;
+			buildPhases = (
+				D50F9746CAE2F51D648BF904 /* [CP] Check Pods Manifest.lock */,
+				A874179023E70CBC00361723 /* Sources */,
+				A874179123E70CBC00361723 /* Frameworks */,
+				A874179223E70CBC00361723 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JiveTalkQuiz;
+			productName = JiveTalkQuiz;
+			productReference = A874179423E70CBC00361723 /* JiveTalkQuiz.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A874178C23E70CBC00361723 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = sihon321;
+				TargetAttributes = {
+					A874179323E70CBC00361723 = {
+						CreatedOnToolsVersion = 11.3;
+					};
+				};
+			};
+			buildConfigurationList = A874178F23E70CBC00361723 /* Build configuration list for PBXProject "JiveTalkQuiz" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A874178B23E70CBC00361723;
+			productRefGroup = A874179523E70CBC00361723 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A874179323E70CBC00361723 /* JiveTalkQuiz */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A874179223E70CBC00361723 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A87417A423E70CC100361723 /* LaunchScreen.storyboard in Resources */,
+				A87417A123E70CC100361723 /* Assets.xcassets in Resources */,
+				A82C7B8123EFF22A00A24FF0 /* BMDOHYEON_otf.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D50F9746CAE2F51D648BF904 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JiveTalkQuiz-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A874179023E70CBC00361723 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A875EAD823EEB42300704A39 /* QuizShowViewController.swift in Sources */,
+				A8723E0C23EFE3180042BD82 /* JiveTalkQuizColor.swift in Sources */,
+				A87417AE23E7160500361723 /* QuizListCell.swift in Sources */,
+				A875EADA23EEB75500704A39 /* QuizView.swift in Sources */,
+				A874179C23E70CBC00361723 /* QuizListViewController.swift in Sources */,
+				A82C7B8423F0037A00A24FF0 /* QuizListTitleCell.swift in Sources */,
+				A87417B023E7168C00361723 /* QuizListCellReactor.swift in Sources */,
+				A875EADC23EEB78A00704A39 /* QuizExampleView.swift in Sources */,
+				A874179823E70CBC00361723 /* AppDelegate.swift in Sources */,
+				A874179A23E70CBC00361723 /* SceneDelegate.swift in Sources */,
+				A87417AC23E70F9B00361723 /* QuizListViewReactor.swift in Sources */,
+				A820D62823EC451400726E52 /* QuizListLevelCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A87417A223E70CC100361723 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A87417A323E70CC100361723 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A87417A623E70CC100361723 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A87417A723E70CC100361723 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A87417A923E70CC100361723 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51D076D129684B7C385110B3 /* Pods-JiveTalkQuiz.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = JiveTalkQuiz/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = BWillOcean.JiveTalkQuiz;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A87417AA23E70CC100361723 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9150DD920CC49D7D5E074599 /* Pods-JiveTalkQuiz.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = JiveTalkQuiz/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = BWillOcean.JiveTalkQuiz;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A874178F23E70CBC00361723 /* Build configuration list for PBXProject "JiveTalkQuiz" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A87417A623E70CC100361723 /* Debug */,
+				A87417A723E70CC100361723 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A87417A823E70CC100361723 /* Build configuration list for PBXNativeTarget "JiveTalkQuiz" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A87417A923E70CC100361723 /* Debug */,
+				A87417AA23E70CC100361723 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A874178C23E70CBC00361723 /* Project object */;
+}
