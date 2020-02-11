@@ -1,3 +1,37 @@
-PODFILE CHECKSUM: d5fc11ba8cde892d7844d55df4c08fbe9abde70e
+PODS:
+  - ReactorKit (2.0.1):
+    - RxSwift (~> 5.0)
+  - RxCocoa (5.0.1):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxGesture (3.0.1):
+    - RxCocoa (~> 5.0)
+    - RxSwift (~> 5.0)
+  - RxRelay (5.0.1):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.1)
+
+DEPENDENCIES:
+  - ReactorKit
+  - RxCocoa (~> 5)
+  - RxGesture
+  - RxSwift (~> 5)
+
+SPEC REPOS:
+  trunk:
+    - ReactorKit
+    - RxCocoa
+    - RxGesture
+    - RxRelay
+    - RxSwift
+
+SPEC CHECKSUMS:
+  ReactorKit: a63c5e11e0fd32d59d672e54178b0ed2876b764b
+  RxCocoa: e741b9749968e8a143e2b787f1dfbff2b63d0a5c
+  RxGesture: a3f8dd6adf078110ed5e1c9c30d09d705a09852e
+  RxRelay: 89d54507f4fd4d969e6ec1d4bd7f3673640b4640
+  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+
+PODFILE CHECKSUM: ab53b110833626f22c9950d9ce500026e2c7f7d2
 
 COCOAPODS: 1.8.4
