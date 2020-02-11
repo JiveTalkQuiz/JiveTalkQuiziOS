@@ -6,5 +6,9 @@ target 'JiveTalkQuiz' do
   use_frameworks!
 
   # Pods for JiveTalkQuiz
-
+  pod 'ReactorKit'
+  
+  pod 'RxSwift', '~> 5'
+  pod 'RxCocoa', '~> 5'
+  pod "RxGesture"
 end
