@@ -22,7 +22,7 @@ class QuizListCell: UICollectionViewCell, View {
     super.init(frame: frame)
     backgroundColor = .white
     label.textColor = JiveTalkQuizColor.label.value
-    label.font = UIFont(name: "BMDoHyeon-OTF", size: 15.0)
+    label.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 15.0)
     addSubview(label)
   }
 
@@ -48,7 +48,7 @@ class QuizListCell: UICollectionViewCell, View {
         self?.viewController?
           .navigationController?
           .pushViewController(quizShowVC,
-                              animated: true)
+                              animated: false)
       })
       .disposed(by: disposeBag)
   }

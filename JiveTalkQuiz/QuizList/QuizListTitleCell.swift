@@ -14,7 +14,7 @@ class QuizListTitleCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    titleLabel.font = UIFont(name: "BMDoHyeon-OTF", size: 70.0)
+    titleLabel.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 70.0)
     titleLabel.text = "신조어테스트"
     titleLabel.numberOfLines = 2
     titleLabel.textColor = JiveTalkQuizColor.label.value

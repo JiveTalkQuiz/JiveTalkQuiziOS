@@ -53,20 +53,20 @@ class QuizListViewController: UIViewController, View {
     navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     navigationController?.navigationBar.standardAppearance = navBarAppearance
     
-    let button: UIButton = {
+    let heartButton: UIButton = {
       let bt = UIButton()
       bt.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
       bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
       // 99넘을시 예외처리
       bt.setTitle("99+", for: .normal)
-      bt.titleLabel?.font = UIFont(name: "BMDoHyeon-OTF", size: 11.0)
+      bt.titleLabel?.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 11.0)
       bt.setTitleColor(JiveTalkQuizColor.label.value, for: .normal)
       bt.titleEdgeInsets = UIEdgeInsets(top: .zero, left: 4.0, bottom: .zero, right: .zero)
       bt.titleLabel?.sizeToFit()
       return bt
     }()
     
-    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton)
   }
 
   func setupConstraint() {

@@ -11,22 +11,88 @@ import UIKit
 class QuizShowViewController: UIViewController {
   let quizView = QuizView(frame: .zero)
   let stackView = UIStackView(frame: .zero)
+  var collectionView: UICollectionView!
   
   override func viewDidLoad() {
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .vertical
+    collectionView = UICollectionView(frame: .zero,
+                                      collectionViewLayout: layout)
+    
     super.viewDidLoad()
     
-    self.view.backgroundColor = .white
+    self.view.backgroundColor = JiveTalkQuizColor.main.value
     
-    quizView.backgroundColor = .blue
-    view.addSubview(quizView)
-    
-    stackView.backgroundColor = .systemPink
     view.addSubview(stackView)
     
+    stackView.addSubview(quizView)
+    
+    collectionView.backgroundColor = JiveTalkQuizColor.main.value
+    collectionView.register(QuizExampleCell.self,
+                       forCellWithReuseIdentifier: "QuizExampleCell")
+    collectionView.dataSource = self
+    collectionView.delegate = self
+    stackView.addSubview(collectionView)
+    
     setupConstraint()
+    
+    let navBarAppearance = UINavigationBarAppearance()
+    navBarAppearance.configureWithOpaqueBackground()
+    navBarAppearance.configureWithTransparentBackground()
+    navBarAppearance.backgroundColor = JiveTalkQuizColor.main.value
+    navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+    navigationController?.navigationBar.standardAppearance = navBarAppearance
+    
+    let heartButton: UIButton = {
+      let bt = UIButton()
+      bt.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
+      bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
+      // 99넘을시 예외처리
+      bt.setTitle("99+", for: .normal)
+      bt.titleLabel?.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 11.0)
+      bt.setTitleColor(JiveTalkQuizColor.label.value, for: .normal)
+      bt.titleEdgeInsets = UIEdgeInsets(top: .zero, left: 4.0, bottom: .zero, right: .zero)
+      bt.titleLabel?.sizeToFit()
+      return bt
+    }()
+    
+    let backButton: UIButton = {
+      let bt = UIButton()
+      
+      bt.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+      bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
+      // 99넘을시 예외처리
+      bt.titleLabel?.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 11.0)
+      bt.setTitleColor(JiveTalkQuizColor.label.value, for: .normal)
+      bt.addTarget(self, action: #selector(touchedDownBackButton), for: .touchDown)
+      return bt
+    }()
+    
+    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton)
+    navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+  }
+  
+  @objc
+  func touchedDownBackButton() {
+    self.navigationController?.popViewController(animated: false)
   }
   
   func setupConstraint() {
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    stackView.topAnchor
+      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                  constant: 5.0)
+      .isActive = true
+    stackView.leadingAnchor
+      .constraint(equalTo: view.leadingAnchor, constant: 20.0)
+      .isActive = true
+    stackView.bottomAnchor
+      .constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+      .isActive = true
+    stackView.rightAnchor
+      .constraint(equalTo: view.rightAnchor, constant: -20.0)
+      .isActive = true
+    
     quizView.translatesAutoresizingMaskIntoConstraints = false
     quizView.topAnchor
       .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0)
@@ -37,21 +103,58 @@ class QuizShowViewController: UIViewController {
     quizView.rightAnchor
       .constraint(equalTo: view.rightAnchor, constant: -20.0)
       .isActive = true
-    quizView.bottomAnchor
-      .constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 20.0)
+    quizView.heightAnchor
+      .constraint(equalToConstant: view.bounds.width - 80)
       .isActive = true
+    
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    collectionView.topAnchor
+      .constraint(equalTo: quizView.topAnchor,
+                  constant: view.bounds.width + 10)
+    .isActive = true
+    collectionView.leadingAnchor
+      .constraint(equalTo: stackView.leadingAnchor)
+    .isActive = true
+    collectionView.bottomAnchor
+      .constraint(equalTo: stackView.bottomAnchor)
+    .isActive = true
+    collectionView.trailingAnchor
+      .constraint(equalTo: stackView.trailingAnchor)
+    .isActive = true
+  }
+}
 
-//    stackView.heightAnchor
-//      .constraint(equalToConstant: 260.0)
-//      .isActive = true
-//    stackView.leftAnchor
-//      .constraint(equalTo: view.leftAnchor, constant: 20.0)
-//      .isActive = true
-//    stackView.bottomAnchor
-//      .constraint(equalTo: view.bottomAnchor, constant: 100.0)
-//      .isActive = true
-//    stackView.rightAnchor
-//      .constraint(equalTo: view.rightAnchor, constant: 20.0)
-//      .isActive = true
+extension QuizShowViewController {
+  var dummyData: [String] {
+    return ["얼굴이 죽처럼 코와이네", "얼굴은 죽이는데 코가 크네", "얼어 죽어도 코트", "얼어 죽어도 코끼리"]
+  }
+}
+
+extension QuizShowViewController: UICollectionViewDataSource {
+   func collectionView(_ collectionView: UICollectionView,
+                       numberOfItemsInSection section: Int) -> Int {
+    return 4
+  }
+  
+  func collectionView(_ collectionView: UICollectionView,
+                    cellForItemAt indexPath: IndexPath)
+  -> UICollectionViewCell {
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell", for: indexPath) as? QuizExampleCell else {
+      return UICollectionViewCell()
+    }
+    cell.titleLabel.text = dummyData[indexPath.row]
+    return cell
+  }
+}
+
+extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: view.bounds.width - 40.0, height: 45)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 15.0
   }
 }

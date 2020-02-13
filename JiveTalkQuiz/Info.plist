@@ -5,6 +5,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>BMDOHYEON_otf.otf</string>
+		<string>BMHANNAProOTF.otf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
