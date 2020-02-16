@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import ReactorKit
+import RxViewController
 
 class QuizListViewController: UIViewController, View {
 
@@ -18,8 +19,8 @@ class QuizListViewController: UIViewController, View {
   }
   
   var collectionView: UICollectionView!
-  
   var disposeBag = DisposeBag()
+  var quizList: Quiz?
   
   override func viewDidLoad() {
     let layout = UICollectionViewFlowLayout()
@@ -28,7 +29,6 @@ class QuizListViewController: UIViewController, View {
     
     super.viewDidLoad()
     // Do any additional setup after loading the view.
-    defer { self.reactor = QuizListViewReactor(heart: 15) }
     
     view.backgroundColor = JiveTalkQuizColor.main.value
     
@@ -86,7 +86,21 @@ class QuizListViewController: UIViewController, View {
   }
   
   func bind(reactor: QuizListViewReactor) {
-
+    // Action
+    self.rx.viewDidLoad
+      .map { Reactor.Action.refresh }
+      .bind(to: reactor.action)
+      .disposed(by: self.disposeBag)
+    
+    // State
+    reactor.state
+      .map { $0.quiz }
+      .bind { [weak self] quiz in
+        guard let strongSelf = self, let collectionView = strongSelf.collectionView else { return }
+        strongSelf.quizList = quiz
+        collectionView.reloadData()
+    }
+    .disposed(by: disposeBag)
   }
 }
 
@@ -101,7 +115,7 @@ extension QuizListViewController: UICollectionViewDataSource {
     case .level:
       return 1
     case .quiz:
-      return 50
+      return quizList?.quiz.count ?? 0
     case .none:
       return 0
     }
@@ -127,9 +141,10 @@ extension QuizListViewController: UICollectionViewDataSource {
       case .quiz:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListCell",
                                                       for: indexPath) as! QuizListCell
-          cell.reactor = QuizListCellReactor(number: indexPath.row)
-          cell.viewController = self
-          return cell
+        cell.reactor = QuizListCellReactor(number: indexPath.row)
+        cell.viewController = self
+        cell.quiz = quizList?.quiz[indexPath.row]
+        return cell
       case .none:
         return UICollectionViewCell()
       }

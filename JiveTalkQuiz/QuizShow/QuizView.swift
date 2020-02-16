@@ -12,7 +12,7 @@ class QuizView: UIView {
   
   let numberLabel = UILabel(frame: .zero)
   let problemLabel = UILabel(frame: .zero)
-  
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     
@@ -26,9 +26,6 @@ class QuizView: UIView {
     problemLabel.textColor = JiveTalkQuizColor.label.value
     problemLabel.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 50.0)
     addSubview(problemLabel)
-    
-    numberLabel.text = "2장"
-    problemLabel.text = "얼죽코"
   }
   
   required init?(coder: NSCoder) {

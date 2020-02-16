@@ -9,7 +9,7 @@
 import UIKit
 
 enum JiveTalkQuizColor {
-  case main, label
+  case main, label, incorrect
   
   var value: UIColor {
     switch self {
@@ -21,6 +21,10 @@ enum JiveTalkQuizColor {
                                 green: 128/255,
                                 blue: 132/255,
                                 alpha: 1.0)
+    case .incorrect: return UIColor(red: 143/255,
+                                    green: 143/255,
+                                    blue: 143/255,
+                                    alpha: 1.0)
     }
   }
 }

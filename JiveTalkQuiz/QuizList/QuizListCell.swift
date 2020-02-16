@@ -15,7 +15,7 @@ class QuizListCell: UICollectionViewCell, View {
   var viewController: UIViewController?
   
   let label = UILabel(frame: .zero)
-  
+  var quiz: QuizElement?
   var disposeBag = DisposeBag()
   
   override init(frame: CGRect) {
@@ -45,6 +45,7 @@ class QuizListCell: UICollectionViewCell, View {
         guard let reactor = reactor else { return }
         let quizShowVC = QuizShowViewController()
         quizShowVC.modalPresentationStyle = .fullScreen
+        quizShowVC.quiz = self?.quiz
         self?.viewController?
           .navigationController?
           .pushViewController(quizShowVC,

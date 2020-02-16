@@ -11,7 +11,10 @@
 		A820D62823EC451400726E52 /* QuizListLevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820D62723EC451400726E52 /* QuizListLevelCell.swift */; };
 		A82C7B8123EFF22A00A24FF0 /* BMDOHYEON_otf.otf in Resources */ = {isa = PBXBuildFile; fileRef = A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */; };
 		A82C7B8423F0037A00A24FF0 /* QuizListTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */; };
+		A872088A23F806A00099826C /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A872088923F806A00099826C /* LocalStorage.swift */; };
+		A872088C23F810C00099826C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A872088B23F810C00099826C /* GoogleService-Info.plist */; };
 		A8723E0C23EFE3180042BD82 /* JiveTalkQuizColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */; };
+		A873C85F23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873C85E23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift */; };
 		A874179823E70CBC00361723 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874179723E70CBC00361723 /* AppDelegate.swift */; };
 		A874179A23E70CBC00361723 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874179923E70CBC00361723 /* SceneDelegate.swift */; };
 		A874179C23E70CBC00361723 /* QuizListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874179B23E70CBC00361723 /* QuizListViewController.swift */; };
@@ -22,9 +25,13 @@
 		A87417B023E7168C00361723 /* QuizListCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AF23E7168C00361723 /* QuizListCellReactor.swift */; };
 		A875EAD823EEB42300704A39 /* QuizShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD723EEB42300704A39 /* QuizShowViewController.swift */; };
 		A875EADA23EEB75500704A39 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD923EEB75500704A39 /* QuizView.swift */; };
+		A8777A7423F6D6A6002C1EF1 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8777A7323F6D6A6002C1EF1 /* StorageService.swift */; };
+		A879E24923F92540000C8474 /* QuizShowPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A879E24823F92540000C8474 /* QuizShowPopupView.swift */; };
 		A87F59D823F4312E00E6FA99 /* QuizExampleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87F59D723F4312E00E6FA99 /* QuizExampleCell.swift */; };
 		A87F59DA23F4404300E6FA99 /* BMHANNAProOTF.otf in Resources */ = {isa = PBXBuildFile; fileRef = A87F59D923F4404300E6FA99 /* BMHANNAProOTF.otf */; };
 		A87F59DD23F440CC00E6FA99 /* JiveTalkQuizFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87F59DC23F440CC00E6FA99 /* JiveTalkQuizFont.swift */; };
+		A87F8F8E23F6F8A000CDB349 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87F8F8D23F6F8A000CDB349 /* Quiz.swift */; };
+		A87F8F9023F6FBEB00CDB349 /* QuizError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87F8F8F23F6FBEB00CDB349 /* QuizError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +40,10 @@
 		A820D62723EC451400726E52 /* QuizListLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListLevelCell.swift; sourceTree = "<group>"; };
 		A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMDOHYEON_otf.otf; sourceTree = "<group>"; };
 		A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListTitleCell.swift; sourceTree = "<group>"; };
+		A872088923F806A00099826C /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
+		A872088B23F810C00099826C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizColor.swift; sourceTree = "<group>"; };
+		A873C85E23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizAPI.swift; sourceTree = "<group>"; };
 		A874179423E70CBC00361723 /* JiveTalkQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JiveTalkQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A874179723E70CBC00361723 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A874179923E70CBC00361723 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,9 +56,13 @@
 		A87417AF23E7168C00361723 /* QuizListCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListCellReactor.swift; sourceTree = "<group>"; };
 		A875EAD723EEB42300704A39 /* QuizShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowViewController.swift; sourceTree = "<group>"; };
 		A875EAD923EEB75500704A39 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		A8777A7323F6D6A6002C1EF1 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		A879E24823F92540000C8474 /* QuizShowPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowPopupView.swift; sourceTree = "<group>"; };
 		A87F59D723F4312E00E6FA99 /* QuizExampleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizExampleCell.swift; sourceTree = "<group>"; };
 		A87F59D923F4404300E6FA99 /* BMHANNAProOTF.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMHANNAProOTF.otf; sourceTree = "<group>"; };
 		A87F59DC23F440CC00E6FA99 /* JiveTalkQuizFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizFont.swift; sourceTree = "<group>"; };
+		A87F8F8D23F6F8A000CDB349 /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
+		A87F8F8F23F6FBEB00CDB349 /* QuizError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizError.swift; sourceTree = "<group>"; };
 		F7D80DBFF1D43F9D479D8C7C /* Pods_JiveTalkQuiz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JiveTalkQuiz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -95,6 +109,24 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		A873C85C23F7DD67008E47C5 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				A87F8F8F23F6FBEB00CDB349 /* QuizError.swift */,
+				A8777A7323F6D6A6002C1EF1 /* StorageService.swift */,
+				A873C85E23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		A873C85D23F7DD7C008E47C5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A87F8F8D23F6F8A000CDB349 /* Quiz.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		A874178B23E70CBC00361723 = {
 			isa = PBXGroup;
 			children = (
@@ -116,14 +148,17 @@
 		A874179623E70CBC00361723 /* JiveTalkQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				A874179723E70CBC00361723 /* AppDelegate.swift */,
+				A874179923E70CBC00361723 /* SceneDelegate.swift */,
 				A87F59DB23F440B900E6FA99 /* Utils */,
 				A875EAD623EEB40600704A39 /* QuizShow */,
 				A820D62923EC519A00726E52 /* QuizList */,
-				A874179723E70CBC00361723 /* AppDelegate.swift */,
-				A874179923E70CBC00361723 /* SceneDelegate.swift */,
+				A873C85D23F7DD7C008E47C5 /* Models */,
+				A873C85C23F7DD67008E47C5 /* Networking */,
 				A87417A023E70CC100361723 /* Assets.xcassets */,
 				A87417A223E70CC100361723 /* LaunchScreen.storyboard */,
 				A87417A523E70CC100361723 /* Info.plist */,
+				A872088B23F810C00099826C /* GoogleService-Info.plist */,
 				A8723E0D23EFE9DF0042BD82 /* SupportingFiles */,
 			);
 			path = JiveTalkQuiz;
@@ -135,6 +170,7 @@
 				A875EAD723EEB42300704A39 /* QuizShowViewController.swift */,
 				A875EAD923EEB75500704A39 /* QuizView.swift */,
 				A87F59D723F4312E00E6FA99 /* QuizExampleCell.swift */,
+				A879E24823F92540000C8474 /* QuizShowPopupView.swift */,
 			);
 			path = QuizShow;
 			sourceTree = "<group>";
@@ -144,6 +180,7 @@
 			children = (
 				A87F59DC23F440CC00E6FA99 /* JiveTalkQuizFont.swift */,
 				A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */,
+				A872088923F806A00099826C /* LocalStorage.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -218,6 +255,7 @@
 			files = (
 				A87417A423E70CC100361723 /* LaunchScreen.storyboard in Resources */,
 				A87417A123E70CC100361723 /* Assets.xcassets in Resources */,
+				A872088C23F810C00099826C /* GoogleService-Info.plist in Resources */,
 				A82C7B8123EFF22A00A24FF0 /* BMDOHYEON_otf.otf in Resources */,
 				A87F59DA23F4404300E6FA99 /* BMHANNAProOTF.otf in Resources */,
 			);
@@ -275,14 +313,20 @@
 				A875EAD823EEB42300704A39 /* QuizShowViewController.swift in Sources */,
 				A8723E0C23EFE3180042BD82 /* JiveTalkQuizColor.swift in Sources */,
 				A87417AE23E7160500361723 /* QuizListCell.swift in Sources */,
+				A879E24923F92540000C8474 /* QuizShowPopupView.swift in Sources */,
 				A875EADA23EEB75500704A39 /* QuizView.swift in Sources */,
 				A874179C23E70CBC00361723 /* QuizListViewController.swift in Sources */,
 				A82C7B8423F0037A00A24FF0 /* QuizListTitleCell.swift in Sources */,
 				A87417B023E7168C00361723 /* QuizListCellReactor.swift in Sources */,
 				A874179823E70CBC00361723 /* AppDelegate.swift in Sources */,
+				A8777A7423F6D6A6002C1EF1 /* StorageService.swift in Sources */,
+				A872088A23F806A00099826C /* LocalStorage.swift in Sources */,
 				A87F59DD23F440CC00E6FA99 /* JiveTalkQuizFont.swift in Sources */,
 				A87F59D823F4312E00E6FA99 /* QuizExampleCell.swift in Sources */,
+				A873C85F23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift in Sources */,
+				A87F8F8E23F6F8A000CDB349 /* Quiz.swift in Sources */,
 				A874179A23E70CBC00361723 /* SceneDelegate.swift in Sources */,
+				A87F8F9023F6FBEB00CDB349 /* QuizError.swift in Sources */,
 				A87417AC23E70F9B00361723 /* QuizListViewReactor.swift in Sources */,
 				A820D62823EC451400726E52 /* QuizListLevelCell.swift in Sources */,
 			);

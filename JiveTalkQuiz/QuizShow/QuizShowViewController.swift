@@ -12,6 +12,7 @@ class QuizShowViewController: UIViewController {
   let quizView = QuizView(frame: .zero)
   let stackView = UIStackView(frame: .zero)
   var collectionView: UICollectionView!
+  var quiz: QuizElement?
   
   override func viewDidLoad() {
     let layout = UICollectionViewFlowLayout()
@@ -25,6 +26,8 @@ class QuizShowViewController: UIViewController {
     
     view.addSubview(stackView)
     
+    quizView.numberLabel.text = quiz?.title ?? ""
+    quizView.problemLabel.text = quiz?.word ?? ""
     stackView.addSubview(quizView)
     
     collectionView.backgroundColor = JiveTalkQuizColor.main.value
@@ -124,12 +127,6 @@ class QuizShowViewController: UIViewController {
   }
 }
 
-extension QuizShowViewController {
-  var dummyData: [String] {
-    return ["얼굴이 죽처럼 코와이네", "얼굴은 죽이는데 코가 크네", "얼어 죽어도 코트", "얼어 죽어도 코끼리"]
-  }
-}
-
 extension QuizShowViewController: UICollectionViewDataSource {
    func collectionView(_ collectionView: UICollectionView,
                        numberOfItemsInSection section: Int) -> Int {
@@ -142,7 +139,7 @@ extension QuizShowViewController: UICollectionViewDataSource {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell", for: indexPath) as? QuizExampleCell else {
       return UICollectionViewCell()
     }
-    cell.titleLabel.text = dummyData[indexPath.row]
+    cell.titleLabel.text = quiz?.selection[indexPath.row].statement ?? ""
     return cell
   }
 }
@@ -156,5 +153,29 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 15.0
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    if quiz?.selection[indexPath.row].correct ?? false {
+      showToast(isCorrect: true)
+    } else {
+      showToast(isCorrect: false)
+    }
+  }
+  
+  private func showToast(isCorrect: Bool) {
+    let popup = QuizShowPopupView(isCorrect: isCorrect)
+    popup.frame = CGRect(origin: .zero, size: CGSize(width: 156, height: 171))
+
+    view.addSubview(popup)
+    popup.translatesAutoresizingMaskIntoConstraints = false
+    popup.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    popup.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    popup.widthAnchor.constraint(equalToConstant: 156.0).isActive = true
+    popup.heightAnchor.constraint(equalToConstant: 171.0).isActive = true
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+      popup.removeFromSuperview()
+    }
   }
 }
