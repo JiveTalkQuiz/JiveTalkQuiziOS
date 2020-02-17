@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class QuizShowViewController: UIViewController {
   let quizView = QuizView(frame: .zero)
   let stackView = UIStackView(frame: .zero)
   var collectionView: UICollectionView!
+  var bannerView: GADBannerView!
+  
   var quiz: QuizElement?
   
   override func viewDidLoad() {
@@ -26,7 +29,8 @@ class QuizShowViewController: UIViewController {
     
     view.addSubview(stackView)
     
-    quizView.numberLabel.text = quiz?.title ?? ""
+    let number = quiz?.id == nil ? -1 : quiz!.id
+    quizView.numberLabel.text = "\(number)장"
     quizView.problemLabel.text = quiz?.word ?? ""
     stackView.addSubview(quizView)
     
@@ -73,6 +77,20 @@ class QuizShowViewController: UIViewController {
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton)
     navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    
+    bannerView = GADBannerView(adSize: GADAdSize(size: CGSize(width: view.bounds.width, height: 50.0), flags: 0))
+    bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+    bannerView.rootViewController = self
+    addBannerViewToView(bannerView)
+    bannerView.load(GADRequest())
+  }
+  
+  func addBannerViewToView(_ bannerView: GADBannerView) {
+    bannerView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(bannerView)
+    bannerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+    bannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
   }
   
   @objc
@@ -173,9 +191,11 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     popup.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     popup.widthAnchor.constraint(equalToConstant: 156.0).isActive = true
     popup.heightAnchor.constraint(equalToConstant: 171.0).isActive = true
-
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+    
+    UIView.animate(withDuration: 2.0, animations: {
+      popup.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+    }, completion: { _ in
       popup.removeFromSuperview()
-    }
+    })
   }
 }

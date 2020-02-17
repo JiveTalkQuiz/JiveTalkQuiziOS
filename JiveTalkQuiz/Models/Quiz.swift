@@ -56,7 +56,7 @@ extension Quiz {
 // MARK: - QuizElement
 struct QuizElement: Codable {
     let id: Int
-    let title, word: String
+    let word: String
     let selection: [Selection]
 }
 
@@ -86,7 +86,6 @@ extension QuizElement {
     ) -> QuizElement {
         return QuizElement(
             id: id ?? self.id,
-            title: title ?? self.title,
             word: word ?? self.word,
             selection: selection ?? self.selection
         )
