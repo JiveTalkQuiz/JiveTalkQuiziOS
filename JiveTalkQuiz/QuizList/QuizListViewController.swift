@@ -13,7 +13,7 @@ import ReactorKit
 import RxViewController
 
 class QuizListViewController: UIViewController, View {
-
+  
   enum Section: Int {
     case title, level, quiz
   }
@@ -21,6 +21,7 @@ class QuizListViewController: UIViewController, View {
   var collectionView: UICollectionView!
   var disposeBag = DisposeBag()
   var quizList: Quiz?
+  let indicatorView = UIActivityIndicatorView(frame: .zero)
   
   override func viewDidLoad() {
     let layout = UICollectionViewFlowLayout()
@@ -43,6 +44,9 @@ class QuizListViewController: UIViewController, View {
     collectionView.dataSource = self
     collectionView.delegate = self
     view.addSubview(collectionView)
+    
+    view.addSubview(indicatorView)
+    indicatorView.startAnimating()
     
     setupConstraint()
     
@@ -72,7 +76,7 @@ class QuizListViewController: UIViewController, View {
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton)
   }
-
+  
   private func setupConstraint() {
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.topAnchor
@@ -87,6 +91,20 @@ class QuizListViewController: UIViewController, View {
     collectionView.leftAnchor
       .constraint(equalTo: view.leftAnchor, constant: 40.0)
       .isActive = true
+    
+    indicatorView.translatesAutoresizingMaskIntoConstraints = false
+    indicatorView.widthAnchor
+      .constraint(equalToConstant: 45)
+      .isActive = true
+    indicatorView.heightAnchor
+      .constraint(equalToConstant: 45)
+      .isActive = true
+    indicatorView.centerYAnchor
+      .constraint(equalTo: view.centerYAnchor)
+      .isActive = true
+    indicatorView.centerXAnchor
+      .constraint(equalTo: view.centerXAnchor)
+      .isActive = true
   }
   
   func bind(reactor: QuizListViewReactor) {
@@ -100,9 +118,13 @@ class QuizListViewController: UIViewController, View {
     reactor.state
       .map { $0.quiz }
       .bind { [weak self] quiz in
-        guard let strongSelf = self, let collectionView = strongSelf.collectionView else { return }
+        guard let quiz = quiz,
+          let strongSelf = self,
+          let collectionView = strongSelf.collectionView else { return }
+        
         strongSelf.quizList = quiz
         collectionView.reloadData()
+        strongSelf.indicatorView.stopAnimating()
     }
     .disposed(by: disposeBag)
   }
@@ -140,7 +162,7 @@ extension QuizListViewController: UICollectionViewDataSource {
         return cell
       case .level:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListLevelCell",
-        for: indexPath) as! QuizListLevelCell
+                                                      for: indexPath) as! QuizListLevelCell
         return cell
       case .quiz:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListCell",
@@ -153,7 +175,7 @@ extension QuizListViewController: UICollectionViewDataSource {
         return UICollectionViewCell()
       }
   }
-
+  
 }
 
 extension QuizListViewController: UICollectionViewDelegateFlowLayout {
