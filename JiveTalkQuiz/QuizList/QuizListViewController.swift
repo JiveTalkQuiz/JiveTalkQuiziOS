@@ -46,6 +46,10 @@ class QuizListViewController: UIViewController, View {
     
     setupConstraint()
     
+    initNavigationBar()
+  }
+  
+  private func initNavigationBar() {
     let navBarAppearance = UINavigationBarAppearance()
     navBarAppearance.configureWithOpaqueBackground()
     navBarAppearance.configureWithTransparentBackground()
@@ -69,7 +73,7 @@ class QuizListViewController: UIViewController, View {
     navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton)
   }
 
-  func setupConstraint() {
+  private func setupConstraint() {
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     collectionView.topAnchor
       .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)

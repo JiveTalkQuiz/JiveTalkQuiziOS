@@ -22,16 +22,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     FirebaseApp.configure()
     GADMobileAds.sharedInstance().start(completionHandler: nil)
-    
-    let vc = QuizListViewController()
-    vc.reactor = QuizListViewReactor(storageService: StorageService())
-    let nc = UINavigationController(rootViewController: vc)
-    
     let win = UIWindow(windowScene: windowScene)
     
-    win.rootViewController = nc
     win.makeKeyAndVisible()
+    
+    let launchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+    win.rootViewController = launchScreen
     window = win
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+      let vc = QuizListViewController()
+      vc.reactor = QuizListViewReactor(storageService: StorageService())
+      let nc = UINavigationController(rootViewController: vc)
+      
+      win.rootViewController = nc
+      self?.window = win
+    }
   }
 
   func sceneDidDisconnect(_ scene: UIScene) {

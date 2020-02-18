@@ -89,7 +89,7 @@ class QuizShowViewController: UIViewController {
     navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
   }
   
-  func addBannerViewToView(_ bannerView: GADBannerView) {
+  private func addBannerViewToView(_ bannerView: GADBannerView) {
     bannerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(bannerView)
     bannerView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
@@ -99,11 +99,11 @@ class QuizShowViewController: UIViewController {
   }
   
   @objc
-  func touchedDownBackButton() {
+  private func touchedDownBackButton() {
     self.navigationController?.popViewController(animated: false)
   }
   
-  func setupConstraint() {
+  private func setupConstraint() {
     stackView.translatesAutoresizingMaskIntoConstraints = false
     stackView.topAnchor
       .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
