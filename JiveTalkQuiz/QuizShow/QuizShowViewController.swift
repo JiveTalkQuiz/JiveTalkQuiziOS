@@ -26,7 +26,6 @@ class QuizShowViewController: UIViewController {
     super.viewDidLoad()
     
     self.view.backgroundColor = JiveTalkQuizColor.main.value
-    
     view.addSubview(stackView)
     
     let number = quiz?.id == nil ? -1 : quiz!.id
@@ -34,6 +33,7 @@ class QuizShowViewController: UIViewController {
     quizView.problemLabel.text = quiz?.word ?? ""
     stackView.addSubview(quizView)
     
+    collectionView.delaysContentTouches = false
     collectionView.backgroundColor = JiveTalkQuizColor.main.value
     collectionView.register(QuizExampleCell.self,
                        forCellWithReuseIdentifier: "QuizExampleCell")
@@ -43,6 +43,16 @@ class QuizShowViewController: UIViewController {
     
     setupConstraint()
     
+    initNavigationBar()
+    
+    bannerView = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: view.bounds.width, height: 50.0)))
+    bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+    bannerView.rootViewController = self
+    addBannerViewToView(bannerView)
+    bannerView.load(GADRequest())
+  }
+  
+  private func initNavigationBar() {
     let navBarAppearance = UINavigationBarAppearance()
     navBarAppearance.configureWithOpaqueBackground()
     navBarAppearance.configureWithTransparentBackground()
@@ -77,17 +87,12 @@ class QuizShowViewController: UIViewController {
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton)
     navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
-    
-    bannerView = GADBannerView(adSize: GADAdSize(size: CGSize(width: view.bounds.width, height: 50.0), flags: 0))
-    bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-    bannerView.rootViewController = self
-    addBannerViewToView(bannerView)
-    bannerView.load(GADRequest())
   }
   
   func addBannerViewToView(_ bannerView: GADBannerView) {
     bannerView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(bannerView)
+    bannerView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
     bannerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
     bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     bannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -116,7 +121,8 @@ class QuizShowViewController: UIViewController {
     
     quizView.translatesAutoresizingMaskIntoConstraints = false
     quizView.topAnchor
-      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20.0)
+      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                  constant: 20.0)
       .isActive = true
     quizView.leftAnchor
       .constraint(equalTo: view.leftAnchor, constant: 20.0)
@@ -132,22 +138,22 @@ class QuizShowViewController: UIViewController {
     collectionView.topAnchor
       .constraint(equalTo: quizView.topAnchor,
                   constant: view.bounds.width + 10)
-    .isActive = true
+      .isActive = true
     collectionView.leadingAnchor
       .constraint(equalTo: stackView.leadingAnchor)
-    .isActive = true
+      .isActive = true
     collectionView.bottomAnchor
       .constraint(equalTo: stackView.bottomAnchor)
-    .isActive = true
+      .isActive = true
     collectionView.trailingAnchor
       .constraint(equalTo: stackView.trailingAnchor)
-    .isActive = true
+      .isActive = true
   }
 }
 
 extension QuizShowViewController: UICollectionViewDataSource {
-   func collectionView(_ collectionView: UICollectionView,
-                       numberOfItemsInSection section: Int) -> Int {
+  func collectionView(_ collectionView: UICollectionView,
+                      numberOfItemsInSection section: Int) -> Int {
     return 4
   }
   

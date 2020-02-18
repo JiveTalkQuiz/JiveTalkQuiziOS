@@ -11,6 +11,21 @@ import UIKit
 class QuizExampleCell: UICollectionViewCell {
   
   let titleLabel = UILabel(frame: .zero)
+  let checkImageView = UIImageView(frame: .zero)
+
+   override var isHighlighted: Bool {
+      didSet {
+          if isHighlighted {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                self.updateContents(isSelected: true)
+              }, completion: nil)
+          } else {
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+                self.updateContents(isSelected: false)
+              }, completion: nil)
+          }
+      }
+  }
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -20,8 +35,25 @@ class QuizExampleCell: UICollectionViewCell {
     
     titleLabel.textColor = JiveTalkQuizColor.label.value
     titleLabel.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 15.0)
-    
     addSubview(titleLabel)
+    
+    checkImageView.image = UIImage(named: "check")
+    addSubview(checkImageView)
+    checkImageView.isHidden = true
+  }
+  
+  func updateContents(isSelected: Bool) {
+    if isSelected {
+      titleLabel.textColor = .white
+      titleLabel.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 15.0)
+      backgroundColor = JiveTalkQuizColor.label.value
+      checkImageView.isHidden = false
+    } else {
+      titleLabel.textColor = JiveTalkQuizColor.label.value
+      titleLabel.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 15.0)
+      backgroundColor = .white
+      checkImageView.isHidden = true
+    }
   }
   
   required convenience init?(coder aDecoder: NSCoder) {
@@ -39,5 +71,19 @@ class QuizExampleCell: UICollectionViewCell {
     .constraint(equalTo: centerYAnchor)
     .isActive = true
     titleLabel.sizeToFit()
+    
+    checkImageView.translatesAutoresizingMaskIntoConstraints = false
+    checkImageView.widthAnchor
+      .constraint(equalToConstant: 17.0)
+      .isActive = true
+    checkImageView.heightAnchor
+      .constraint(equalToConstant: 17.0)
+      .isActive = true
+    checkImageView.topAnchor
+      .constraint(equalTo: topAnchor, constant: 14.0)
+      .isActive = true
+    checkImageView.trailingAnchor
+      .constraint(equalTo: trailingAnchor, constant: -14.0)
+      .isActive = true
   }
 }
