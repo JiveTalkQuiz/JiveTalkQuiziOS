@@ -9,19 +9,32 @@
 import UIKit
 import GoogleMobileAds
 import RxSwift
+import RxCocoa
 
 class QuizShowViewController: UIViewController {
   let quizView = QuizView(frame: .zero)
   let stackView = UIStackView(frame: .zero)
   var collectionView: UICollectionView?
   var heartButton: UIButton?
+  var guideView = UIImageView(frame: .zero)
+  
   var bannerView: GADBannerView!
   var interstitial: GADInterstitial!
   
   var quiz: QuizElement?
   var localStorage: LocalStorage?
   var index: Int?
-  
+  var guideImage: String {
+    guard let storage = localStorage else {
+      return ""
+    }
+
+    if storage.heartPoint <= 0 {
+      return "ads"
+    } else {
+      return "hint"
+    }
+  }
   var observer = PublishSubject<Bool>()
   
   override func viewDidLoad() {
@@ -42,6 +55,16 @@ class QuizShowViewController: UIViewController {
     collectionView?.dataSource = self
     collectionView?.delegate = self
     stackView.addSubview(collectionView!)
+    
+    guideView.image = UIImage(named: guideImage)
+    guideView.alpha = 0.0
+    view.addSubview(guideView)
+    UIView.animate(withDuration: 0.8,
+                   delay: 0.5,
+                   options: .curveEaseIn,
+                   animations: { [weak self] in
+                    self?.guideView.alpha = 1.0
+    }, completion: nil)
     
     setupConstraint()
     
@@ -182,11 +205,34 @@ class QuizShowViewController: UIViewController {
     collectionView?.trailingAnchor
       .constraint(equalTo: stackView.trailingAnchor)
       .isActive = true
+    
+    guideView.translatesAutoresizingMaskIntoConstraints = false
+    guideView.widthAnchor
+      .constraint(equalToConstant: 58.0)
+      .isActive = true
+    guideView.topAnchor
+      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4)
+      .isActive = true
+    guideView.trailingAnchor
+      .constraint(equalTo: view.trailingAnchor, constant: -22.0)
+      .isActive = true
   }
   
   private func setupHeartPoint() {
     if let storage = localStorage {
       heartButton?.setTitle(String(storage.heartPoint), for: .normal)
+      guideView.image = UIImage(named: guideImage)
+      var height: CGFloat = 0.0
+      if storage.heartPoint <= 0 {
+        height = 42.0
+      } else {
+        height = 30.0
+
+      }
+      
+      guideView.heightAnchor
+        .constraint(equalToConstant: height)
+        .isActive = true
     }
   }
 }
@@ -233,8 +279,12 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView,
                       didSelectItemAt indexPath: IndexPath) {
-    guard let index = index,
-      localStorage?.quizList[index].isSolved == false else {
+    guard let index = index, let storage = localStorage,
+      storage.quizList[index].isSolved == false else {
+        return
+    }
+    
+    guard storage.heartPoint > 0 else {
       return
     }
     
@@ -249,6 +299,11 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
       setupHeartPoint()
       observer.onNext(false)
     }
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+      collectionView.reloadData()
+    }
+    
   }
   
   private func showToast(isCorrect: Bool) {
@@ -263,7 +318,10 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     popup.heightAnchor.constraint(equalToConstant: 171.0).isActive = true
     popup.animate()
     
-    UIView.animate(withDuration: 0.8, delay: 0.5, options: .curveEaseIn, animations: {
+    UIView.animate(withDuration: 0.8,
+                   delay: 0.5,
+                   options: .curveEaseIn,
+                   animations: {
       popup.alpha = 0.0
     }, completion: { _ in
       popup.removeFromSuperview()

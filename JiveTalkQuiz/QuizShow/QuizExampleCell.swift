@@ -52,6 +52,8 @@ class QuizExampleCell: UICollectionViewCell {
   }
   
   override func prepareForReuse() {
+    backgroundColor = .white
+    layer.cornerRadius = 12
     dimmedView.isHidden = true
     checkImageView.isHidden = true
     isSolved = false
