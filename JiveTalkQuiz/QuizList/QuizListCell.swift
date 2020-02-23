@@ -15,15 +15,27 @@ class QuizListCell: UICollectionViewCell, View {
   var viewController: UIViewController?
   
   let label = UILabel(frame: .zero)
-  var quiz: QuizElement?
+  let imageView = UIImageView(frame: .zero)
   var disposeBag = DisposeBag()
+  
+  var quiz: QuizElement?
+  var localStorage: LocalStorage?
+  var index: Int?
+  var quizShowVC: QuizShowViewController?
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .white
+    backgroundColor = .clear
+    backgroundView = UIImageView(image: UIImage(named: "stage"))
+    
     label.textColor = JiveTalkQuizColor.label.value
     label.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 15.0)
+    label.textAlignment = .center
+    label.sizeToFit()
     addSubview(label)
+    
+    imageView.image = UIImage(named: "stageCheck")
+    addSubview(imageView)
   }
 
   required convenience init?(coder aDecoder: NSCoder) {
@@ -43,13 +55,18 @@ class QuizListCell: UICollectionViewCell, View {
       .filter { $0.state == .ended }
       .subscribe(onNext: { [weak reactor, weak self] _ in
         guard let reactor = reactor else { return }
-        let quizShowVC = QuizShowViewController()
-        quizShowVC.modalPresentationStyle = .fullScreen
-        quizShowVC.quiz = self?.quiz
-        self?.viewController?
-          .navigationController?
-          .pushViewController(quizShowVC,
-                              animated: false)
+        
+        if let quizShow = self?.quizShowVC {
+          quizShow.quiz = self?.quiz
+          quizShow.localStorage = self?.localStorage
+          quizShow.index = self?.index
+          quizShow.updateContents()
+          self?.viewController?
+            .navigationController?
+            .pushViewController(quizShow,
+                                animated: true)
+        }
+
       })
       .disposed(by: disposeBag)
   }
@@ -65,7 +82,23 @@ class QuizListCell: UICollectionViewCell, View {
       .constraint(equalTo: self.contentView.centerXAnchor)
       .isActive = true
     
-    self.label.textAlignment = .center
-    self.label.sizeToFit()
+    self.imageView.translatesAutoresizingMaskIntoConstraints = false
+    self.imageView.topAnchor
+      .constraint(equalTo: topAnchor)
+      .isActive = true
+    self.imageView.leadingAnchor
+      .constraint(equalTo: leadingAnchor)
+      .isActive = true
+    self.imageView.bottomAnchor
+      .constraint(equalTo: bottomAnchor)
+      .isActive = true
+    self.imageView.trailingAnchor
+      .constraint(equalTo: trailingAnchor)
+      .isActive = true
+    
+    if let index = index,
+      let isSolved = localStorage?.quizList[index].isSolved {
+      imageView.isHidden = !isSolved
+    }
   }
 }

@@ -27,6 +27,7 @@
 		A875EADA23EEB75500704A39 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD923EEB75500704A39 /* QuizView.swift */; };
 		A8777A7423F6D6A6002C1EF1 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8777A7323F6D6A6002C1EF1 /* StorageService.swift */; };
 		A879E24923F92540000C8474 /* QuizShowPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A879E24823F92540000C8474 /* QuizShowPopupView.swift */; };
+		A87B09DA2400D2A3000871EE /* StorageQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87B09D92400D2A3000871EE /* StorageQuiz.swift */; };
 		A87F59D823F4312E00E6FA99 /* QuizExampleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87F59D723F4312E00E6FA99 /* QuizExampleCell.swift */; };
 		A87F59DA23F4404300E6FA99 /* BMHANNAProOTF.otf in Resources */ = {isa = PBXBuildFile; fileRef = A87F59D923F4404300E6FA99 /* BMHANNAProOTF.otf */; };
 		A87F59DD23F440CC00E6FA99 /* JiveTalkQuizFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87F59DC23F440CC00E6FA99 /* JiveTalkQuizFont.swift */; };
@@ -58,6 +59,7 @@
 		A875EAD923EEB75500704A39 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
 		A8777A7323F6D6A6002C1EF1 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		A879E24823F92540000C8474 /* QuizShowPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowPopupView.swift; sourceTree = "<group>"; };
+		A87B09D92400D2A3000871EE /* StorageQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageQuiz.swift; sourceTree = "<group>"; };
 		A87F59D723F4312E00E6FA99 /* QuizExampleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizExampleCell.swift; sourceTree = "<group>"; };
 		A87F59D923F4404300E6FA99 /* BMHANNAProOTF.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMHANNAProOTF.otf; sourceTree = "<group>"; };
 		A87F59DC23F440CC00E6FA99 /* JiveTalkQuizFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizFont.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				A87F8F8D23F6F8A000CDB349 /* Quiz.swift */,
+				A87B09D92400D2A3000871EE /* StorageQuiz.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				A873C85F23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift in Sources */,
 				A87F8F8E23F6F8A000CDB349 /* Quiz.swift in Sources */,
 				A874179A23E70CBC00361723 /* SceneDelegate.swift in Sources */,
+				A87B09DA2400D2A3000871EE /* StorageQuiz.swift in Sources */,
 				A87F8F9023F6FBEB00CDB349 /* QuizError.swift in Sources */,
 				A87417AC23E70F9B00361723 /* QuizListViewReactor.swift in Sources */,
 				A820D62823EC451400726E52 /* QuizListLevelCell.swift in Sources */,

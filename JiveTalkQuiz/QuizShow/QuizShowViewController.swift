@@ -8,14 +8,21 @@
 
 import UIKit
 import GoogleMobileAds
+import RxSwift
 
 class QuizShowViewController: UIViewController {
   let quizView = QuizView(frame: .zero)
   let stackView = UIStackView(frame: .zero)
-  var collectionView: UICollectionView!
+  var collectionView: UICollectionView?
+  var heartButton: UIButton?
   var bannerView: GADBannerView!
+  var interstitial: GADInterstitial!
   
   var quiz: QuizElement?
+  var localStorage: LocalStorage?
+  var index: Int?
+  
+  var observer = PublishSubject<Bool>()
   
   override func viewDidLoad() {
     let layout = UICollectionViewFlowLayout()
@@ -27,19 +34,14 @@ class QuizShowViewController: UIViewController {
     
     self.view.backgroundColor = JiveTalkQuizColor.main.value
     view.addSubview(stackView)
-    
-    let number = quiz?.id == nil ? -1 : quiz!.id
-    quizView.numberLabel.text = "\(number)장"
-    quizView.problemLabel.text = quiz?.word ?? ""
-    stackView.addSubview(quizView)
-    
-    collectionView.delaysContentTouches = false
-    collectionView.backgroundColor = JiveTalkQuizColor.main.value
-    collectionView.register(QuizExampleCell.self,
+
+    collectionView?.delaysContentTouches = false
+    collectionView?.backgroundColor = JiveTalkQuizColor.main.value
+    collectionView?.register(QuizExampleCell.self,
                        forCellWithReuseIdentifier: "QuizExampleCell")
-    collectionView.dataSource = self
-    collectionView.delegate = self
-    stackView.addSubview(collectionView)
+    collectionView?.dataSource = self
+    collectionView?.delegate = self
+    stackView.addSubview(collectionView!)
     
     setupConstraint()
     
@@ -50,6 +52,23 @@ class QuizShowViewController: UIViewController {
     bannerView.rootViewController = self
     addBannerViewToView(bannerView)
     bannerView.load(GADRequest())
+    
+    interstitial = createAndLoadInterstitial()
+  }
+  
+  func updateContents() {
+    let number = quiz?.id == nil ? -1 : quiz!.id
+    quizView.numberLabel.text = "\(number)장"
+    quizView.problemLabel.text = quiz?.word ?? ""
+    stackView.addSubview(quizView)
+    collectionView?.reloadData()
+  }
+  
+  func createAndLoadInterstitial() -> GADInterstitial {
+    interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+    interstitial.delegate = self
+    interstitial.load(GADRequest())
+    return interstitial
   }
   
   private func initNavigationBar() {
@@ -60,16 +79,20 @@ class QuizShowViewController: UIViewController {
     navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     navigationController?.navigationBar.standardAppearance = navBarAppearance
     
-    let heartButton: UIButton = {
+    heartButton = {
       let bt = UIButton()
       bt.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
       bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
       // 99넘을시 예외처리
-      bt.setTitle("99+", for: .normal)
+      if let point = localStorage?.heartPoint {
+        bt.setTitle(String(point), for: .normal)
+      }
       bt.titleLabel?.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 11.0)
       bt.setTitleColor(JiveTalkQuizColor.label.value, for: .normal)
       bt.titleEdgeInsets = UIEdgeInsets(top: .zero, left: 4.0, bottom: .zero, right: .zero)
       bt.titleLabel?.sizeToFit()
+      bt.addTarget(self, action: #selector(showFrontAds),
+                   for: .touchDown)
       return bt
     }()
     
@@ -85,8 +108,19 @@ class QuizShowViewController: UIViewController {
       return bt
     }()
     
-    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton)
+    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton!)
     navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+  }
+  
+  @objc
+  private func showFrontAds() {
+    if let storage = localStorage,
+      interstitial.isReady, storage.heartPoint <= 0 {
+      interstitial.present(fromRootViewController: self)
+      storage.calculate(point: .ad)
+      setupHeartPoint()
+      observer.onNext(false)
+    }
   }
   
   private func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -97,10 +131,10 @@ class QuizShowViewController: UIViewController {
     bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     bannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
   }
-  
+
   @objc
   private func touchedDownBackButton() {
-    self.navigationController?.popViewController(animated: false)
+    self.navigationController?.popViewController(animated: true)
   }
   
   private func setupConstraint() {
@@ -134,20 +168,26 @@ class QuizShowViewController: UIViewController {
       .constraint(equalToConstant: view.bounds.width - 80)
       .isActive = true
     
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    collectionView.topAnchor
+    collectionView?.translatesAutoresizingMaskIntoConstraints = false
+    collectionView?.topAnchor
       .constraint(equalTo: quizView.topAnchor,
                   constant: view.bounds.width + 10)
       .isActive = true
-    collectionView.leadingAnchor
+    collectionView?.leadingAnchor
       .constraint(equalTo: stackView.leadingAnchor)
       .isActive = true
-    collectionView.bottomAnchor
+    collectionView?.bottomAnchor
       .constraint(equalTo: stackView.bottomAnchor)
       .isActive = true
-    collectionView.trailingAnchor
+    collectionView?.trailingAnchor
       .constraint(equalTo: stackView.trailingAnchor)
       .isActive = true
+  }
+  
+  private func setupHeartPoint() {
+    if let storage = localStorage {
+      heartButton?.setTitle(String(storage.heartPoint), for: .normal)
+    }
   }
 }
 
@@ -158,13 +198,25 @@ extension QuizShowViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView,
-                    cellForItemAt indexPath: IndexPath)
-  -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell", for: indexPath) as? QuizExampleCell else {
-      return UICollectionViewCell()
-    }
-    cell.titleLabel.text = quiz?.selection[indexPath.row].statement ?? ""
-    return cell
+                      cellForItemAt indexPath: IndexPath)
+    -> UICollectionViewCell {
+      guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell", for: indexPath) as? QuizExampleCell,
+        let index = index else {
+          return UICollectionViewCell()
+      }
+      cell.titleLabel.text = quiz?.selection[indexPath.row].statement ?? ""
+      if let storage = localStorage,
+        storage.quizList[index].idDimmed[indexPath.row] {
+        cell.dimmedView.isHidden = false
+      }
+      if let isSolved = localStorage?.quizList[index].isSolved, isSolved {
+        cell.isSolved = isSolved
+        
+        if let isCorrect = quiz?.selection[indexPath.row].correct, isCorrect {
+          cell.checkImageView.isHidden = false
+        }
+      }
+      return cell
   }
 }
 
@@ -179,11 +231,23 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     return 15.0
   }
   
-  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+  func collectionView(_ collectionView: UICollectionView,
+                      didSelectItemAt indexPath: IndexPath) {
+    guard let index = index,
+      localStorage?.quizList[index].isSolved == false else {
+      return
+    }
+    
     if quiz?.selection[indexPath.row].correct ?? false {
       showToast(isCorrect: true)
+      localStorage?.solve(quiz: index)
+      observer.onNext(true)
     } else {
       showToast(isCorrect: false)
+      localStorage?.calculate(point: .wrong)
+      localStorage?.dimmed(number: index, example: indexPath.row)
+      setupHeartPoint()
+      observer.onNext(false)
     }
   }
   
@@ -203,5 +267,39 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     }, completion: { _ in
       popup.removeFromSuperview()
     })
+  }
+}
+
+extension QuizShowViewController: GADInterstitialDelegate {
+  /// Tells the delegate an ad request succeeded.
+  func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+    print("interstitialDidReceiveAd")
+  }
+
+  /// Tells the delegate an ad request failed.
+  func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+    print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+  }
+
+  /// Tells the delegate that an interstitial will be presented.
+  func interstitialWillPresentScreen(_ ad: GADInterstitial) {
+    print("interstitialWillPresentScreen")
+  }
+
+  /// Tells the delegate the interstitial is to be animated off the screen.
+  func interstitialWillDismissScreen(_ ad: GADInterstitial) {
+    print("interstitialWillDismissScreen")
+  }
+
+  /// Tells the delegate the interstitial had been animated off the screen.
+  func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+    print("interstitialDidDismissScreen")
+    interstitial = createAndLoadInterstitial()
+  }
+
+  /// Tells the delegate that a user click will open another app
+  /// (such as the App Store), backgrounding the current app.
+  func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
+    print("interstitialWillLeaveApplication")
   }
 }

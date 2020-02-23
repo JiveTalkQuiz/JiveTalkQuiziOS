@@ -19,9 +19,14 @@ class QuizListViewController: UIViewController, View {
   }
   
   var collectionView: UICollectionView!
+  var heartButton: UIButton?
+  
   var disposeBag = DisposeBag()
-  var quizList: Quiz?
+  var quiz: Quiz?
+  var point: Int = 0
   let indicatorView = UIActivityIndicatorView(frame: .zero)
+  
+  var quisShowVC = QuizShowViewController()
   
   override func viewDidLoad() {
     let layout = UICollectionViewFlowLayout()
@@ -61,12 +66,10 @@ class QuizListViewController: UIViewController, View {
     navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     navigationController?.navigationBar.standardAppearance = navBarAppearance
     
-    let heartButton: UIButton = {
+    heartButton = {
       let bt = UIButton()
       bt.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
       bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
-      // 99넘을시 예외처리
-      bt.setTitle("99+", for: .normal)
       bt.titleLabel?.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 11.0)
       bt.setTitleColor(JiveTalkQuizColor.label.value, for: .normal)
       bt.titleEdgeInsets = UIEdgeInsets(top: .zero, left: 4.0, bottom: .zero, right: .zero)
@@ -74,7 +77,7 @@ class QuizListViewController: UIViewController, View {
       return bt
     }()
     
-    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton)
+    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton!)
   }
   
   private func setupConstraint() {
@@ -108,6 +111,19 @@ class QuizListViewController: UIViewController, View {
   }
   
   func bind(reactor: QuizListViewReactor) {
+    
+    quisShowVC.observer.subscribe(onNext: { [weak self] isSolved in
+      DispatchQueue.main.async { [weak self] in
+        if isSolved {
+          self?.collectionView.reloadData()
+        } else {
+          let point = String(reactor.localStorage.heartPoint)
+          self?.heartButton?.setTitle(point, for: .normal)
+        }
+      }
+    })
+      .disposed(by: disposeBag)
+    
     // Action
     self.rx.viewDidLoad
       .map { Reactor.Action.refresh }
@@ -116,18 +132,27 @@ class QuizListViewController: UIViewController, View {
     
     // State
     reactor.state
+      .map { $0.heartPoint }
+      .bind { [weak self] point in
+        let copiedPoint = point > 999 ? "+999" : String(point)
+        self?.heartButton?.setTitle(copiedPoint, for: .normal)
+    }
+    .disposed(by: disposeBag)
+    
+    reactor.state
       .map { $0.quiz }
       .bind { [weak self] quiz in
         guard let quiz = quiz,
           let strongSelf = self,
           let collectionView = strongSelf.collectionView else { return }
         
-        strongSelf.quizList = quiz
+        strongSelf.quiz = quiz
         collectionView.reloadData()
         strongSelf.indicatorView.stopAnimating()
     }
     .disposed(by: disposeBag)
   }
+    
 }
 
 extension QuizListViewController: UICollectionViewDataSource {
@@ -141,7 +166,7 @@ extension QuizListViewController: UICollectionViewDataSource {
     case .level:
       return 1
     case .quiz:
-      return quizList?.quiz.count ?? 0
+      return quiz?.quizList.count ?? 0
     case .none:
       return 0
     }
@@ -167,9 +192,15 @@ extension QuizListViewController: UICollectionViewDataSource {
       case .quiz:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListCell",
                                                       for: indexPath) as! QuizListCell
-        cell.reactor = QuizListCellReactor(number: indexPath.row)
+        if let id = quiz?.quizList[indexPath.row].id {
+          cell.reactor = QuizListCellReactor(number: id)
+        }
+        
         cell.viewController = self
-        cell.quiz = quizList?.quiz[indexPath.row]
+        cell.quizShowVC = quisShowVC
+        cell.quiz = quiz?.quizList[indexPath.row]
+        cell.localStorage = reactor?.localStorage
+        cell.index = indexPath.row
         return cell
       case .none:
         return UICollectionViewCell()
@@ -208,4 +239,5 @@ extension QuizListViewController: UICollectionViewDelegateFlowLayout {
       return .zero
     }
   }
+  
 }

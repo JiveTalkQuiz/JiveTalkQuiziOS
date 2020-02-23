@@ -15,7 +15,11 @@ import Foundation
 
 // MARK: - Quiz
 struct Quiz: Codable {
-    let quiz: [QuizElement]
+  let quizList: [QuizElement]
+  
+  enum CodingKeys : String, CodingKey{
+    case quizList = "quiz"
+  }
 }
 
 // MARK: Quiz convenience initializers and mutators
@@ -40,7 +44,7 @@ extension Quiz {
         quiz: [QuizElement]? = nil
     ) -> Quiz {
         return Quiz(
-            quiz: quiz ?? self.quiz
+            quizList: quiz ?? self.quizList
         )
     }
 

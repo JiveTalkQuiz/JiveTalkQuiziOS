@@ -17,20 +17,25 @@ class QuizListViewReactor: Reactor {
   }
   
   enum Mutation {
+    case setHeartPoint(Int)
     case setRefreshing(Bool)
     case setQuizs(Quiz?)
   }
   
   struct State {
+    var heartPoint: Int
     var isRefreshing: Bool = false
     var quiz: Quiz? = nil
   }
   
-  let initialState: State = State()
-  private let storageService: StorageServiceType
+  let initialState: State
+  let storageService: StorageServiceType
+  let localStorage: LocalStorage
   
-  init(storageService: StorageServiceType) {
+  init(storageService: StorageServiceType, localStorage: LocalStorage) {
     self.storageService = storageService
+    self.localStorage = localStorage
+    initialState = State(heartPoint: localStorage.heartPoint)
     _ = self.state
   }
   
@@ -56,11 +61,17 @@ class QuizListViewReactor: Reactor {
   func reduce(state: State, mutation: Mutation) -> State {
     var state = state
     switch mutation {
-    case let .setRefreshing(_):
+    case let .setHeartPoint(point):
+      state.heartPoint = point
+      return state
+    case .setRefreshing(_):
       state.isRefreshing = false
       return state
     case let .setQuizs(quiz):
       state.quiz = quiz
+      if let list = quiz?.quizList {
+        localStorage.initQuiz(list: list)
+      }
       return state
     }
   }

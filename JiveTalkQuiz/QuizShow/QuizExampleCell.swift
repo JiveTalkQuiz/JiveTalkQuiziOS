@@ -10,21 +10,24 @@ import UIKit
 
 class QuizExampleCell: UICollectionViewCell {
   
+  var isSolved = false
   let titleLabel = UILabel(frame: .zero)
   let checkImageView = UIImageView(frame: .zero)
-
-   override var isHighlighted: Bool {
-      didSet {
-          if isHighlighted {
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-                self.updateContents(isSelected: true)
-              }, completion: nil)
-          } else {
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-                self.updateContents(isSelected: false)
-              }, completion: nil)
-          }
+  let dimmedView = UIView(frame: .zero)
+  
+  override var isHighlighted: Bool {
+    didSet {
+      guard isSolved == false else { return }
+      if isHighlighted {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+          self.updateContents(isSelected: true)
+        }, completion: nil)
+      } else {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+          self.updateContents(isSelected: false)
+        }, completion: nil)
       }
+    }
   }
   
   override init(frame: CGRect) {
@@ -32,7 +35,7 @@ class QuizExampleCell: UICollectionViewCell {
     
     backgroundColor = .white
     layer.cornerRadius = 12
-    
+      
     titleLabel.textColor = JiveTalkQuizColor.label.value
     titleLabel.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 15.0)
     addSubview(titleLabel)
@@ -40,6 +43,18 @@ class QuizExampleCell: UICollectionViewCell {
     checkImageView.image = UIImage(named: "check")
     addSubview(checkImageView)
     checkImageView.isHidden = true
+    
+    dimmedView.backgroundColor = .black
+    dimmedView.layer.cornerRadius = 12
+    dimmedView.alpha = 0.3
+    dimmedView.isHidden = true
+    addSubview(dimmedView)
+  }
+  
+  override func prepareForReuse() {
+    dimmedView.isHidden = true
+    checkImageView.isHidden = true
+    isSolved = false
   }
   
   func updateContents(isSelected: Bool) {
@@ -84,6 +99,20 @@ class QuizExampleCell: UICollectionViewCell {
       .isActive = true
     checkImageView.trailingAnchor
       .constraint(equalTo: trailingAnchor, constant: -14.0)
+      .isActive = true
+    
+    dimmedView.translatesAutoresizingMaskIntoConstraints = false
+    dimmedView.topAnchor
+      .constraint(equalTo: topAnchor)
+      .isActive = true
+    dimmedView.leadingAnchor
+      .constraint(equalTo: leadingAnchor)
+      .isActive = true
+    dimmedView.bottomAnchor
+      .constraint(equalTo: bottomAnchor)
+      .isActive = true
+    dimmedView.trailingAnchor
+      .constraint(equalTo: trailingAnchor)
       .isActive = true
   }
 }

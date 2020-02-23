@@ -32,7 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
       let vc = QuizListViewController()
-      vc.reactor = QuizListViewReactor(storageService: StorageService())
+      vc.reactor = QuizListViewReactor(storageService: StorageService(),
+                                       localStorage: LocalStorage())
       let nc = UINavigationController(rootViewController: vc)
       
       win.rootViewController = nc

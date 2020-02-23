@@ -15,6 +15,7 @@ class QuizListCellReactor: Reactor {
   
   struct State {
     var number: Int
+    var isSolved: Bool = false
   }
   
   let initialState: State
