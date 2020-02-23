@@ -211,7 +211,7 @@ class QuizShowViewController: UIViewController {
       .constraint(equalToConstant: 58.0)
       .isActive = true
     guideView.topAnchor
-      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 4)
+      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
       .isActive = true
     guideView.trailingAnchor
       .constraint(equalTo: view.trailingAnchor, constant: -22.0)
