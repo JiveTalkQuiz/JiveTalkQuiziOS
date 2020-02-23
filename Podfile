@@ -19,4 +19,6 @@ target 'JiveTalkQuiz' do
   pod 'RxFirebase/Storage'
   
   pod 'SwiftyUserDefaults', '~> 5.0'
+  
+  pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 end

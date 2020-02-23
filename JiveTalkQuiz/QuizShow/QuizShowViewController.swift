@@ -261,9 +261,10 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     popup.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     popup.widthAnchor.constraint(equalToConstant: 156.0).isActive = true
     popup.heightAnchor.constraint(equalToConstant: 171.0).isActive = true
+    popup.animate()
     
-    UIView.animate(withDuration: 2.0, animations: {
-      popup.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+    UIView.animate(withDuration: 0.8, delay: 0.5, options: .curveEaseIn, animations: {
+      popup.alpha = 0.0
     }, completion: { _ in
       popup.removeFromSuperview()
     })
