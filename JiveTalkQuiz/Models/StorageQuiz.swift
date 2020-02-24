@@ -11,7 +11,8 @@ import SwiftyUserDefaults
 
 struct StorageQuiz: Codable, DefaultsSerializable {
   var isSolved: Bool = false
-  var idDimmed: [Bool] = []
+  var isDimmed: [Bool] = []
+  var correctNumber = 0
 }
 
 typealias StorageQuizList = [StorageQuiz]

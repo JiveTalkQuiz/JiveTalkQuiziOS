@@ -57,6 +57,7 @@ class QuizListCell: UICollectionViewCell, View {
         guard let reactor = reactor else { return }
         
         if let quizShow = self?.quizShowVC {
+          self?.localStorage?.calculate(point: .start)
           quizShow.quiz = self?.quiz
           quizShow.localStorage = self?.localStorage
           quizShow.index = self?.index

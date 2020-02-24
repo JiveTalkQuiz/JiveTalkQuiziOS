@@ -12,22 +12,27 @@ import SwiftyUserDefaults
 class LocalStorage {
   
   enum PointAction: Int {
-    case wrong = -3, hint = -1, ad = 15, level = 5
+    case wrong, start = -3, hint = -1, ad = 15, level = 5
   }
   
   var quizList: StorageQuizList { return Defaults.quizList }
+  var storageQuizList: [QuizElement] { return Defaults.storageQuizList }
   var heartPoint: Int { return Defaults.heartPoint }
   
   init() { }
   
   func initQuiz(list: [QuizElement]) {
+    Defaults[\.storageQuizList] = list
     
     if Defaults.quizList.isEmpty {
       Defaults[\.quizList] = StorageQuizList(repeating: StorageQuiz(),
                                              count: list.count)
       for (index, quiz) in list.enumerated() {
-        for _ in quiz.selection {
-          Defaults.quizList[index].idDimmed.append(false)
+        for (selIndex, sel) in quiz.selection.enumerated() {
+          Defaults.quizList[index].isDimmed.append(false)
+          if sel.correct {
+            Defaults.quizList[index].correctNumber = selIndex
+          }
         }
       }
     } else {
@@ -48,7 +53,7 @@ class LocalStorage {
   }
   
   func dimmed(number: Int, example index: Int) {
-    Defaults.quizList[number].idDimmed[index] = true
+    Defaults.quizList[number].isDimmed[index] = true
   }
   
   func calculate(point action: PointAction) {
@@ -59,4 +64,5 @@ class LocalStorage {
 extension DefaultsKeys {
   var quizList: DefaultsKey<StorageQuizList> { return .init("quizList", defaultValue: StorageQuizList()) }
   var heartPoint: DefaultsKey<Int> { return .init("heartPoint", defaultValue: 15)}
+  var storageQuizList: DefaultsKey<[QuizElement]> { return .init("storageQuizList", defaultValue: [QuizElement]()) }
 }

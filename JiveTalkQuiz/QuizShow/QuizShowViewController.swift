@@ -114,7 +114,7 @@ class QuizShowViewController: UIViewController {
       bt.setTitleColor(JiveTalkQuizColor.label.value, for: .normal)
       bt.titleEdgeInsets = UIEdgeInsets(top: .zero, left: 4.0, bottom: .zero, right: .zero)
       bt.titleLabel?.sizeToFit()
-      bt.addTarget(self, action: #selector(showFrontAds),
+      bt.addTarget(self, action: #selector(touchedDownHeartButton),
                    for: .touchDown)
       return bt
     }()
@@ -136,14 +136,34 @@ class QuizShowViewController: UIViewController {
   }
   
   @objc
-  private func showFrontAds() {
-    if let storage = localStorage,
-      interstitial.isReady, storage.heartPoint <= 0 {
+  private func touchedDownHeartButton() {
+    guard let storage = localStorage else { return }
+    
+    if interstitial.isReady, storage.heartPoint <= 0 {
       interstitial.present(fromRootViewController: self)
       storage.calculate(point: .ad)
-      setupHeartPoint()
-      observer.onNext(false)
+    } else if let index = index,
+      let localIndex = storage.quizList[index]
+        .isDimmed
+        .enumerated()
+        .filter({
+          ($0.element == false)
+          && ($0.offset != storage.quizList[index].correctNumber)
+        })
+        .map({ $0.offset })
+        .randomElement() {
+      storage.calculate(point: .hint)
+      storage.dimmed(number: index, example: localIndex)
+      UIView.animate(withDuration: 1,
+                     delay: 0.5,
+                     options: .curveEaseIn,
+      animations: { [weak self] in
+        self?.collectionView?.reloadData()
+      }, completion: nil)
     }
+    
+    setupHeartPoint()
+    observer.onNext(false)
   }
   
   private func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -227,7 +247,6 @@ class QuizShowViewController: UIViewController {
         height = 42.0
       } else {
         height = 30.0
-
       }
       
       guideView.heightAnchor
@@ -252,7 +271,7 @@ extension QuizShowViewController: UICollectionViewDataSource {
       }
       cell.titleLabel.text = quiz?.selection[indexPath.row].statement ?? ""
       if let storage = localStorage,
-        storage.quizList[index].idDimmed[indexPath.row] {
+        storage.quizList[index].isDimmed[indexPath.row] {
         cell.dimmedView.isHidden = false
       }
       if let isSolved = localStorage?.quizList[index].isSolved, isSolved {
@@ -292,6 +311,9 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
       showToast(isCorrect: true)
       localStorage?.solve(quiz: index)
       observer.onNext(true)
+      DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+        self?.nextQuiz()
+      }
     } else {
       showToast(isCorrect: false)
       localStorage?.calculate(point: .wrong)
@@ -304,6 +326,20 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
       collectionView.reloadData()
     }
     
+  }
+  
+  private func nextQuiz() {
+    guard let index = index,
+      let totalCount = localStorage?.quizList.count,
+      totalCount > index + 1,
+      let quizList = localStorage?.storageQuizList else {
+        return
+    }
+    
+    self.quiz = quizList[index + 1]
+    self.index = index + 1
+    
+    updateContents()
   }
   
   private func showToast(isCorrect: Bool) {

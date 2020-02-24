@@ -12,6 +12,7 @@
 //   let quiz = try Quiz(json)
 
 import Foundation
+import SwiftyUserDefaults
 
 // MARK: - Quiz
 struct Quiz: Codable {
@@ -58,7 +59,7 @@ extension Quiz {
 }
 
 // MARK: - QuizElement
-struct QuizElement: Codable {
+struct QuizElement: Codable, DefaultsSerializable {
     let id: Int
     let word: String
     let selection: [Selection]
@@ -105,7 +106,7 @@ extension QuizElement {
 }
 
 // MARK: - Selection
-struct Selection: Codable {
+struct Selection: Codable, DefaultsSerializable {
     let statement: String
     let correct: Bool
 }
