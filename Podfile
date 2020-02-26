@@ -16,6 +16,7 @@ target 'JiveTalkQuiz' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Storage'
   pod 'Firebase/AdMob'
+  pod 'Firebase/Crashlytics'
   pod 'RxFirebase/Storage'
   
   pod 'SwiftyUserDefaults', '~> 5.0'

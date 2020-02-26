@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuizView: UIView {
+class QuizShowCell: UICollectionViewCell {
   
   let numberLabel = UILabel(frame: .zero)
   let problemLabel = UILabel(frame: .zero)

@@ -35,6 +35,7 @@ class QuizListCell: UICollectionViewCell, View {
     addSubview(label)
     
     imageView.image = UIImage(named: "stageCheck")
+    imageView.backgroundColor = .clear
     addSubview(imageView)
   }
 
@@ -61,7 +62,7 @@ class QuizListCell: UICollectionViewCell, View {
           quizShow.quiz = self?.quiz
           quizShow.localStorage = self?.localStorage
           quizShow.index = self?.index
-          quizShow.updateContents()
+          quizShow.collectionView?.reloadData()
           self?.viewController?
             .navigationController?
             .pushViewController(quizShow,

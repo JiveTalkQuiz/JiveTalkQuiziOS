@@ -12,7 +12,16 @@ import SwiftyUserDefaults
 class LocalStorage {
   
   enum PointAction: Int {
-    case wrong, start = -3, hint = -1, ad = 15, level = 5
+    case wrong, start, hint, ad, level
+    
+    var point: Int {
+      switch self {
+      case .wrong, .start: return -3
+      case .hint: return -1
+      case .ad: return 15
+      case .level: return 5
+      }
+    }
   }
   
   var quizList: StorageQuizList { return Defaults.quizList }
@@ -57,7 +66,8 @@ class LocalStorage {
   }
   
   func calculate(point action: PointAction) {
-    Defaults.heartPoint += action.rawValue
+    let point = action.point
+    Defaults.heartPoint += point
   }
 }
 

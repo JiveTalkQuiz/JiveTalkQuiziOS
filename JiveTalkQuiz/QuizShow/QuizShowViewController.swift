@@ -12,8 +12,11 @@ import RxSwift
 import RxCocoa
 
 class QuizShowViewController: UIViewController {
-  let quizView = QuizView(frame: .zero)
-  let stackView = UIStackView(frame: .zero)
+  
+  enum Section: Int {
+    case show, example
+  }
+  
   var collectionView: UICollectionView?
   var heartButton: UIButton?
   var guideView = UIImageView(frame: .zero)
@@ -23,6 +26,9 @@ class QuizShowViewController: UIViewController {
   
   var quiz: QuizElement?
   var localStorage: LocalStorage?
+  var guidHintContraint: NSLayoutConstraint?
+  var guidAdsContraint: NSLayoutConstraint?
+  
   var index: Int?
   var guideImage: String {
     guard let storage = localStorage else {
@@ -38,6 +44,12 @@ class QuizShowViewController: UIViewController {
   var observer = PublishSubject<Bool>()
   
   override func viewDidLoad() {
+    defer {
+        setupConstraint()
+    }
+    
+    navigationController?.interactivePopGestureRecognizer?.delegate = nil
+    
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
     collectionView = UICollectionView(frame: .zero,
@@ -46,27 +58,20 @@ class QuizShowViewController: UIViewController {
     super.viewDidLoad()
     
     self.view.backgroundColor = JiveTalkQuizColor.main.value
-    view.addSubview(stackView)
 
     collectionView?.delaysContentTouches = false
     collectionView?.backgroundColor = JiveTalkQuizColor.main.value
+    collectionView?.register(QuizShowCell.self,
+                       forCellWithReuseIdentifier: "QuizShowCell")
     collectionView?.register(QuizExampleCell.self,
                        forCellWithReuseIdentifier: "QuizExampleCell")
     collectionView?.dataSource = self
     collectionView?.delegate = self
-    stackView.addSubview(collectionView!)
+    view.addSubview(collectionView!)
     
     guideView.image = UIImage(named: guideImage)
     guideView.alpha = 0.0
     view.addSubview(guideView)
-    UIView.animate(withDuration: 0.8,
-                   delay: 0.5,
-                   options: .curveEaseIn,
-                   animations: { [weak self] in
-                    self?.guideView.alpha = 1.0
-    }, completion: nil)
-    
-    setupConstraint()
     
     initNavigationBar()
     
@@ -79,14 +84,28 @@ class QuizShowViewController: UIViewController {
     interstitial = createAndLoadInterstitial()
   }
   
-  func updateContents() {
-    let number = quiz?.id == nil ? -1 : quiz!.id
-    quizView.numberLabel.text = "\(number)장"
-    quizView.problemLabel.text = quiz?.word ?? ""
-    stackView.addSubview(quizView)
-    collectionView?.reloadData()
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    UIView.animate(withDuration: 0.8,
+                   delay: 0.5,
+                   options: .curveEaseIn,
+                   animations: { [weak self] in
+                    self?.guideView.alpha = 1.0
+    }, completion: nil)
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    UIView.animate(withDuration: 0.8,
+                   delay: 0.5,
+                   options: .curveEaseIn,
+                   animations: { [weak self] in
+                    self?.guideView.alpha = 0
+    }, completion: nil)
+  }
+
   func createAndLoadInterstitial() -> GADInterstitial {
     interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
     interstitial.delegate = self
@@ -106,7 +125,6 @@ class QuizShowViewController: UIViewController {
       let bt = UIButton()
       bt.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
       bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
-      // 99넘을시 예외처리
       if let point = localStorage?.heartPoint {
         bt.setTitle(String(point), for: .normal)
       }
@@ -124,7 +142,6 @@ class QuizShowViewController: UIViewController {
       
       bt.setImage(#imageLiteral(resourceName: "back"), for: .normal)
       bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
-      // 99넘을시 예외처리
       bt.titleLabel?.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 11.0)
       bt.setTitleColor(JiveTalkQuizColor.label.value, for: .normal)
       bt.addTarget(self, action: #selector(touchedDownBackButton), for: .touchDown)
@@ -162,8 +179,10 @@ class QuizShowViewController: UIViewController {
       }, completion: nil)
     }
     
-    setupHeartPoint()
-    observer.onNext(false)
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+      self?.setupHeartPoint()
+      self?.observer.onNext(false)
+    }
   }
   
   private func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -181,49 +200,19 @@ class QuizShowViewController: UIViewController {
   }
   
   private func setupConstraint() {
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    stackView.topAnchor
-      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-                  constant: 5.0)
-      .isActive = true
-    stackView.leadingAnchor
-      .constraint(equalTo: view.leadingAnchor, constant: 20.0)
-      .isActive = true
-    stackView.bottomAnchor
-      .constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-      .isActive = true
-    stackView.rightAnchor
-      .constraint(equalTo: view.rightAnchor, constant: -20.0)
-      .isActive = true
-    
-    quizView.translatesAutoresizingMaskIntoConstraints = false
-    quizView.topAnchor
-      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
-                  constant: 20.0)
-      .isActive = true
-    quizView.leftAnchor
-      .constraint(equalTo: view.leftAnchor, constant: 20.0)
-      .isActive = true
-    quizView.rightAnchor
-      .constraint(equalTo: view.rightAnchor, constant: -20.0)
-      .isActive = true
-    quizView.heightAnchor
-      .constraint(equalToConstant: view.bounds.width - 80)
-      .isActive = true
     
     collectionView?.translatesAutoresizingMaskIntoConstraints = false
     collectionView?.topAnchor
-      .constraint(equalTo: quizView.topAnchor,
-                  constant: view.bounds.width + 10)
+      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
       .isActive = true
     collectionView?.leadingAnchor
-      .constraint(equalTo: stackView.leadingAnchor)
+      .constraint(equalTo: view.leadingAnchor)
       .isActive = true
     collectionView?.bottomAnchor
-      .constraint(equalTo: stackView.bottomAnchor)
+      .constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
       .isActive = true
     collectionView?.trailingAnchor
-      .constraint(equalTo: stackView.trailingAnchor)
+      .constraint(equalTo: view.trailingAnchor)
       .isActive = true
     
     guideView.translatesAutoresizingMaskIntoConstraints = false
@@ -236,96 +225,26 @@ class QuizShowViewController: UIViewController {
     guideView.trailingAnchor
       .constraint(equalTo: view.trailingAnchor, constant: -22.0)
       .isActive = true
+    guidHintContraint = guideView.heightAnchor
+      .constraint(equalToConstant: 30.0)
+    guidAdsContraint = guideView.heightAnchor
+    .constraint(equalToConstant: 42.0)
   }
   
   private func setupHeartPoint() {
     if let storage = localStorage {
+      print("sihoon \(storage.heartPoint)")
       heartButton?.setTitle(String(storage.heartPoint), for: .normal)
       guideView.image = UIImage(named: guideImage)
-      var height: CGFloat = 0.0
-      if storage.heartPoint <= 0 {
-        height = 42.0
-      } else {
-        height = 30.0
-      }
       
-      guideView.heightAnchor
-        .constraint(equalToConstant: height)
-        .isActive = true
-    }
-  }
-}
-
-extension QuizShowViewController: UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView,
-                      numberOfItemsInSection section: Int) -> Int {
-    return 4
-  }
-  
-  func collectionView(_ collectionView: UICollectionView,
-                      cellForItemAt indexPath: IndexPath)
-    -> UICollectionViewCell {
-      guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell", for: indexPath) as? QuizExampleCell,
-        let index = index else {
-          return UICollectionViewCell()
+      if storage.heartPoint <= 0 {
+        guidHintContraint?.isActive = false
+        guidAdsContraint?.isActive = true
+      } else {
+        guidHintContraint?.isActive = true
+        guidAdsContraint?.isActive = false
       }
-      cell.titleLabel.text = quiz?.selection[indexPath.row].statement ?? ""
-      if let storage = localStorage,
-        storage.quizList[index].isDimmed[indexPath.row] {
-        cell.dimmedView.isHidden = false
-      }
-      if let isSolved = localStorage?.quizList[index].isSolved, isSolved {
-        cell.isSolved = isSolved
-        
-        if let isCorrect = quiz?.selection[indexPath.row].correct, isCorrect {
-          cell.checkImageView.isHidden = false
-        }
-      }
-      return cell
-  }
-}
-
-extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
-  func collectionView(_ collectionView: UICollectionView,
-                      layout collectionViewLayout: UICollectionViewLayout,
-                      sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: view.bounds.width - 40.0, height: 45)
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-    return 15.0
-  }
-  
-  func collectionView(_ collectionView: UICollectionView,
-                      didSelectItemAt indexPath: IndexPath) {
-    guard let index = index, let storage = localStorage,
-      storage.quizList[index].isSolved == false else {
-        return
     }
-    
-    guard storage.heartPoint > 0 else {
-      return
-    }
-    
-    if quiz?.selection[indexPath.row].correct ?? false {
-      showToast(isCorrect: true)
-      localStorage?.solve(quiz: index)
-      observer.onNext(true)
-      DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-        self?.nextQuiz()
-      }
-    } else {
-      showToast(isCorrect: false)
-      localStorage?.calculate(point: .wrong)
-      localStorage?.dimmed(number: index, example: indexPath.row)
-      setupHeartPoint()
-      observer.onNext(false)
-    }
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-      collectionView.reloadData()
-    }
-    
   }
   
   private func nextQuiz() {
@@ -339,7 +258,13 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     self.quiz = quizList[index + 1]
     self.index = index + 1
     
-    updateContents()
+    UIView.animate(withDuration: 0.5,
+                   delay: 0,
+                   options: .curveEaseIn,
+                   animations: { [weak self] in
+                    self?.collectionView?.contentOffset = .zero
+                    self?.collectionView?.reloadData()
+    })
   }
   
   private func showToast(isCorrect: Bool) {
@@ -362,6 +287,132 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     }, completion: { _ in
       popup.removeFromSuperview()
     })
+  }
+}
+
+extension QuizShowViewController: UICollectionViewDataSource {
+  
+  func collectionView(_ collectionView: UICollectionView,
+                      numberOfItemsInSection section: Int) -> Int {
+        let section = Section(rawValue: section)
+    switch section {
+    case .show:
+      return 1
+    case .example:
+      return 4
+    case .none:
+      return 0
+    }
+  }
+  
+  func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 2
+  }
+  
+  func collectionView(_ collectionView: UICollectionView,
+                      cellForItemAt indexPath: IndexPath)
+    -> UICollectionViewCell {
+      let section = Section(rawValue: indexPath.section)
+      switch section {
+      case .show:
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizShowCell", for: indexPath) as? QuizShowCell else {
+            return UICollectionViewCell()
+        }
+        
+        let number = quiz?.id == nil ? -1 : quiz!.id
+        cell.numberLabel.text = "\(number)장"
+        cell.problemLabel.text = quiz?.word ?? ""
+        return cell
+      case .example:
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell", for: indexPath) as? QuizExampleCell,
+          let index = index else {
+            return UICollectionViewCell()
+        }
+        cell.titleLabel.text = quiz?.selection[indexPath.row].statement ?? ""
+        if let storage = localStorage,
+          storage.quizList[index].isDimmed[indexPath.row] {
+          cell.dimmedView.isHidden = false
+        }
+        if let isSolved = localStorage?.quizList[index].isSolved, isSolved {
+          cell.isSolved = isSolved
+          
+          if let isCorrect = quiz?.selection[indexPath.row].correct, isCorrect {
+            cell.checkImageView.isHidden = false
+          }
+        }
+        return cell
+      case .none:
+        return UICollectionViewCell()
+      }
+  }
+}
+
+extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let section = Section(rawValue: indexPath.section)
+    switch section {
+    case .show:
+      return CGSize(width: view.bounds.width - 40.0,
+                    height: view.bounds.width - 80)
+    case .example:
+      return CGSize(width: view.bounds.width - 40.0, height: 45)
+    case .none:
+      return .zero
+    }
+  }
+  
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      insetForSectionAt section: Int) -> UIEdgeInsets {
+    let section = Section(rawValue: section)
+    switch section {
+    case .show:
+      return UIEdgeInsets(top: 5.0, left: 20.0, bottom: 25.0, right: 20.0)
+    case .example:
+      return UIEdgeInsets(top: 25.0, left: 20.0, bottom: 75.0, right: 20.0)
+    case .none:
+      return .zero
+    }
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 15.0
+  }
+  
+  func collectionView(_ collectionView: UICollectionView,
+                      didSelectItemAt indexPath: IndexPath) {
+    guard let section = Section(rawValue: indexPath.section),
+      section == .example,
+      let index = index, let storage = localStorage,
+      storage.quizList[index].isSolved == false else {
+        return
+    }
+    
+    guard storage.heartPoint > 0 else {
+      return
+    }
+    
+    if quiz?.selection[indexPath.row].correct ?? false {
+      showToast(isCorrect: true)
+      localStorage?.solve(quiz: index)
+      observer.onNext(true)
+      DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+        self?.nextQuiz()
+      }
+    } else {
+      showToast(isCorrect: false)
+      localStorage?.calculate(point: .wrong)
+      localStorage?.dimmed(number: index, example: indexPath.row)
+        self.setupHeartPoint()
+        self.observer.onNext(false)
+    }
+    
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+      collectionView.reloadData()
+    }
+    
   }
 }
 

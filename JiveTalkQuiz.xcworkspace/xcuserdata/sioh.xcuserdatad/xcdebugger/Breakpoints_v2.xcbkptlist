@@ -14,8 +14,8 @@
             filePath = "JiveTalkQuiz/QuizList/QuizListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "collectionView(_:numberOfItemsInSection:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,9 +46,9 @@
             filePath = "JiveTalkQuiz/QuizShow/QuizShowViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
-            landmarkName = "setupHeartPoint()"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "showToast(isCorrect:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

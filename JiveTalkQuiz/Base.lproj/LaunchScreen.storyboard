@@ -16,15 +16,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="fln-4L-6TJ">
-                                <rect key="frame" x="40" y="188" width="309" height="470"/>
+                                <rect key="frame" x="40" y="186" width="262" height="524"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.7803921568627451" green="0.87450980392156863" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fln-4L-6TJ" secondAttribute="trailing" constant="65" id="YNk-5w-4Fp"/>
-                            <constraint firstItem="fln-4L-6TJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="a1z-sf-Pqh"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fln-4L-6TJ" secondAttribute="bottom" constant="204" id="eDW-Gy-QcT"/>
-                            <constraint firstItem="fln-4L-6TJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="144" id="fQZ-4J-zrB"/>
+                            <constraint firstItem="fln-4L-6TJ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ICw-K8-uKH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fln-4L-6TJ" secondAttribute="bottom" constant="152" id="K1i-A1-cUd"/>
+                            <constraint firstItem="fln-4L-6TJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="ggD-3r-FuJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fln-4L-6TJ" secondAttribute="trailing" constant="112" id="uNB-gg-GZx"/>
+                            <constraint firstItem="fln-4L-6TJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="142" id="uoI-If-viG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

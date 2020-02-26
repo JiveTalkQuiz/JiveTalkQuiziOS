@@ -19,6 +19,7 @@ class QuizListLevelCell: UICollectionViewCell {
     imageLabel.text = "라떼는 말이야~"
     levelLabel.text = "Lv. 아재"
     backgroundColor = .white
+    layer.cornerRadius = 12
     
     imageView.image = UIImage(named: "Level_1")
     addSubview(imageView)
@@ -40,6 +41,7 @@ class QuizListLevelCell: UICollectionViewCell {
   
   override func layoutSubviews() {
     super.layoutSubviews()
+    
     self.imageView.translatesAutoresizingMaskIntoConstraints = false
     self.imageView.leadingAnchor
       .constraint(equalTo: self.leadingAnchor)

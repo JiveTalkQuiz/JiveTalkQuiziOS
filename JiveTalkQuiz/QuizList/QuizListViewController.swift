@@ -119,6 +119,7 @@ class QuizListViewController: UIViewController, View {
         } else {
           let point = String(reactor.localStorage.heartPoint)
           self?.heartButton?.setTitle(point, for: .normal)
+          self?.heartButton?.layoutIfNeeded()
         }
       }
     })
@@ -226,7 +227,9 @@ extension QuizListViewController: UICollectionViewDelegateFlowLayout {
     }
   }
   
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      insetForSectionAt section: Int) -> UIEdgeInsets {
     let section = Section(rawValue: section)
     switch section {
     case .title:

@@ -24,7 +24,7 @@
 		A87417AE23E7160500361723 /* QuizListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AD23E7160500361723 /* QuizListCell.swift */; };
 		A87417B023E7168C00361723 /* QuizListCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AF23E7168C00361723 /* QuizListCellReactor.swift */; };
 		A875EAD823EEB42300704A39 /* QuizShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD723EEB42300704A39 /* QuizShowViewController.swift */; };
-		A875EADA23EEB75500704A39 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD923EEB75500704A39 /* QuizView.swift */; };
+		A875EADA23EEB75500704A39 /* QuizShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD923EEB75500704A39 /* QuizShowCell.swift */; };
 		A8777A7423F6D6A6002C1EF1 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8777A7323F6D6A6002C1EF1 /* StorageService.swift */; };
 		A879E24923F92540000C8474 /* QuizShowPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A879E24823F92540000C8474 /* QuizShowPopupView.swift */; };
 		A87B09DA2400D2A3000871EE /* StorageQuiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87B09D92400D2A3000871EE /* StorageQuiz.swift */; };
@@ -45,7 +45,7 @@
 		A872088B23F810C00099826C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizColor.swift; sourceTree = "<group>"; };
 		A873C85E23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizAPI.swift; sourceTree = "<group>"; };
-		A874179423E70CBC00361723 /* JiveTalkQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JiveTalkQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A874179423E70CBC00361723 /* 신조어테스트.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "신조어테스트.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A874179723E70CBC00361723 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A874179923E70CBC00361723 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A874179B23E70CBC00361723 /* QuizListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListViewController.swift; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 		A87417AD23E7160500361723 /* QuizListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListCell.swift; sourceTree = "<group>"; };
 		A87417AF23E7168C00361723 /* QuizListCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListCellReactor.swift; sourceTree = "<group>"; };
 		A875EAD723EEB42300704A39 /* QuizShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowViewController.swift; sourceTree = "<group>"; };
-		A875EAD923EEB75500704A39 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		A875EAD923EEB75500704A39 /* QuizShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowCell.swift; sourceTree = "<group>"; };
 		A8777A7323F6D6A6002C1EF1 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		A879E24823F92540000C8474 /* QuizShowPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowPopupView.swift; sourceTree = "<group>"; };
 		A87B09D92400D2A3000871EE /* StorageQuiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageQuiz.swift; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 		A874179523E70CBC00361723 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A874179423E70CBC00361723 /* JiveTalkQuiz.app */,
+				A874179423E70CBC00361723 /* 신조어테스트.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -171,7 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				A875EAD723EEB42300704A39 /* QuizShowViewController.swift */,
-				A875EAD923EEB75500704A39 /* QuizView.swift */,
+				A875EAD923EEB75500704A39 /* QuizShowCell.swift */,
 				A87F59D723F4312E00E6FA99 /* QuizExampleCell.swift */,
 				A879E24823F92540000C8474 /* QuizShowPopupView.swift */,
 			);
@@ -215,7 +215,7 @@
 			);
 			name = JiveTalkQuiz;
 			productName = JiveTalkQuiz;
-			productReference = A874179423E70CBC00361723 /* JiveTalkQuiz.app */;
+			productReference = A874179423E70CBC00361723 /* 신조어테스트.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -317,7 +317,7 @@
 				A8723E0C23EFE3180042BD82 /* JiveTalkQuizColor.swift in Sources */,
 				A87417AE23E7160500361723 /* QuizListCell.swift in Sources */,
 				A879E24923F92540000C8474 /* QuizShowPopupView.swift in Sources */,
-				A875EADA23EEB75500704A39 /* QuizView.swift in Sources */,
+				A875EADA23EEB75500704A39 /* QuizShowCell.swift in Sources */,
 				A874179C23E70CBC00361723 /* QuizListViewController.swift in Sources */,
 				A82C7B8423F0037A00A24FF0 /* QuizListTitleCell.swift in Sources */,
 				A87417B023E7168C00361723 /* QuizListCellReactor.swift in Sources */,
@@ -469,17 +469,19 @@
 			baseConfigurationReference = 51D076D129684B7C385110B3 /* Pods-JiveTalkQuiz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 6Q8JS3LMQP;
 				INFOPLIST_FILE = JiveTalkQuiz/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BWillOcean.JiveTalkQuiz;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "JiveTalkQuiz-Dist";
+				PRODUCT_NAME = "신조어테스트";
+				PROVISIONING_PROFILE_SPECIFIER = "JiveTalkQuiz-Dev";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -490,17 +492,19 @@
 			baseConfigurationReference = 9150DD920CC49D7D5E074599 /* Pods-JiveTalkQuiz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 6Q8JS3LMQP;
 				INFOPLIST_FILE = JiveTalkQuiz/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BWillOcean.JiveTalkQuiz;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "JiveTalkQuiz-Dist";
+				PRODUCT_NAME = "신조어테스트";
+				PROVISIONING_PROFILE_SPECIFIER = "JiveTalkQuiz-Dev";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
