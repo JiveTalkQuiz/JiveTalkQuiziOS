@@ -70,14 +70,11 @@ class QuizListLevelCell: UICollectionViewCell {
       .isActive = true
     
     self.levelLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.levelLabel.topAnchor
-      .constraint(equalTo: self.topAnchor)
+    self.levelLabel.centerYAnchor
+      .constraint(equalTo: self.centerYAnchor)
       .isActive = true
     self.levelLabel.trailingAnchor
       .constraint(equalTo: self.trailingAnchor, constant: -18.0)
-      .isActive = true
-    self.levelLabel.bottomAnchor
-      .constraint(equalTo: self.bottomAnchor)
       .isActive = true
     self.levelLabel.sizeToFit()
   }

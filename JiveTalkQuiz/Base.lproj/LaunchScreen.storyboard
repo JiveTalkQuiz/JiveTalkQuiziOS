@@ -24,8 +24,8 @@
                             <constraint firstItem="fln-4L-6TJ" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ICw-K8-uKH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fln-4L-6TJ" secondAttribute="bottom" constant="152" id="K1i-A1-cUd"/>
                             <constraint firstItem="fln-4L-6TJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="ggD-3r-FuJ"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fln-4L-6TJ" secondAttribute="trailing" constant="112" id="uNB-gg-GZx"/>
-                            <constraint firstItem="fln-4L-6TJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="142" id="uoI-If-viG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fln-4L-6TJ" secondAttribute="trailing" constant="112" id="uNB-gg-GZx"/>
+                            <constraint firstItem="fln-4L-6TJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="142" id="uoI-If-viG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

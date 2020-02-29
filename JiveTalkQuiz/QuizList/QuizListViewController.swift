@@ -20,13 +20,10 @@ class QuizListViewController: UIViewController, View {
   
   var collectionView: UICollectionView!
   var heartButton: UIButton?
+  let indicatorView = UIActivityIndicatorView(frame: .zero)
+  let quisShowVC = QuizShowViewController()
   
   var disposeBag = DisposeBag()
-  var quiz: Quiz?
-  var point: Int = 0
-  let indicatorView = UIActivityIndicatorView(frame: .zero)
-  
-  var quisShowVC = QuizShowViewController()
   
   override func viewDidLoad() {
     let layout = UICollectionViewFlowLayout()
@@ -51,21 +48,28 @@ class QuizListViewController: UIViewController, View {
     view.addSubview(collectionView)
     
     view.addSubview(indicatorView)
-    indicatorView.startAnimating()
     
     setupConstraint()
+    
+    indicatorView.startAnimating()
     
     initNavigationBar()
   }
   
   private func initNavigationBar() {
-    let navBarAppearance = UINavigationBarAppearance()
-    navBarAppearance.configureWithOpaqueBackground()
-    navBarAppearance.configureWithTransparentBackground()
-    navBarAppearance.backgroundColor = JiveTalkQuizColor.main.value
-    navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-    navigationController?.navigationBar.standardAppearance = navBarAppearance
-    
+    if #available(iOS 13, *) {
+      let navBarAppearance = UINavigationBarAppearance()
+      navBarAppearance.configureWithOpaqueBackground()
+      navBarAppearance.configureWithTransparentBackground()
+      navBarAppearance.backgroundColor = JiveTalkQuizColor.main.value
+      navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+      navigationController?.navigationBar.standardAppearance = navBarAppearance
+    } else {
+      navigationController?.navigationBar.setBackgroundImage(UIImage(),
+                                                             for: .any,
+                                                             barMetrics: .default)
+      navigationController?.navigationBar.shadowImage = UIImage()
+    }
     heartButton = {
       let bt = UIButton()
       bt.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
@@ -143,17 +147,15 @@ class QuizListViewController: UIViewController, View {
     reactor.state
       .map { $0.quiz }
       .bind { [weak self] quiz in
-        guard let quiz = quiz,
-          let strongSelf = self,
+        guard let strongSelf = self,
           let collectionView = strongSelf.collectionView else { return }
         
-        strongSelf.quiz = quiz
         collectionView.reloadData()
         strongSelf.indicatorView.stopAnimating()
     }
     .disposed(by: disposeBag)
   }
-    
+  
 }
 
 extension QuizListViewController: UICollectionViewDataSource {
@@ -167,7 +169,7 @@ extension QuizListViewController: UICollectionViewDataSource {
     case .level:
       return 1
     case .quiz:
-      return quiz?.quizList.count ?? 0
+      return reactor?.localStorage.storageQuizList.count ?? 0
     case .none:
       return 0
     }
@@ -193,13 +195,13 @@ extension QuizListViewController: UICollectionViewDataSource {
       case .quiz:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListCell",
                                                       for: indexPath) as! QuizListCell
-        if let id = quiz?.quizList[indexPath.row].id {
+        if let id = reactor?.localStorage.storageQuizList[indexPath.row].id {
           cell.reactor = QuizListCellReactor(number: id)
         }
         
         cell.viewController = self
         cell.quizShowVC = quisShowVC
-        cell.quiz = quiz?.quizList[indexPath.row]
+        cell.quiz = reactor?.localStorage.storageQuizList[indexPath.row]
         cell.localStorage = reactor?.localStorage
         cell.index = indexPath.row
         return cell
@@ -237,7 +239,7 @@ extension QuizListViewController: UICollectionViewDelegateFlowLayout {
     case .level:
       return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 25.0, right: 0.0)
     case .quiz:
-      return .zero
+      return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 40.0, right: 0.0)
     case .none:
       return .zero
     }

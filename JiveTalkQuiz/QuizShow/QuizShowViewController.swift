@@ -114,12 +114,19 @@ class QuizShowViewController: UIViewController {
   }
   
   private func initNavigationBar() {
-    let navBarAppearance = UINavigationBarAppearance()
-    navBarAppearance.configureWithOpaqueBackground()
-    navBarAppearance.configureWithTransparentBackground()
-    navBarAppearance.backgroundColor = JiveTalkQuizColor.main.value
-    navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-    navigationController?.navigationBar.standardAppearance = navBarAppearance
+    if #available(iOS 13, *) {
+      let navBarAppearance = UINavigationBarAppearance()
+      navBarAppearance.configureWithOpaqueBackground()
+      navBarAppearance.configureWithTransparentBackground()
+      navBarAppearance.backgroundColor = JiveTalkQuizColor.main.value
+      navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+      navigationController?.navigationBar.standardAppearance = navBarAppearance
+    } else {
+      navigationController?.navigationBar.setBackgroundImage(UIImage(),
+                                                             for: .any,
+                                                             barMetrics: .default)
+      navigationController?.navigationBar.shadowImage = UIImage()
+    }
     
     heartButton = {
       let bt = UIButton()
@@ -241,8 +248,8 @@ class QuizShowViewController: UIViewController {
         guidHintContraint?.isActive = false
         guidAdsContraint?.isActive = true
       } else {
-        guidHintContraint?.isActive = true
         guidAdsContraint?.isActive = false
+        guidHintContraint?.isActive = true
       }
     }
   }
@@ -355,7 +362,7 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     switch section {
     case .show:
       return CGSize(width: view.bounds.width - 40.0,
-                    height: view.bounds.width - 80)
+                    height: 300)
     case .example:
       return CGSize(width: view.bounds.width - 40.0, height: 45)
     case .none:
@@ -416,6 +423,7 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
   }
 }
 
+// MARK: - GADInterstitialDelegate
 extension QuizShowViewController: GADInterstitialDelegate {
   /// Tells the delegate an ad request succeeded.
   func interstitialDidReceiveAd(_ ad: GADInterstitial) {

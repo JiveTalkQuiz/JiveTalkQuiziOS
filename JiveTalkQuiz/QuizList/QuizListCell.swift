@@ -83,6 +83,7 @@ class QuizListCell: UICollectionViewCell, View {
     self.label.centerXAnchor
       .constraint(equalTo: self.contentView.centerXAnchor)
       .isActive = true
+    self.label.sizeToFit()
     
     self.imageView.translatesAutoresizingMaskIntoConstraints = false
     self.imageView.topAnchor
