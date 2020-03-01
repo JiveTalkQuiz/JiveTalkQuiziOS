@@ -238,7 +238,7 @@ class QuizShowViewController: UIViewController {
     .constraint(equalToConstant: 42.0)
   }
   
-  private func setupHeartPoint() {
+  func setupHeartPoint() {
     if let storage = localStorage {
       heartButton?.setTitle(String(storage.heartPoint), for: .normal)
       guideView.image = UIImage(named: guideImage)
@@ -321,7 +321,8 @@ extension QuizShowViewController: UICollectionViewDataSource {
       let section = Section(rawValue: indexPath.section)
       switch section {
       case .show:
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizShowCell", for: indexPath) as? QuizShowCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizShowCell",
+                                                            for: indexPath) as? QuizShowCell else {
             return UICollectionViewCell()
         }
         
@@ -330,7 +331,8 @@ extension QuizShowViewController: UICollectionViewDataSource {
         cell.problemLabel.text = quiz?.word ?? ""
         return cell
       case .example:
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell", for: indexPath) as? QuizExampleCell,
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell",
+                                                            for: indexPath) as? QuizExampleCell,
           let index = index else {
             return UICollectionViewCell()
         }

@@ -62,6 +62,8 @@ class QuizListCell: UICollectionViewCell, View {
           quizShow.quiz = self?.quiz
           quizShow.localStorage = self?.localStorage
           quizShow.index = self?.index
+          quizShow.setupHeartPoint()
+          quizShow.observer.onNext(false)
           quizShow.collectionView?.reloadData()
           self?.viewController?
             .navigationController?
