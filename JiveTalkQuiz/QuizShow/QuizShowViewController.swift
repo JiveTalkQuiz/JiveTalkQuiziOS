@@ -240,7 +240,6 @@ class QuizShowViewController: UIViewController {
   
   private func setupHeartPoint() {
     if let storage = localStorage {
-      print("sihoon \(storage.heartPoint)")
       heartButton?.setTitle(String(storage.heartPoint), for: .normal)
       guideView.image = UIImage(named: guideImage)
       
