@@ -23,6 +23,7 @@
 		A87417AC23E70F9B00361723 /* QuizListViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AB23E70F9B00361723 /* QuizListViewReactor.swift */; };
 		A87417AE23E7160500361723 /* QuizListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AD23E7160500361723 /* QuizListCell.swift */; };
 		A87417B023E7168C00361723 /* QuizListCellReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AF23E7168C00361723 /* QuizListCellReactor.swift */; };
+		A875C93D240BEFD500E08EAD /* JiveTalkQuizLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875C93C240BEFD500E08EAD /* JiveTalkQuizLevel.swift */; };
 		A875EAD823EEB42300704A39 /* QuizShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD723EEB42300704A39 /* QuizShowViewController.swift */; };
 		A875EADA23EEB75500704A39 /* QuizShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875EAD923EEB75500704A39 /* QuizShowCell.swift */; };
 		A8777A7423F6D6A6002C1EF1 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8777A7323F6D6A6002C1EF1 /* StorageService.swift */; };
@@ -53,6 +54,7 @@
 		A87417AB23E70F9B00361723 /* QuizListViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListViewReactor.swift; sourceTree = "<group>"; };
 		A87417AD23E7160500361723 /* QuizListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListCell.swift; sourceTree = "<group>"; };
 		A87417AF23E7168C00361723 /* QuizListCellReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListCellReactor.swift; sourceTree = "<group>"; };
+		A875C93C240BEFD500E08EAD /* JiveTalkQuizLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizLevel.swift; sourceTree = "<group>"; };
 		A875EAD723EEB42300704A39 /* QuizShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowViewController.swift; sourceTree = "<group>"; };
 		A875EAD923EEB75500704A39 /* QuizShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowCell.swift; sourceTree = "<group>"; };
 		A8777A7323F6D6A6002C1EF1 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			children = (
 				A87F8F8D23F6F8A000CDB349 /* Quiz.swift */,
 				A87B09D92400D2A3000871EE /* StorageQuiz.swift */,
+				A875C93C240BEFD500E08EAD /* JiveTalkQuizLevel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A875C93D240BEFD500E08EAD /* JiveTalkQuizLevel.swift in Sources */,
 				A875EAD823EEB42300704A39 /* QuizShowViewController.swift in Sources */,
 				A8723E0C23EFE3180042BD82 /* JiveTalkQuizColor.swift in Sources */,
 				A87417AE23E7160500361723 /* QuizListCell.swift in Sources */,

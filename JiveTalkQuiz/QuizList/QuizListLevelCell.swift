@@ -14,6 +14,7 @@ class QuizListLevelCell: UICollectionViewCell {
   let imageLabel = UILabel(frame: .zero)
   let levelLabel = UILabel(frame: .zero)
   var level: JiveTalkQuizLevel = .아재
+  var localStorage: LocalStorage?
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -36,8 +37,12 @@ class QuizListLevelCell: UICollectionViewCell {
   
   func updateContents(solved problem: Int) {
     level = JiveTalkQuizLevel.get(solved: problem)
+    if localStorage?.level != level {
+      localStorage?.calculate(point: .level)
+    }
+    localStorage?.setupLevel(level)
     imageLabel.text = level.description
-    levelLabel.text = level.rawValue
+    levelLabel.text = "Lv. " + level.rawValue
   }
   
   required init?(coder: NSCoder) {
@@ -82,31 +87,5 @@ class QuizListLevelCell: UICollectionViewCell {
       .constraint(equalTo: self.trailingAnchor, constant: -18.0)
       .isActive = true
     self.levelLabel.sizeToFit()
-  }
-}
-
-enum JiveTalkQuizLevel: String {
-  case 아재, 문찐, 프로불편러, 오놀아놈, 인싸
-  
-  var description: String {
-    switch self {
-    case .아재: return "라떼는 말이야~"
-    case .문찐: return "아 어려워 급식체 거부!"
-    case .프로불편러: return "이걸 또 줄여? 하 불편해"
-    case .오놀아놈: return "오~ 당신은 놀줄아는 놈"
-    case .인싸: return "이런다고 인싸안되는거 아는 당신은"
-    }
-  }
-  
-  static func get(solved problem: Int) -> Self {
-    switch problem {
-    case 1...20: return .아재
-    case 21...40: return .문찐
-    case 41...60: return .프로불편러
-    case 61...80: return .오놀아놈
-    case 81...100: return .인싸
-    default:
-      return .아재
-    }
   }
 }

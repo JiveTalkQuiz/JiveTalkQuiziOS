@@ -13,15 +13,11 @@ import ReactorKit
 class QuizListCell: UICollectionViewCell, View {
   
   var viewController: UIViewController?
-  
+  var quizShowVC: QuizShowViewController?
   let label = UILabel(frame: .zero)
   let imageView = UIImageView(frame: .zero)
-  var disposeBag = DisposeBag()
   
-  var quiz: QuizElement?
-  var localStorage: LocalStorage?
-  var index: Int?
-  var quizShowVC: QuizShowViewController?
+  var disposeBag = DisposeBag()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -58,10 +54,10 @@ class QuizListCell: UICollectionViewCell, View {
         guard let reactor = reactor else { return }
         
         if let quizShow = self?.quizShowVC {
-          self?.localStorage?.calculate(point: .start)
-          quizShow.quiz = self?.quiz
-          quizShow.localStorage = self?.localStorage
-          quizShow.index = self?.index
+          reactor.localStorage?.calculate(point: .start)
+          quizShow.quiz = reactor.quiz
+          quizShow.localStorage = reactor.localStorage
+          quizShow.index = reactor.number
           quizShow.setupHeartPoint()
           quizShow.observer.onNext(false)
           quizShow.collectionView?.reloadData()
@@ -101,8 +97,8 @@ class QuizListCell: UICollectionViewCell, View {
       .constraint(equalTo: trailingAnchor)
       .isActive = true
     
-    if let index = index,
-      let isSolved = localStorage?.quizList[index].isSolved {
+    if let index = reactor?.number,
+      let isSolved = reactor?.localStorage?.quizList[index - 1].isSolved {
       imageView.isHidden = !isSolved
     }
   }

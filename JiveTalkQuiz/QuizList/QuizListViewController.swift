@@ -17,7 +17,7 @@ class QuizListViewController: UIViewController, View {
   enum Section: Int {
     case title, level, quiz
   }
-  
+
   var collectionView: UICollectionView!
   var heartButton: UIButton?
   let indicatorView = UIActivityIndicatorView(frame: .zero)
@@ -28,6 +28,7 @@ class QuizListViewController: UIViewController, View {
   override func viewDidLoad() {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
+    
     collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     
     super.viewDidLoad()
@@ -89,14 +90,14 @@ class QuizListViewController: UIViewController, View {
     collectionView.topAnchor
       .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
       .isActive = true
-    collectionView.rightAnchor
-      .constraint(equalTo: view.rightAnchor, constant: -40.0)
+    collectionView.trailingAnchor
+      .constraint(equalTo: view.trailingAnchor, constant: -40.0)
       .isActive = true
     collectionView.bottomAnchor
       .constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
       .isActive = true
-    collectionView.leftAnchor
-      .constraint(equalTo: view.leftAnchor, constant: 40.0)
+    collectionView.leadingAnchor
+      .constraint(equalTo: view.leadingAnchor, constant: 40.0)
       .isActive = true
     
     indicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -156,6 +157,11 @@ class QuizListViewController: UIViewController, View {
     .disposed(by: disposeBag)
   }
   
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    
+    collectionView?.collectionViewLayout.invalidateLayout()
+  }
 }
 
 extension QuizListViewController: UICollectionViewDataSource {
@@ -191,6 +197,7 @@ extension QuizListViewController: UICollectionViewDataSource {
       case .level:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListLevelCell",
                                                       for: indexPath) as! QuizListLevelCell
+        cell.localStorage = reactor?.localStorage
         cell.updateContents(solved: reactor?.localStorage
           .quizList
           .filter({ $0.isSolved == true })
@@ -200,14 +207,13 @@ extension QuizListViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListCell",
                                                       for: indexPath) as! QuizListCell
         if let id = reactor?.localStorage.storageQuizList[indexPath.row].id {
-          cell.reactor = QuizListCellReactor(number: id)
+          cell.reactor = QuizListCellReactor(localStorage: reactor?.localStorage,
+                                             number: id)
         }
         
         cell.viewController = self
         cell.quizShowVC = quisShowVC
-        cell.quiz = reactor?.localStorage.storageQuizList[indexPath.row]
-        cell.localStorage = reactor?.localStorage
-        cell.index = indexPath.row
+
         return cell
       case .none:
         return UICollectionViewCell()

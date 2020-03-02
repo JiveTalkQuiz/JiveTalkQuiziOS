@@ -294,6 +294,12 @@ class QuizShowViewController: UIViewController {
       popup.removeFromSuperview()
     })
   }
+  
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    
+    collectionView?.collectionViewLayout.invalidateLayout()
+  }
 }
 
 extension QuizShowViewController: UICollectionViewDataSource {

@@ -26,17 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       self.window = UIWindow(frame: UIScreen.main.bounds)
       window?.makeKeyAndVisible()
       
-      let launchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
-      window?.rootViewController = launchScreen
+      let vc = QuizListViewController()
+      vc.reactor = QuizListViewReactor(storageService: StorageService(),
+                                       localStorage: LocalStorage())
+      let nc = UINavigationController(rootViewController: vc)
       
-      DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-        let vc = QuizListViewController()
-        vc.reactor = QuizListViewReactor(storageService: StorageService(),
-                                         localStorage: LocalStorage())
-        let nc = UINavigationController(rootViewController: vc)
-        
-        self?.window?.rootViewController = nc
-      }
+      self.window?.rootViewController = nc
     }
     return true
   }

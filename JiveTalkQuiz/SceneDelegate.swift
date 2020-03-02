@@ -27,19 +27,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     win.makeKeyAndVisible()
     
-    let launchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
-    win.rootViewController = launchScreen
-    window = win
+    let vc = QuizListViewController()
+    vc.reactor = QuizListViewReactor(storageService: StorageService(),
+                                     localStorage: LocalStorage())
+    let nc = UINavigationController(rootViewController: vc)
     
-    DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-      let vc = QuizListViewController()
-      vc.reactor = QuizListViewReactor(storageService: StorageService(),
-                                       localStorage: LocalStorage())
-      let nc = UINavigationController(rootViewController: vc)
-      
-      win.rootViewController = nc
-      self?.window = win
-    }
+    win.rootViewController = nc
+    self.window = win
+
   }
 
   func sceneDidDisconnect(_ scene: UIScene) {

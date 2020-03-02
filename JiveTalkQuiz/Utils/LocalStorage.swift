@@ -27,6 +27,7 @@ class LocalStorage {
   var quizList: StorageQuizList { return Defaults.quizList }
   var storageQuizList: [QuizElement] { return Defaults.storageQuizList }
   var heartPoint: Int { return Defaults.heartPoint }
+  var level: JiveTalkQuizLevel { return Defaults.level }
   
   init() { }
   
@@ -56,6 +57,10 @@ class LocalStorage {
     }
   }
   
+  func setupLevel(_ level: JiveTalkQuizLevel) {
+    Defaults.level = level
+  }
+  
   func solve(quiz index: Int?) {
     guard let index = index else { return }
     Defaults.quizList[index].isSolved = true
@@ -72,7 +77,16 @@ class LocalStorage {
 }
 
 extension DefaultsKeys {
-  var quizList: DefaultsKey<StorageQuizList> { return .init("quizList", defaultValue: StorageQuizList()) }
-  var heartPoint: DefaultsKey<Int> { return .init("heartPoint", defaultValue: 15)}
-  var storageQuizList: DefaultsKey<[QuizElement]> { return .init("storageQuizList", defaultValue: [QuizElement]()) }
+  var quizList: DefaultsKey<StorageQuizList> {
+    return .init("quizList", defaultValue: StorageQuizList())
+  }
+  var heartPoint: DefaultsKey<Int> {
+    return .init("heartPoint", defaultValue: 15)
+  }
+  var storageQuizList: DefaultsKey<[QuizElement]> {
+    return .init("storageQuizList", defaultValue: [QuizElement]())
+  }
+  var level: DefaultsKey<JiveTalkQuizLevel> {
+    return .init("level", defaultValue: .아재)
+  }
 }
