@@ -7,31 +7,42 @@
 //
 
 import UIKit
+import ReactorKit
 import GoogleMobileAds
 import RxSwift
 import RxCocoa
 
-class QuizShowViewController: UIViewController {
+class QuizShowViewController: UIViewController, View {
   
   enum Section: Int {
     case show, example
   }
   
-  var collectionView: UICollectionView?
+  var collectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    let collectionView = UICollectionView(frame: .zero,
+                                          collectionViewLayout: layout)
+    layout.scrollDirection = .vertical
+    collectionView.delaysContentTouches = false
+    collectionView.backgroundColor = JiveTalkQuizColor.main.value
+    collectionView.register(QuizShowCell.self,
+                            forCellWithReuseIdentifier: "QuizShowCell")
+    collectionView.register(QuizExampleCell.self,
+                            forCellWithReuseIdentifier: "QuizExampleCell")
+    return collectionView
+  }()
+  
   var heartButton: UIButton?
   var guideView = UIImageView(frame: .zero)
   
   var bannerView: GADBannerView!
   var interstitial: GADInterstitial!
-  
-  var quiz: QuizElement?
-  var localStorage: LocalStorage?
+
   var guidHintContraint: NSLayoutConstraint?
   var guidAdsContraint: NSLayoutConstraint?
   
-  var index: Int?
   var guideImage: String {
-    guard let storage = localStorage else {
+    guard let storage = reactor?.currentState.localStorage else {
       return ""
     }
 
@@ -43,6 +54,9 @@ class QuizShowViewController: UIViewController {
   }
   var observer = PublishSubject<Bool>()
   
+  var disposeBag = DisposeBag()
+  
+  // MARK: LifeCycle
   override func viewDidLoad() {
     defer {
         setupConstraint()
@@ -50,24 +64,11 @@ class QuizShowViewController: UIViewController {
     
     navigationController?.interactivePopGestureRecognizer?.delegate = nil
     
-    let layout = UICollectionViewFlowLayout()
-    layout.scrollDirection = .vertical
-    collectionView = UICollectionView(frame: .zero,
-                                      collectionViewLayout: layout)
-    
     super.viewDidLoad()
     
     self.view.backgroundColor = JiveTalkQuizColor.main.value
 
-    collectionView?.delaysContentTouches = false
-    collectionView?.backgroundColor = JiveTalkQuizColor.main.value
-    collectionView?.register(QuizShowCell.self,
-                       forCellWithReuseIdentifier: "QuizShowCell")
-    collectionView?.register(QuizExampleCell.self,
-                       forCellWithReuseIdentifier: "QuizExampleCell")
-    collectionView?.dataSource = self
-    collectionView?.delegate = self
-    view.addSubview(collectionView!)
+    view.addSubview(collectionView)
     
     guideView.image = UIImage(named: guideImage)
     guideView.alpha = 0.0
@@ -75,12 +76,7 @@ class QuizShowViewController: UIViewController {
     
     initNavigationBar()
     
-    bannerView = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: view.bounds.width, height: 50.0)))
-    bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-    bannerView.rootViewController = self
-    addBannerViewToView(bannerView)
-    bannerView.load(GADRequest())
-    
+    createBannerView()
     interstitial = createAndLoadInterstitial()
   }
   
@@ -105,14 +101,80 @@ class QuizShowViewController: UIViewController {
                     self?.guideView.alpha = 0
     }, completion: nil)
   }
-
-  func createAndLoadInterstitial() -> GADInterstitial {
-    interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-    interstitial.delegate = self
-    interstitial.load(GADRequest())
-    return interstitial
+  
+  // MARK: Binding
+  func bind(reactor: QuizShowViewReactor) {
+    self.collectionView.rx.setDelegate(self).disposed(by: disposeBag)
+    self.collectionView.rx.setDataSource(self).disposed(by: disposeBag)
+    
+    collectionView
+      .rx
+      .itemSelected
+      .filter { Section(rawValue: $0.section) == .example }
+      .map { Reactor.Action.answer($0.row) }
+      .bind(to: reactor.action)
+      .disposed(by: disposeBag)
+    
+    reactor.state
+      .map { $0.isCorrect }
+      .subscribe(onNext: { [weak self] isCorrect in
+        guard let isCorrect = isCorrect else { return }
+        
+        guard let storage = reactor.currentState.localStorage,
+          storage.heartPoint > 0 else {
+            return
+        }
+        
+        if isCorrect {
+          self?.showToast(isCorrect: true)
+          self?.observer.onNext(true)
+          self?.nextQuiz()
+        } else {
+          self?.showToast(isCorrect: false)
+          self?.setupHeartPoint()
+          self?.observer.onNext(false)
+          
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self?.collectionView.reloadData()
+          }
+        }
+      }).disposed(by: disposeBag)
   }
   
+  // MARK: Constraints
+  private func setupConstraint() {
+    
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    collectionView.topAnchor
+      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+      .isActive = true
+    collectionView.leadingAnchor
+      .constraint(equalTo: view.leadingAnchor)
+      .isActive = true
+    collectionView.bottomAnchor
+      .constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+      .isActive = true
+    collectionView.trailingAnchor
+      .constraint(equalTo: view.trailingAnchor)
+      .isActive = true
+    
+    guideView.translatesAutoresizingMaskIntoConstraints = false
+    guideView.widthAnchor
+      .constraint(equalToConstant: 58.0)
+      .isActive = true
+    guideView.topAnchor
+      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
+      .isActive = true
+    guideView.trailingAnchor
+      .constraint(equalTo: view.trailingAnchor, constant: -22.0)
+      .isActive = true
+    guidHintContraint = guideView.heightAnchor
+      .constraint(equalToConstant: 30.0)
+    guidAdsContraint = guideView.heightAnchor
+    .constraint(equalToConstant: 42.0)
+  }
+  
+  // MARK: NavigationBar
   private func initNavigationBar() {
     if #available(iOS 13, *) {
       let navBarAppearance = UINavigationBarAppearance()
@@ -132,7 +194,7 @@ class QuizShowViewController: UIViewController {
       let bt = UIButton()
       bt.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
       bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
-      if let point = localStorage?.heartPoint {
+      if let point = reactor?.currentState.localStorage?.heartPoint {
         bt.setTitle(String(point), for: .normal)
       }
       bt.titleLabel?.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 11.0)
@@ -159,14 +221,24 @@ class QuizShowViewController: UIViewController {
     navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
   }
   
+  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    super.viewWillTransition(to: size, with: coordinator)
+    
+    collectionView.collectionViewLayout.invalidateLayout()
+  }
+}
+
+// MARK: - Action
+extension QuizShowViewController {
+  
   @objc
   private func touchedDownHeartButton() {
-    guard let storage = localStorage else { return }
+    guard let storage = reactor?.currentState.localStorage else { return }
     
     if interstitial.isReady, storage.heartPoint <= 0 {
       interstitial.present(fromRootViewController: self)
       storage.calculate(point: .ad)
-    } else if let index = index,
+    } else if let index = reactor?.currentState.number,
       let localIndex = storage.quizList[index]
         .isDimmed
         .enumerated()
@@ -178,11 +250,12 @@ class QuizShowViewController: UIViewController {
         .randomElement() {
       storage.calculate(point: .hint)
       storage.dimmed(number: index, example: localIndex)
+      
       UIView.animate(withDuration: 1,
                      delay: 0.5,
                      options: .curveEaseIn,
       animations: { [weak self] in
-        self?.collectionView?.reloadData()
+        self?.collectionView.reloadData()
       }, completion: nil)
     }
     
@@ -191,55 +264,14 @@ class QuizShowViewController: UIViewController {
       self?.observer.onNext(false)
     }
   }
-  
-  private func addBannerViewToView(_ bannerView: GADBannerView) {
-    bannerView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(bannerView)
-    bannerView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
-    bannerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-    bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-    bannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-  }
 
   @objc
   private func touchedDownBackButton() {
     self.navigationController?.popViewController(animated: true)
   }
   
-  private func setupConstraint() {
-    
-    collectionView?.translatesAutoresizingMaskIntoConstraints = false
-    collectionView?.topAnchor
-      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-      .isActive = true
-    collectionView?.leadingAnchor
-      .constraint(equalTo: view.leadingAnchor)
-      .isActive = true
-    collectionView?.bottomAnchor
-      .constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-      .isActive = true
-    collectionView?.trailingAnchor
-      .constraint(equalTo: view.trailingAnchor)
-      .isActive = true
-    
-    guideView.translatesAutoresizingMaskIntoConstraints = false
-    guideView.widthAnchor
-      .constraint(equalToConstant: 58.0)
-      .isActive = true
-    guideView.topAnchor
-      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-      .isActive = true
-    guideView.trailingAnchor
-      .constraint(equalTo: view.trailingAnchor, constant: -22.0)
-      .isActive = true
-    guidHintContraint = guideView.heightAnchor
-      .constraint(equalToConstant: 30.0)
-    guidAdsContraint = guideView.heightAnchor
-    .constraint(equalToConstant: 42.0)
-  }
-  
   func setupHeartPoint() {
-    if let storage = localStorage {
+    if let storage = reactor?.currentState.localStorage {
       heartButton?.setTitle(String(storage.heartPoint), for: .normal)
       guideView.image = UIImage(named: guideImage)
       
@@ -254,23 +286,10 @@ class QuizShowViewController: UIViewController {
   }
   
   private func nextQuiz() {
-    guard let index = index,
-      let totalCount = localStorage?.quizList.count,
-      totalCount > index + 1,
-      let quizList = localStorage?.storageQuizList else {
-        return
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+      self?.collectionView.contentOffset = .zero
+      self?.collectionView.reloadData()
     }
-    
-    self.quiz = quizList[index + 1]
-    self.index = index + 1
-    
-    UIView.animate(withDuration: 0.5,
-                   delay: 0,
-                   options: .curveEaseIn,
-                   animations: { [weak self] in
-                    self?.collectionView?.contentOffset = .zero
-                    self?.collectionView?.reloadData()
-    })
   }
   
   private func showToast(isCorrect: Bool) {
@@ -294,14 +313,9 @@ class QuizShowViewController: UIViewController {
       popup.removeFromSuperview()
     })
   }
-  
-  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    super.viewWillTransition(to: size, with: coordinator)
-    
-    collectionView?.collectionViewLayout.invalidateLayout()
-  }
 }
 
+// MARK: - UICollectionViewDataSource
 extension QuizShowViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView,
@@ -332,25 +346,29 @@ extension QuizShowViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        let number = quiz?.id == nil ? -1 : quiz!.id
+        let number = reactor?.currentState.quiz?.id == nil ? -1 : reactor!.currentState.quiz!.id
         cell.numberLabel.text = "\(number)장"
-        cell.problemLabel.text = quiz?.word ?? ""
+        cell.problemLabel.text = reactor?.currentState.quiz?.word ?? ""
         return cell
       case .example:
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell",
                                                             for: indexPath) as? QuizExampleCell,
-          let index = index else {
+          let index = reactor?.currentState.number else {
             return UICollectionViewCell()
         }
-        cell.titleLabel.text = quiz?.selection[indexPath.row].statement ?? ""
-        if let storage = localStorage,
+        cell.titleLabel.text = reactor?.currentState.quiz?.selection[indexPath.row].statement ?? ""
+        
+        if let storage = reactor?.currentState.localStorage,
           storage.quizList[index].isDimmed[indexPath.row] {
           cell.dimmedView.isHidden = false
         }
-        if let isSolved = localStorage?.quizList[index].isSolved, isSolved {
+        
+        if let isSolved = reactor?.currentState.localStorage?.quizList[index].isSolved,
+          isSolved {
           cell.isSolved = isSolved
           
-          if let isCorrect = quiz?.selection[indexPath.row].correct, isCorrect {
+          if let isCorrect = reactor?.currentState.quiz?.selection[indexPath.row].correct,
+            isCorrect {
             cell.checkImageView.isHidden = false
           }
         }
@@ -361,6 +379,7 @@ extension QuizShowViewController: UICollectionViewDataSource {
   }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
@@ -391,42 +410,38 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     }
   }
   
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 15.0
   }
+}
+
+// MARK: - Google AdMobs
+extension QuizShowViewController {
+
+  private func createBannerView() {
+    bannerView = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: view.bounds.width, height: 50.0)))
+    bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+    bannerView.rootViewController = self
+    addBannerViewToView(bannerView)
+    bannerView.load(GADRequest())
+  }
   
-  func collectionView(_ collectionView: UICollectionView,
-                      didSelectItemAt indexPath: IndexPath) {
-    guard let section = Section(rawValue: indexPath.section),
-      section == .example,
-      let index = index, let storage = localStorage,
-      storage.quizList[index].isSolved == false else {
-        return
-    }
-    
-    guard storage.heartPoint > 0 else {
-      return
-    }
-    
-    if quiz?.selection[indexPath.row].correct ?? false {
-      showToast(isCorrect: true)
-      localStorage?.solve(quiz: index)
-      observer.onNext(true)
-      DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-        self?.nextQuiz()
-      }
-    } else {
-      showToast(isCorrect: false)
-      localStorage?.calculate(point: .wrong)
-      localStorage?.dimmed(number: index, example: indexPath.row)
-        self.setupHeartPoint()
-        self.observer.onNext(false)
-    }
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-      collectionView.reloadData()
-    }
-    
+  private func addBannerViewToView(_ bannerView: GADBannerView) {
+    bannerView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(bannerView)
+    bannerView.heightAnchor.constraint(equalToConstant: 50.0).isActive = true
+    bannerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+    bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+    bannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+  }
+  
+  private func createAndLoadInterstitial() -> GADInterstitial {
+    interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+    interstitial.delegate = self
+    interstitial.load(GADRequest())
+    return interstitial
   }
 }
 

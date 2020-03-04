@@ -24,18 +24,18 @@ class QuizListViewReactor: Reactor {
   
   struct State {
     var heartPoint: Int
+    let storageService: StorageServiceType
+    let localStorage: LocalStorage
     var isRefreshing: Bool = false
     var quiz: Quiz? = nil
   }
   
   let initialState: State
-  let storageService: StorageServiceType
-  let localStorage: LocalStorage
   
   init(storageService: StorageServiceType, localStorage: LocalStorage) {
-    self.storageService = storageService
-    self.localStorage = localStorage
-    initialState = State(heartPoint: localStorage.heartPoint)
+    initialState = State(heartPoint: localStorage.heartPoint,
+                         storageService: storageService,
+                         localStorage: localStorage)
     _ = self.state
   }
   
@@ -45,7 +45,7 @@ class QuizListViewReactor: Reactor {
       guard !self.currentState.isRefreshing else { return .empty() }
       let startRefreshing = Observable<Mutation>.just(.setRefreshing(true))
       let endRefreshing = Observable<Mutation>.just(.setRefreshing(false))
-      let setQuizs = storageService.request()
+      let setQuizs = currentState.storageService.request()
         .map { data -> Mutation in
           guard let quiz = try? Quiz(data: data) else {
             debugPrint(QuizError.invalidData)
@@ -70,7 +70,7 @@ class QuizListViewReactor: Reactor {
     case let .setQuizs(quiz):
       state.quiz = quiz
       if let list = quiz?.quizList {
-        localStorage.initQuiz(list: list)
+        currentState.localStorage.initQuiz(list: list)
       }
       return state
     }

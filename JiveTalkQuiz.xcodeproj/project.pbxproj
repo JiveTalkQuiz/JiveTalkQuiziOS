@@ -11,6 +11,7 @@
 		A820D62823EC451400726E52 /* QuizListLevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820D62723EC451400726E52 /* QuizListLevelCell.swift */; };
 		A82C7B8123EFF22A00A24FF0 /* BMDOHYEON_otf.otf in Resources */ = {isa = PBXBuildFile; fileRef = A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */; };
 		A82C7B8423F0037A00A24FF0 /* QuizListTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */; };
+		A841DD25240D55D10085A2A7 /* QuizShowViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A841DD24240D55D00085A2A7 /* QuizShowViewReactor.swift */; };
 		A872088A23F806A00099826C /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A872088923F806A00099826C /* LocalStorage.swift */; };
 		A872088C23F810C00099826C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A872088B23F810C00099826C /* GoogleService-Info.plist */; };
 		A8723E0C23EFE3180042BD82 /* JiveTalkQuizColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */; };
@@ -40,6 +41,7 @@
 		A820D62723EC451400726E52 /* QuizListLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListLevelCell.swift; sourceTree = "<group>"; };
 		A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMDOHYEON_otf.otf; sourceTree = "<group>"; };
 		A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListTitleCell.swift; sourceTree = "<group>"; };
+		A841DD24240D55D00085A2A7 /* QuizShowViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowViewReactor.swift; sourceTree = "<group>"; };
 		A872088923F806A00099826C /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		A872088B23F810C00099826C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizColor.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				A875EAD723EEB42300704A39 /* QuizShowViewController.swift */,
+				A841DD24240D55D00085A2A7 /* QuizShowViewReactor.swift */,
 				A875EAD923EEB75500704A39 /* QuizShowCell.swift */,
 				A87F59D723F4312E00E6FA99 /* QuizExampleCell.swift */,
 				A879E24823F92540000C8474 /* QuizShowPopupView.swift */,
@@ -323,6 +326,7 @@
 				A879E24923F92540000C8474 /* QuizShowPopupView.swift in Sources */,
 				A875EADA23EEB75500704A39 /* QuizShowCell.swift in Sources */,
 				A874179C23E70CBC00361723 /* QuizListViewController.swift in Sources */,
+				A841DD25240D55D10085A2A7 /* QuizShowViewReactor.swift in Sources */,
 				A82C7B8423F0037A00A24FF0 /* QuizListTitleCell.swift in Sources */,
 				A87417B023E7168C00361723 /* QuizListCellReactor.swift in Sources */,
 				A874179823E70CBC00361723 /* AppDelegate.swift in Sources */,

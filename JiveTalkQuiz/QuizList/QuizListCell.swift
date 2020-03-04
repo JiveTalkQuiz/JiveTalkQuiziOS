@@ -44,7 +44,7 @@ class QuizListCell: UICollectionViewCell, View {
       .map { $0.number }
       .distinctUntilChanged()
       .subscribe(onNext: { [weak self] number in
-        self?.label.text = String(number)
+        self?.label.text = String(number + 1)
       })
       .disposed(by: self.disposeBag)
     
@@ -54,13 +54,12 @@ class QuizListCell: UICollectionViewCell, View {
         guard let reactor = reactor else { return }
         
         if let quizShow = self?.quizShowVC {
-          reactor.localStorage?.calculate(point: .start)
-          quizShow.quiz = reactor.quiz
-          quizShow.localStorage = reactor.localStorage
-          quizShow.index = reactor.number
+          reactor.currentState.localStorage?.calculate(point: .start)
+          quizShow.reactor = QuizShowViewReactor(number: reactor.currentState.number,
+                                                 localStorage: reactor.currentState.localStorage)
           quizShow.setupHeartPoint()
           quizShow.observer.onNext(false)
-          quizShow.collectionView?.reloadData()
+          quizShow.collectionView.reloadData()
           self?.viewController?
             .navigationController?
             .pushViewController(quizShow,
@@ -97,8 +96,8 @@ class QuizListCell: UICollectionViewCell, View {
       .constraint(equalTo: trailingAnchor)
       .isActive = true
     
-    if let index = reactor?.number,
-      let isSolved = reactor?.localStorage?.quizList[index - 1].isSolved {
+    if let index = reactor?.currentState.number,
+      let isSolved = reactor?.currentState.localStorage?.quizList[index].isSolved {
       imageView.isHidden = !isSolved
     }
   }

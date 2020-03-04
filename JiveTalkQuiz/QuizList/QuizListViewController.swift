@@ -122,7 +122,7 @@ class QuizListViewController: UIViewController, View {
         if isSolved {
           self?.collectionView.reloadData()
         } else {
-          let point = String(reactor.localStorage.heartPoint)
+          let point = String(reactor.currentState.localStorage.heartPoint)
           self?.heartButton?.setTitle(point, for: .normal)
           self?.heartButton?.layoutIfNeeded()
         }
@@ -175,7 +175,7 @@ extension QuizListViewController: UICollectionViewDataSource {
     case .level:
       return 1
     case .quiz:
-      return reactor?.localStorage.storageQuizList.count ?? 0
+      return reactor?.currentState.localStorage.storageQuizList.count ?? 0
     case .none:
       return 0
     }
@@ -197,8 +197,8 @@ extension QuizListViewController: UICollectionViewDataSource {
       case .level:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListLevelCell",
                                                       for: indexPath) as! QuizListLevelCell
-        cell.localStorage = reactor?.localStorage
-        cell.updateContents(solved: reactor?.localStorage
+        cell.localStorage = reactor?.currentState.localStorage
+        cell.updateContents(solved: reactor?.currentState.localStorage
           .quizList
           .filter({ $0.isSolved == true })
           .count ?? 0)
@@ -206,10 +206,8 @@ extension QuizListViewController: UICollectionViewDataSource {
       case .quiz:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListCell",
                                                       for: indexPath) as! QuizListCell
-        if let id = reactor?.localStorage.storageQuizList[indexPath.row].id {
-          cell.reactor = QuizListCellReactor(localStorage: reactor?.localStorage,
-                                             number: id)
-        }
+        cell.reactor = QuizListCellReactor(localStorage: reactor?.currentState.localStorage,
+                                           number: indexPath.row)
         
         cell.viewController = self
         cell.quizShowVC = quisShowVC
