@@ -126,17 +126,22 @@ class QuizShowViewController: UIViewController, View {
         }
         
         if isCorrect {
+          if storage.level != reactor.currentState.level {
+            storage.calculate(point: .level)
+          }
+          
           self?.showToast(isCorrect: true)
           self?.observer.onNext(true)
           self?.nextQuiz()
         } else {
           self?.showToast(isCorrect: false)
-          self?.setupHeartPoint()
           self?.observer.onNext(false)
           
           DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self?.collectionView.reloadData()
           }
+          
+          self?.setupHeartPoint()
         }
       }).disposed(by: disposeBag)
   }

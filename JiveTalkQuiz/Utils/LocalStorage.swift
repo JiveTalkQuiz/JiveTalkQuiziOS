@@ -12,11 +12,11 @@ import SwiftyUserDefaults
 class LocalStorage {
   
   enum PointAction: Int {
-    case wrong, start, hint, ad, level
+    case wrong, hint, ad, level
     
     var point: Int {
       switch self {
-      case .wrong, .start: return -3
+      case .wrong: return -3
       case .hint: return -1
       case .ad: return 15
       case .level: return 5

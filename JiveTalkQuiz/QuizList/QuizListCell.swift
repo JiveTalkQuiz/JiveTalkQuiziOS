@@ -54,7 +54,6 @@ class QuizListCell: UICollectionViewCell, View {
         guard let reactor = reactor else { return }
         
         if let quizShow = self?.quizShowVC {
-          reactor.currentState.localStorage?.calculate(point: .start)
           quizShow.reactor = QuizShowViewReactor(number: reactor.currentState.number,
                                                  localStorage: reactor.currentState.localStorage)
           quizShow.setupHeartPoint()

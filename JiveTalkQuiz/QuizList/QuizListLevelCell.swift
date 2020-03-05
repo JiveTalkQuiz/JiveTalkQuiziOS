@@ -35,11 +35,8 @@ class QuizListLevelCell: UICollectionViewCell {
     addSubview(levelLabel)
   }
   
-  func updateContents(solved problem: Int) {
-    level = JiveTalkQuizLevel.get(solved: problem)
-    if localStorage?.level != level {
-      localStorage?.calculate(point: .level)
-    }
+  func updateContents(level: JiveTalkQuizLevel?) {
+    guard let level = level else { return }
     localStorage?.setupLevel(level)
     imageLabel.text = level.description
     levelLabel.text = "Lv. " + level.rawValue

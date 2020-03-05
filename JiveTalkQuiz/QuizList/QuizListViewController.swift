@@ -198,10 +198,7 @@ extension QuizListViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListLevelCell",
                                                       for: indexPath) as! QuizListLevelCell
         cell.localStorage = reactor?.currentState.localStorage
-        cell.updateContents(solved: reactor?.currentState.localStorage
-          .quizList
-          .filter({ $0.isSolved == true })
-          .count ?? 0)
+        cell.updateContents(level: reactor?.currentState.level)
         return cell
       case .quiz:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListCell",

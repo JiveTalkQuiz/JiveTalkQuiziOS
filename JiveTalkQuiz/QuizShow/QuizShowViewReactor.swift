@@ -26,6 +26,7 @@ class QuizShowViewReactor: Reactor {
     var quiz: QuizElement?
     var localStorage: LocalStorage?
     var isCorrect: Bool?
+    var level: JiveTalkQuizLevel = .아재
   }
   
   let initialState: State
