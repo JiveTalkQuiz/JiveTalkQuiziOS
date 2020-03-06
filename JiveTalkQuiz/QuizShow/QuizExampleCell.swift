@@ -13,7 +13,6 @@ class QuizExampleCell: UICollectionViewCell {
   var isSolved = false
   let titleLabel = UILabel(frame: .zero)
   let checkImageView = UIImageView(frame: .zero)
-  let dimmedView = UIView(frame: .zero)
   
   override var isHighlighted: Bool {
     didSet {
@@ -43,18 +42,12 @@ class QuizExampleCell: UICollectionViewCell {
     checkImageView.image = UIImage(named: "check")
     addSubview(checkImageView)
     checkImageView.isHidden = true
-    
-    dimmedView.backgroundColor = .black
-    dimmedView.layer.cornerRadius = 12
-    dimmedView.alpha = 0.3
-    dimmedView.isHidden = true
-    addSubview(dimmedView)
   }
   
   override func prepareForReuse() {
     backgroundColor = .white
     layer.cornerRadius = 12
-    dimmedView.isHidden = true
+    alpha = 1.0
     checkImageView.isHidden = true
     isSolved = false
   }
@@ -101,20 +94,6 @@ class QuizExampleCell: UICollectionViewCell {
       .isActive = true
     checkImageView.trailingAnchor
       .constraint(equalTo: trailingAnchor, constant: -14.0)
-      .isActive = true
-    
-    dimmedView.translatesAutoresizingMaskIntoConstraints = false
-    dimmedView.topAnchor
-      .constraint(equalTo: topAnchor)
-      .isActive = true
-    dimmedView.leadingAnchor
-      .constraint(equalTo: leadingAnchor)
-      .isActive = true
-    dimmedView.bottomAnchor
-      .constraint(equalTo: bottomAnchor)
-      .isActive = true
-    dimmedView.trailingAnchor
-      .constraint(equalTo: trailingAnchor)
       .isActive = true
   }
 }

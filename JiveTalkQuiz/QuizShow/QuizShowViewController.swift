@@ -367,17 +367,14 @@ extension QuizShowViewController: UICollectionViewDataSource {
         
         if let storage = reactor?.currentState.localStorage,
           storage.quizList[index].isDimmed[indexPath.row] {
-          cell.dimmedView.isHidden = false
+          cell.contentView.alpha = 0.4
+          cell.backgroundColor = UIColor(white: 1.0, alpha: 0.4)
+          cell.titleLabel.alpha = 0.4
         }
         
         if let isSolved = reactor?.currentState.localStorage.quizList[index].isSolved,
           isSolved {
           cell.isSolved = isSolved
-          
-          if let isCorrect = reactor?.currentState.quiz?.selection[indexPath.row].correct,
-            isCorrect {
-            cell.checkImageView.isHidden = false
-          }
         }
         return cell
       case .none:
