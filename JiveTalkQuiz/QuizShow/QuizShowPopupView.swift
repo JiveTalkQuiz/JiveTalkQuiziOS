@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import Spring
 
 class QuizShowPopupView: UIView {
   
-  let iconView = SpringImageView(frame: .zero)
+  let iconView = UIImageView(frame: .zero)
   let titleLabel = UILabel(frame: .zero)
   
   convenience init(isCorrect: Bool) {
@@ -35,12 +34,7 @@ class QuizShowPopupView: UIView {
     addSubview(titleLabel)
     addSubview(iconView)
   }
-  
-  func animate() {
-    iconView.animation = "shake"
-    iconView.animate()
-  }
-  
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     

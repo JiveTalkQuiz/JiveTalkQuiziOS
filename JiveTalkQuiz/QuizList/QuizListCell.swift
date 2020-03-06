@@ -34,6 +34,12 @@ class QuizListCell: UICollectionViewCell, View {
     imageView.backgroundColor = .clear
     addSubview(imageView)
   }
+    
+    override func prepareForReuse() {
+        backgroundView = UIImageView(image: UIImage(named: "stage"))
+        label.textColor = JiveTalkQuizColor.label.value
+        imageView.isHidden = true
+    }
 
   required convenience init?(coder aDecoder: NSCoder) {
     self.init(frame: .zero)
@@ -51,7 +57,9 @@ class QuizListCell: UICollectionViewCell, View {
     self.contentView.rx.tapGesture()
       .filter { $0.state == .ended }
       .subscribe(onNext: { [weak reactor, weak self] _ in
-        guard let reactor = reactor else { return }
+        guard let reactor = reactor,
+        reactor.currentState.localStorage.solvedNumber
+            >= reactor.currentState.number else { return }
         
         if let quizShow = self?.quizShowVC {
           quizShow.reactor = QuizShowViewReactor(number: reactor.currentState.number,
@@ -98,6 +106,14 @@ class QuizListCell: UICollectionViewCell, View {
     if let index = reactor?.currentState.number,
       let isSolved = reactor?.currentState.localStorage.quizList[index].isSolved {
       imageView.isHidden = !isSolved
+    }
+    
+    if let index = reactor?.currentState.number,
+        let solvedNumber = reactor?.currentState.localStorage.solvedNumber,
+        solvedNumber == index {
+        label.textColor = .white
+        backgroundView = UIImageView(image: UIImage(named: "stageCopy"))
+        backgroundView?.layoutIfNeeded()
     }
   }
 }

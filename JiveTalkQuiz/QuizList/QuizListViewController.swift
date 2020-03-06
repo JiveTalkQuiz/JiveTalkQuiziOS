@@ -206,7 +206,6 @@ extension QuizListViewController: UICollectionViewDataSource {
                                                       for: indexPath) as! QuizListCell
         cell.reactor = QuizListCellReactor(localStorage: reactor.currentState.localStorage,
                                            number: indexPath.row)
-        
         cell.viewController = self
         cell.quizShowVC = quisShowVC
 

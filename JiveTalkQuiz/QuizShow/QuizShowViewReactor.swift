@@ -43,6 +43,7 @@ class QuizShowViewReactor: Reactor {
   }
   
   func mutate(action: Action) -> Observable<Mutation> {
+    
     switch action {
     case .answer(let selectionNumber):
       guard let isCorrect = currentState.quiz?.selection[selectionNumber].correct else {
@@ -66,6 +67,7 @@ class QuizShowViewReactor: Reactor {
       if total > state.number {
         state.quiz = state.localStorage.storageQuizList[state.number + 1]
         state.number = state.number + 1
+        state.localStorage.setupSolvedNumber(number: state.number)
       }
       state.isCorrect = true
       return state
