@@ -50,6 +50,9 @@ class QuizExampleCell: UICollectionViewCell {
     alpha = 1.0
     checkImageView.isHidden = true
     isSolved = false
+    contentView.alpha = 1.0
+    backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+    titleLabel.alpha = 1.0
   }
   
   func updateContents(isSelected: Bool) {

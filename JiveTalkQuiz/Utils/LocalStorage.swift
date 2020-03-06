@@ -17,7 +17,7 @@ class LocalStorage {
     var point: Int {
       switch self {
       case .wrong: return -3
-      case .hint: return -1
+      case .hint: return -2
       case .ad: return 15
       case .level: return 5
       }

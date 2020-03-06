@@ -33,7 +33,7 @@ class QuizShowViewController: UIViewController, View {
   }()
   
   var heartButton: UIButton?
-  var guideView = UIImageView(frame: .zero)
+  var guideView = UIButton(frame: .zero)
   
   var bannerView: GADBannerView!
   var interstitial: GADInterstitial!
@@ -70,8 +70,9 @@ class QuizShowViewController: UIViewController, View {
 
     view.addSubview(collectionView)
     
-    guideView.image = UIImage(named: guideImage)
+    guideView.setImage(UIImage(named: guideImage), for: .normal)
     guideView.alpha = 0.0
+    guideView.addTarget(self, action: #selector(touchedDownHeartButton), for: .touchDown)
     view.addSubview(guideView)
     
     initNavigationBar()
@@ -281,7 +282,7 @@ extension QuizShowViewController {
   func setupHeartPoint() {
     if let storage = reactor?.currentState.localStorage {
       heartButton?.setTitle(String(storage.heartPoint), for: .normal)
-      guideView.image = UIImage(named: guideImage)
+      guideView.setImage(UIImage(named: guideImage), for: .normal)
       
       if storage.heartPoint <= 0 {
         guidHintContraint?.isActive = false
