@@ -24,16 +24,21 @@ class QuizShowViewReactor: Reactor {
   struct State {
     var number: Int
     var quiz: QuizElement?
-    var localStorage: LocalStorage?
+    var localStorage: LocalStorage
     var isCorrect: Bool?
-    var level: JiveTalkQuizLevel = .아재
+    var level: JiveTalkQuizLevel {
+      return JiveTalkQuizLevel.get(solved: localStorage
+        .quizList
+        .filter({ $0.isSolved == true })
+        .count)
+    }
   }
   
   let initialState: State
   
-  init(number: Int, localStorage: LocalStorage?) {
+  init(number: Int, localStorage: LocalStorage) {
     initialState = State(number: number,
-                         quiz: localStorage?.storageQuizList[number],
+                         quiz: localStorage.storageQuizList[number],
                          localStorage: localStorage)
   }
   
@@ -56,16 +61,17 @@ class QuizShowViewReactor: Reactor {
     var state = state
     switch mutation {
     case .getRight(_):
-      state.localStorage?.solve(quiz: state.number)
-      if let total = state.localStorage?.quizList.count, total > state.number {
-        state.quiz = state.localStorage?.storageQuizList[state.number + 1]
+      state.localStorage.solve(quiz: state.number)
+      let total = state.localStorage.quizList.count
+      if total > state.number {
+        state.quiz = state.localStorage.storageQuizList[state.number + 1]
         state.number = state.number + 1
       }
       state.isCorrect = true
       return state
     case .getWrong(let selectionNumber):
-      state.localStorage?.calculate(point: .wrong)
-      state.localStorage?.dimmed(number: state.number, example: selectionNumber)
+      state.localStorage.calculate(point: .wrong)
+      state.localStorage.dimmed(number: state.number, example: selectionNumber)
       state.isCorrect = false
       return state
     case .none:

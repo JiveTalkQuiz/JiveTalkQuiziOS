@@ -13,8 +13,6 @@ class QuizListLevelCell: UICollectionViewCell {
   let imageView = UIImageView(frame: .zero)
   let imageLabel = UILabel(frame: .zero)
   let levelLabel = UILabel(frame: .zero)
-  var level: JiveTalkQuizLevel = .아재
-  var localStorage: LocalStorage?
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -37,7 +35,6 @@ class QuizListLevelCell: UICollectionViewCell {
   
   func updateContents(level: JiveTalkQuizLevel?) {
     guard let level = level else { return }
-    localStorage?.setupLevel(level)
     imageLabel.text = level.description
     levelLabel.text = "Lv. " + level.rawValue
   }

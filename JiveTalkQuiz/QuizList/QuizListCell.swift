@@ -96,7 +96,7 @@ class QuizListCell: UICollectionViewCell, View {
       .isActive = true
     
     if let index = reactor?.currentState.number,
-      let isSolved = reactor?.currentState.localStorage?.quizList[index].isSolved {
+      let isSolved = reactor?.currentState.localStorage.quizList[index].isSolved {
       imageView.isHidden = !isSolved
     }
   }

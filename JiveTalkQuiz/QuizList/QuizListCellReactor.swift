@@ -16,16 +16,16 @@ class QuizListCellReactor: Reactor {
   struct State {
     var number: Int
     var quiz: QuizElement?
-    var localStorage: LocalStorage?
+    var localStorage: LocalStorage
     var isSolved: Bool = false
   }
   
   let initialState: State
   
-  init(localStorage: LocalStorage?,
+  init(localStorage: LocalStorage,
        number: Int) {
     initialState = State(number: number,
-                         quiz: localStorage?.storageQuizList[number],
+                         quiz: localStorage.storageQuizList[number],
                          localStorage: localStorage)
   }
 }

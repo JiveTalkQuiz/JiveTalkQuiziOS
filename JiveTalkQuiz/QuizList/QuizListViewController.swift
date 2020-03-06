@@ -188,6 +188,8 @@ extension QuizListViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView,
                       cellForItemAt indexPath: IndexPath)
     -> UICollectionViewCell {
+      guard let reactor = reactor else { return UICollectionViewCell() }
+      
       let section = Section(rawValue: indexPath.section)
       switch section {
       case .title:
@@ -197,13 +199,12 @@ extension QuizListViewController: UICollectionViewDataSource {
       case .level:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListLevelCell",
                                                       for: indexPath) as! QuizListLevelCell
-        cell.localStorage = reactor?.currentState.localStorage
-        cell.updateContents(level: reactor?.currentState.level)
+        cell.updateContents(level: reactor.currentState.localStorage.level)
         return cell
       case .quiz:
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizListCell",
                                                       for: indexPath) as! QuizListCell
-        cell.reactor = QuizListCellReactor(localStorage: reactor?.currentState.localStorage,
+        cell.reactor = QuizListCellReactor(localStorage: reactor.currentState.localStorage,
                                            number: indexPath.row)
         
         cell.viewController = self

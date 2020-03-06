@@ -28,12 +28,6 @@ class QuizListViewReactor: Reactor {
     let localStorage: LocalStorage
     var isRefreshing: Bool = false
     var quiz: Quiz? = nil
-    var level: JiveTalkQuizLevel {
-      return JiveTalkQuizLevel.get(solved: localStorage
-        .quizList
-        .filter({ $0.isSolved == true })
-        .count)
-    }
   }
   
   var initialState: State

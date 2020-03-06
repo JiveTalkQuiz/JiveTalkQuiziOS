@@ -120,28 +120,29 @@ class QuizShowViewController: UIViewController, View {
       .subscribe(onNext: { [weak self] isCorrect in
         guard let isCorrect = isCorrect else { return }
         
-        guard let storage = reactor.currentState.localStorage,
-          storage.heartPoint > 0 else {
+        let storage = reactor.currentState.localStorage
+        guard storage.heartPoint > 0 else {
             return
         }
         
         if isCorrect {
           if storage.level != reactor.currentState.level {
+            storage.setupLevel(reactor.currentState.level)
             storage.calculate(point: .level)
           }
           
           self?.showToast(isCorrect: true)
           self?.observer.onNext(true)
+          self?.setupHeartPoint()
           self?.nextQuiz()
         } else {
           self?.showToast(isCorrect: false)
           self?.observer.onNext(false)
           
           DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self?.setupHeartPoint()
             self?.collectionView.reloadData()
           }
-          
-          self?.setupHeartPoint()
         }
       }).disposed(by: disposeBag)
   }
@@ -199,7 +200,7 @@ class QuizShowViewController: UIViewController, View {
       let bt = UIButton()
       bt.setImage(#imageLiteral(resourceName: "heart"), for: .normal)
       bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
-      if let point = reactor?.currentState.localStorage?.heartPoint {
+      if let point = reactor?.currentState.localStorage.heartPoint {
         bt.setTitle(String(point), for: .normal)
       }
       bt.titleLabel?.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 11.0)
@@ -368,7 +369,7 @@ extension QuizShowViewController: UICollectionViewDataSource {
           cell.dimmedView.isHidden = false
         }
         
-        if let isSolved = reactor?.currentState.localStorage?.quizList[index].isSolved,
+        if let isSolved = reactor?.currentState.localStorage.quizList[index].isSolved,
           isSolved {
           cell.isSolved = isSolved
           

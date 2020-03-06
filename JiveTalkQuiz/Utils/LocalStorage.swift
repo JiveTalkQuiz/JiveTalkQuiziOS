@@ -29,7 +29,11 @@ class LocalStorage {
   var heartPoint: Int { return Defaults.heartPoint }
   var level: JiveTalkQuizLevel { return Defaults.level }
   
-  init() { }
+  init() {
+    Defaults[\.level] = JiveTalkQuizLevel.get(solved: quizList
+      .filter({ $0.isSolved == true })
+      .count)
+  }
   
   func initQuiz(list: [QuizElement]) {
     Defaults[\.storageQuizList] = list

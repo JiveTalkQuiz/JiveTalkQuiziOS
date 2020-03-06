@@ -24,11 +24,11 @@ enum JiveTalkQuizLevel: String, DefaultsSerializable {
   
   static func get(solved problem: Int) -> Self {
     switch problem {
-    case 1...20: return .아재
-    case 21...40: return .문찐
-    case 41...60: return .프로불편러
-    case 61...80: return .오놀아놈
-    case 81...100: return .인싸
+    case 1..<20: return .아재
+    case 21..<40: return .문찐
+    case 41..<60: return .프로불편러
+    case 61..<80: return .오놀아놈
+    case 81..<100: return .인싸
     default:
       return .아재
     }
