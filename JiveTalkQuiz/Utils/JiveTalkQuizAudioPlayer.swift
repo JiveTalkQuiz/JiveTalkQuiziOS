@@ -64,7 +64,7 @@ class JiveTalkQuizAudioPlayer {
       volume = 0.0
       backgroundPlayer?.setVolume(0.0, fadeDuration: .zero)
     } else {
-      volume = 0.0
+      volume = 1.0
       backgroundPlayer?.setVolume(1.0, fadeDuration: .zero)
     }
   }
