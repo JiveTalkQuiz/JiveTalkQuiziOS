@@ -35,6 +35,8 @@ class JiveTalkQuizAudioPlayer {
       guard let player = backgroundPlayer else { return }
 
       player.numberOfLoops = -1
+      player.volume = volume
+      
       player.play()
     } catch let error {
       print(error.localizedDescription)

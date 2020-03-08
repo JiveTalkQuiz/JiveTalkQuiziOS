@@ -64,6 +64,9 @@ class QuizListViewController: UIViewController, View {
     
     initNavigationBar()
     
+    if let isMute = reactor?.currentState.localStorage.isMute {
+      JiveTalkQuizAudioPlayer.shared.mute(isMute)
+    }
     JiveTalkQuizAudioPlayer.shared.playBackgroundSound()
   }
   
