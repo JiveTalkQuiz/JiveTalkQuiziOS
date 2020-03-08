@@ -18,11 +18,19 @@ class QuizListViewController: UIViewController, View {
     case title, level, quiz
   }
 
+  let quisShowVC = QuizShowViewController()
   var collectionView: UICollectionView!
   var heartButton: UIButton?
-  let indicatorView = UIActivityIndicatorView(frame: .zero)
-  let quisShowVC = QuizShowViewController()
+  var muteButton: UIButton?
   
+  let indicatorView = UIActivityIndicatorView(frame: .zero)
+  
+  var muteImage: UIImage {
+    guard let storage = reactor?.currentState.localStorage else {
+      return #imageLiteral(resourceName: "soundOn")
+    }
+    return storage.isMute ? #imageLiteral(resourceName: "soundOff") : #imageLiteral(resourceName: "soundOn")
+  }
   var disposeBag = DisposeBag()
   
   override func viewDidLoad() {
@@ -55,6 +63,8 @@ class QuizListViewController: UIViewController, View {
     indicatorView.startAnimating()
     
     initNavigationBar()
+    
+    JiveTalkQuizAudioPlayer.shared.playBackgroundSound()
   }
   
   private func initNavigationBar() {
@@ -82,7 +92,16 @@ class QuizListViewController: UIViewController, View {
       return bt
     }()
     
-    navigationItem.rightBarButtonItem = UIBarButtonItem(customView: heartButton!)
+    muteButton = {
+      let bt = UIButton()
+      bt.setImage(muteImage, for: .normal)
+      bt.frame = CGRect(x: 0, y: 0, width: 54, height: 24)
+      bt.addTarget(self, action: #selector(touchedDownMuteButton), for: .touchDown)
+      return bt
+    }()
+    
+    navigationItem.rightBarButtonItems = [UIBarButtonItem(customView: heartButton!),
+                                          UIBarButtonItem(customView: muteButton!)]
   }
   
   private func setupConstraint() {
@@ -161,6 +180,17 @@ class QuizListViewController: UIViewController, View {
     super.viewWillTransition(to: size, with: coordinator)
     
     collectionView?.collectionViewLayout.invalidateLayout()
+  }
+  
+  @objc
+  func touchedDownMuteButton() {
+    guard let storage = reactor?.currentState.localStorage else {
+      return
+    }
+    
+    storage.mute()
+    muteButton?.setImage(muteImage, for: .normal)
+    JiveTalkQuizAudioPlayer.shared.mute(storage.isMute)
   }
 }
 

@@ -60,7 +60,7 @@ class QuizListCell: UICollectionViewCell, View {
         guard let reactor = reactor,
         reactor.currentState.localStorage.solvedNumber
             >= reactor.currentState.number else { return }
-        
+
         if let quizShow = self?.quizShowVC {
           quizShow.reactor = QuizShowViewReactor(number: reactor.currentState.number,
                                                  localStorage: reactor.currentState.localStorage)
@@ -71,6 +71,7 @@ class QuizListCell: UICollectionViewCell, View {
             .navigationController?
             .pushViewController(quizShow,
                                 animated: true)
+          JiveTalkQuizAudioPlayer.shared.playSound(effect: .start)
         }
 
       })

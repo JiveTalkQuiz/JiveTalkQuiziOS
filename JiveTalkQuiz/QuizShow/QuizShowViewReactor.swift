@@ -18,7 +18,7 @@ class QuizShowViewReactor: Reactor {
   enum Mutation {
     case getRight(Int)
     case getWrong(Int)
-    case none
+    case empty
   }
   
   struct State {
@@ -46,8 +46,9 @@ class QuizShowViewReactor: Reactor {
     
     switch action {
     case .answer(let selectionNumber):
-      guard let isCorrect = currentState.quiz?.selection[selectionNumber].correct else {
-        return Observable.just(.none)
+      guard let isCorrect = currentState.quiz?.selection[selectionNumber].correct,
+        currentState.localStorage.heartPoint > 0 else {
+        return Observable.just(.empty)
       }
       
       if isCorrect {
@@ -76,7 +77,8 @@ class QuizShowViewReactor: Reactor {
       state.localStorage.dimmed(number: state.number, example: selectionNumber)
       state.isCorrect = false
       return state
-    case .none:
+    case .empty:
+      state.isCorrect = nil
       return state
     }
   }

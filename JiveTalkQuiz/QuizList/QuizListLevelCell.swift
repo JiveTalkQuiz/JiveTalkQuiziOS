@@ -19,7 +19,7 @@ class QuizListLevelCell: UICollectionViewCell {
     backgroundColor = .white
     layer.cornerRadius = 12
     
-    imageView.image = UIImage(named: "Level_1")
+    imageView.image = UIImage(named: "Level")
     addSubview(imageView)
     
     imageLabel.textColor = .black

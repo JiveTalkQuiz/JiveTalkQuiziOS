@@ -119,13 +119,12 @@ class QuizShowViewController: UIViewController, View {
     reactor.state
       .map { $0.isCorrect }
       .subscribe(onNext: { [weak self] isCorrect in
-        guard let isCorrect = isCorrect else { return }
-        
-        let storage = reactor.currentState.localStorage
-        guard storage.heartPoint > 0 else {
-            return
+        guard let isCorrect = isCorrect else {
+          JiveTalkQuizAudioPlayer.shared.playSound(effect: .empty)
+          return
         }
         
+        let storage = reactor.currentState.localStorage
         if isCorrect {
           if storage.level != reactor.currentState.level {
             storage.setupLevel(reactor.currentState.level)
@@ -136,6 +135,7 @@ class QuizShowViewController: UIViewController, View {
           self?.observer.onNext(true)
           self?.setupHeartPoint()
           self?.nextQuiz()
+          JiveTalkQuizAudioPlayer.shared.playSound(effect: .correct)
         } else {
           self?.showToast(isCorrect: false)
           self?.observer.onNext(false)
@@ -144,6 +144,7 @@ class QuizShowViewController: UIViewController, View {
             self?.setupHeartPoint()
             self?.collectionView.reloadData()
           }
+          JiveTalkQuizAudioPlayer.shared.playSound(effect: .incorrect)
         }
       }).disposed(by: disposeBag)
   }
@@ -256,6 +257,7 @@ extension QuizShowViewController {
         })
         .map({ $0.offset })
         .randomElement() {
+      
       storage.calculate(point: .hint)
       storage.dimmed(number: index, example: localIndex)
       
@@ -265,7 +267,6 @@ extension QuizShowViewController {
                      animations: { [weak self] in
                         self?.collectionView.reloadData()
       }, completion: nil)
-        
     }
     
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
