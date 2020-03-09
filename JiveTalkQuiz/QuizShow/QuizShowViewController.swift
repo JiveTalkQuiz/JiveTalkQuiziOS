@@ -314,6 +314,7 @@ extension QuizShowViewController {
     popup.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     popup.widthAnchor.constraint(equalToConstant: 156.0).isActive = true
     popup.heightAnchor.constraint(equalToConstant: 171.0).isActive = true
+    popup.animate()
     
     UIView.animate(withDuration: 0.8,
                    delay: 0.5,

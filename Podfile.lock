@@ -147,6 +147,7 @@ PODS:
   - RxViewController (1.0.0):
     - RxCocoa (~> 5.0)
     - RxSwift (~> 5.0)
+  - Spring (1.0.6)
   - SwiftyUserDefaults (5.0.0)
 
 DEPENDENCIES:
@@ -163,6 +164,7 @@ DEPENDENCIES:
   - RxGesture
   - RxSwift (~> 5)
   - RxViewController
+  - Spring (from `https://github.com/MengTo/Spring.git`)
   - SwiftyUserDefaults (~> 5.0)
 
 SPEC REPOS:
@@ -202,6 +204,15 @@ SPEC REPOS:
     - RxViewController
     - SwiftyUserDefaults
 
+EXTERNAL SOURCES:
+  Spring:
+    :git: https://github.com/MengTo/Spring.git
+
+CHECKOUT OPTIONS:
+  Spring:
+    :commit: 50d92a5b9e08848387ae95bf44c6ad20834f7083
+    :git: https://github.com/MengTo/Spring.git
+
 SPEC CHECKSUMS:
   DeviceKit: da103891aa928d89f64ea8dd8aca738c5f3d8ac0
   Firebase: 0490eca762a72e4f1582319539153897f1508dee
@@ -236,8 +247,9 @@ SPEC CHECKSUMS:
   RxRelay: a168bd6caf712d00c676ac344e9295afc93b418e
   RxSwift: ad5874f24bb0dbffd1e9bb8443604e3578796c7a
   RxViewController: 7330a46e5c31cd680db169da4c9fc8676e975a81
+  Spring: 3d113f14575ef79aec9c5f906dfa4f5001c03254
   SwiftyUserDefaults: 33fcb42bd1feb53a37d873feb62c82967db5f7f6
 
-PODFILE CHECKSUM: 1c65610581c0c30edc4336240b4129f13344dc8b
+PODFILE CHECKSUM: 88f0571aff68799808dbde1a1800461477a4c1ab
 
 COCOAPODS: 1.9.0

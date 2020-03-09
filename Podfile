@@ -23,4 +23,5 @@ target 'JiveTalkQuiz' do
 
   pod 'SwiftyUserDefaults', '~> 5.0'
   pod 'DeviceKit', '~> 2.0'
+  pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
 end
