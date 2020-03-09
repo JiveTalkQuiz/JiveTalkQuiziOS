@@ -30,7 +30,7 @@ class QuizShowPopupView: UIView {
       titleLabel.text = "땡!"
       iconView.image = UIImage(named: "incorrect")
     }
-    
+
     addSubview(titleLabel)
     addSubview(iconView)
   }
@@ -56,6 +56,9 @@ class QuizShowPopupView: UIView {
     iconView.heightAnchor
       .constraint(equalToConstant: 76)
       .isActive = true
+    iconView.widthAnchor
+      .constraint(equalToConstant: 76)
+      .isActive = true
     
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.topAnchor
@@ -65,11 +68,5 @@ class QuizShowPopupView: UIView {
     titleLabel.centerXAnchor
     .constraint(equalTo: centerXAnchor)
     .isActive = true
-  }
-}
-
-extension QuizShowPopupView {
-  func show() {
-    
   }
 }

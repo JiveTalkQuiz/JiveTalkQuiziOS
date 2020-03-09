@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 import RxViewController
+import DeviceKit
 
 class QuizListViewController: UIViewController, View {
   
@@ -36,7 +37,15 @@ class QuizListViewController: UIViewController, View {
   override func viewDidLoad() {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .vertical
-    
+    switch Device.current {
+    case .iPhoneSE, .iPhone4, .iPhone5, .iPhone5s, .iPhone5c,
+         .iPhone6, .iPhone6s, .iPhone7, .iPhone8:
+      layout.minimumLineSpacing = 25.0
+      layout.minimumInteritemSpacing = 25.0
+    default:
+      break
+    }
+
     collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     
     super.viewDidLoad()
@@ -56,13 +65,12 @@ class QuizListViewController: UIViewController, View {
     collectionView.delegate = self
     view.addSubview(collectionView)
     
-    view.addSubview(indicatorView)
-    
     setupConstraint()
     
-    indicatorView.startAnimating()
-    
     initNavigationBar()
+    
+    view.addSubview(indicatorView)
+    indicatorView.startAnimating()
     
     if let isMute = reactor?.currentState.localStorage.isMute {
       JiveTalkQuizAudioPlayer.shared.mute(isMute)

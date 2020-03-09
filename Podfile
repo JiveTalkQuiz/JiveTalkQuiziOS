@@ -18,7 +18,9 @@ target 'JiveTalkQuiz' do
   pod 'Firebase/AdMob'
   pod 'Google-Mobile-Ads-SDK'
   pod 'Firebase/Crashlytics'
+  pod 'Firebase/Performance'
   pod 'RxFirebase/Storage'
 
   pod 'SwiftyUserDefaults', '~> 5.0'
+  pod 'DeviceKit', '~> 2.0'
 end

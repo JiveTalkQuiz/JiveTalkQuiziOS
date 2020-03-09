@@ -19,11 +19,11 @@ class QuizExampleCell: UICollectionViewCell {
       guard isSolved == false else { return }
       if isHighlighted {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-          self.updateContents(isSelected: true)
+          self.updateHighlighted(isSelected: true)
         }, completion: nil)
       } else {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-          self.updateContents(isSelected: false)
+          self.updateHighlighted(isSelected: false)
         }, completion: nil)
       }
     }
@@ -53,9 +53,17 @@ class QuizExampleCell: UICollectionViewCell {
     contentView.alpha = 1.0
     backgroundColor = UIColor(white: 1.0, alpha: 1.0)
     titleLabel.alpha = 1.0
+    titleLabel.textColor = JiveTalkQuizColor.label.value
   }
   
-  func updateContents(isSelected: Bool) {
+  func updateContents() {
+    contentView.alpha = 0.4
+    backgroundColor = UIColor(white: 1.0, alpha: 0.4)
+    titleLabel.alpha = 0.4
+    titleLabel.textColor = JiveTalkQuizColor.label.value
+  }
+  
+  private func updateHighlighted(isSelected: Bool) {
     if isSelected {
       titleLabel.textColor = .white
       titleLabel.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 15.0)

@@ -47,7 +47,9 @@ class QuizShowViewReactor: Reactor {
     switch action {
     case .answer(let selectionNumber):
       guard let isCorrect = currentState.quiz?.selection[selectionNumber].correct,
-        currentState.localStorage.heartPoint > 0 else {
+        currentState.localStorage.heartPoint > 0,
+        currentState.localStorage.quizList[currentState.number]
+          .isDimmed[selectionNumber] == false else {
         return Observable.just(.empty)
       }
       

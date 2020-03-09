@@ -173,8 +173,10 @@ class QuizShowViewController: UIViewController, View {
     guideView.topAnchor
       .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
       .isActive = true
+    let value: CGFloat = heartButton?.imageView?.frame.minX == 0
+      ? 0.0 : heartButton!.imageView!.frame.minX
     guideView.trailingAnchor
-      .constraint(equalTo: view.trailingAnchor, constant: -22.0)
+      .constraint(equalTo: view.trailingAnchor, constant: -12.0 - value)
       .isActive = true
     guidHintContraint = guideView.heightAnchor
       .constraint(equalToConstant: 30.0)
@@ -369,9 +371,7 @@ extension QuizShowViewController: UICollectionViewDataSource {
         
         if let storage = reactor?.currentState.localStorage,
           storage.quizList[index].isDimmed[indexPath.row] {
-          cell.contentView.alpha = 0.4
-          cell.backgroundColor = UIColor(white: 1.0, alpha: 0.4)
-          cell.titleLabel.alpha = 0.4
+          cell.updateContents()
         }
         
         if let isSolved = reactor?.currentState.localStorage.quizList[index].isSolved,
@@ -393,8 +393,10 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
     let section = Section(rawValue: indexPath.section)
     switch section {
     case .show:
+      var height = 335 - (round(335 * (1 - (view.bounds.height / 715))) * 2)
+      height = height > 335 ? 335 : height
       return CGSize(width: view.bounds.width - 40.0,
-                    height: 300)
+                    height: height)
     case .example:
       return CGSize(width: view.bounds.width - 40.0, height: 45)
     case .none:

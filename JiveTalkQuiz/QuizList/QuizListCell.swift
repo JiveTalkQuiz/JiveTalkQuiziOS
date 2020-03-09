@@ -24,7 +24,7 @@ class QuizListCell: UICollectionViewCell, View {
     backgroundColor = .clear
     backgroundView = UIImageView(image: UIImage(named: "stage"))
     
-    label.textColor = JiveTalkQuizColor.label.value
+    label.textColor = JiveTalkQuizColor.listLabel.value
     label.font = UIFont(name: JiveTalkQuizFont.hannaPro.value, size: 15.0)
     label.textAlignment = .center
     label.sizeToFit()
@@ -33,14 +33,21 @@ class QuizListCell: UICollectionViewCell, View {
     imageView.image = UIImage(named: "stageCheck")
     imageView.backgroundColor = .clear
     addSubview(imageView)
-  }
     
-    override func prepareForReuse() {
-        backgroundView = UIImageView(image: UIImage(named: "stage"))
-        label.textColor = JiveTalkQuizColor.label.value
-        imageView.isHidden = true
-    }
-
+    layer.backgroundColor = UIColor.clear.cgColor
+    layer.shadowColor = UIColor.black.cgColor
+    layer.shadowOffset = CGSize(width: 0, height: 1.0)
+    layer.shadowOpacity = 0.1
+    layer.shadowRadius = 4.0
+    layer.masksToBounds = false
+  }
+  
+  override func prepareForReuse() {
+    backgroundView = UIImageView(image: UIImage(named: "stage"))
+    label.textColor = JiveTalkQuizColor.listLabel.value
+    imageView.isHidden = true
+  }
+  
   required convenience init?(coder aDecoder: NSCoder) {
     self.init(frame: .zero)
   }

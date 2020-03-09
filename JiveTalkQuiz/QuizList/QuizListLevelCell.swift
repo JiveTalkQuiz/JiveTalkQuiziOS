@@ -24,7 +24,7 @@ class QuizListLevelCell: UICollectionViewCell {
     
     imageLabel.textColor = .black
     imageLabel.font = UIFont(name: JiveTalkQuizFont.hannaPro.value,
-                             size: 8.0)
+                             size: 10.0)
     addSubview(imageLabel)
     
     levelLabel.textColor = JiveTalkQuizColor.label.value
