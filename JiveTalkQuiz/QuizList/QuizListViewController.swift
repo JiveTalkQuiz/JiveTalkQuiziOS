@@ -154,11 +154,11 @@ class QuizListViewController: UIViewController, View {
       DispatchQueue.main.async { [weak self] in
         if isSolved {
           self?.collectionView.reloadData()
-        } else {
-          let point = String(reactor.currentState.localStorage.heartPoint)
-          self?.heartButton?.setTitle(point, for: .normal)
-          self?.heartButton?.layoutIfNeeded()
         }
+        
+        let point = String(reactor.currentState.localStorage.heartPoint)
+        self?.heartButton?.setTitle(point, for: .normal)
+        self?.heartButton?.layoutIfNeeded()
       }
     })
       .disposed(by: disposeBag)

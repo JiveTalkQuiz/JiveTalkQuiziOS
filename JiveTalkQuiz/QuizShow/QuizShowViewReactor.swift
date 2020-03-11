@@ -77,7 +77,9 @@ class QuizShowViewReactor: Reactor {
       state.isCorrect = true
       return state
     case .getWrong(let selectionNumber):
-      state.localStorage.calculate(point: .wrong)
+      if state.number >= state.localStorage.solvedNumber {
+        state.localStorage.calculate(point: .wrong)
+      }
       state.localStorage.dimmed(number: state.number, example: selectionNumber)
       state.isCorrect = false
       return state

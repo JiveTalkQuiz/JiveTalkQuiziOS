@@ -132,9 +132,9 @@ class QuizShowViewController: UIViewController, View {
           }
           
           self?.showToast(isCorrect: true)
-          self?.observer.onNext(true)
           self?.setupHeartPoint()
           self?.nextQuiz()
+          self?.observer.onNext(true)
           JiveTalkQuizAudioPlayer.shared.playSound(effect: .correct)
         } else {
           self?.showToast(isCorrect: false)
@@ -260,7 +260,9 @@ extension QuizShowViewController {
         .map({ $0.offset })
         .randomElement() {
       
-      storage.calculate(point: .hint)
+      if storage.solvedNumber <= index {
+        storage.calculate(point: .hint)
+      }
       storage.dimmed(number: index, example: localIndex)
       
       UIView.animate(withDuration: 1,
@@ -284,11 +286,6 @@ extension QuizShowViewController {
   
   func setupHeartPoint() {
     if let storage = reactor?.currentState.localStorage {
-      guard let currentNumber = reactor?.currentState.number,
-        storage.solvedNumber < currentNumber else {
-          return
-      }
-      
       heartButton?.setTitle(String(storage.heartPoint), for: .normal)
       guideView.setImage(UIImage(named: guideImage), for: .normal)
       
