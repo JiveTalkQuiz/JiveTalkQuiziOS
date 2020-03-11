@@ -284,6 +284,11 @@ extension QuizShowViewController {
   
   func setupHeartPoint() {
     if let storage = reactor?.currentState.localStorage {
+      guard let currentNumber = reactor?.currentState.number,
+        storage.solvedNumber < currentNumber else {
+          return
+      }
+      
       heartButton?.setTitle(String(storage.heartPoint), for: .normal)
       guideView.setImage(UIImage(named: guideImage), for: .normal)
       

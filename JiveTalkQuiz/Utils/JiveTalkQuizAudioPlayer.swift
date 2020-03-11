@@ -20,6 +20,15 @@ class JiveTalkQuizAudioPlayer {
     
   }
   
+  func activeAudio(_ isMute: Bool) {
+    do {
+      try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+      try AVAudioSession.sharedInstance().setActive(!isMute)
+    } catch let error {
+      print(error.localizedDescription)
+    }
+  }
+  
   func playBackgroundSound() {
     guard let url = Bundle.main.url(forResource: "bg",
                                     withExtension: "wav") else {
@@ -27,9 +36,6 @@ class JiveTalkQuizAudioPlayer {
     }
     
     do {
-      try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-      try AVAudioSession.sharedInstance().setActive(true)
-
       backgroundPlayer = try AVAudioPlayer(contentsOf: url,
                                            fileTypeHint: AVFileType.mp3.rawValue)
       guard let player = backgroundPlayer else { return }
@@ -62,6 +68,8 @@ class JiveTalkQuizAudioPlayer {
   }
   
   func mute(_ isMute: Bool) {
+    activeAudio(isMute)
+    
     if isMute {
       volume = 0.0
       backgroundPlayer?.setVolume(0.0, fadeDuration: .zero)

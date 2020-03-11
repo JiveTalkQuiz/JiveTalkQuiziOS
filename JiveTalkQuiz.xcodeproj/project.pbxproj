@@ -521,7 +521,7 @@
 			baseConfigurationReference = 3A2300CDD65FCC9A2E1F89A0 /* Pods-JiveTalkQuiz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BUNDLE_VERSION = 7;
+				BUNDLE_VERSION = 9;
 				BUNDLE_VERSION_SHORT = 1.0.0.0;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -546,7 +546,7 @@
 			baseConfigurationReference = 735AED3ADF571742B76687B1 /* Pods-JiveTalkQuiz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BUNDLE_VERSION = 7;
+				BUNDLE_VERSION = 9;
 				BUNDLE_VERSION_SHORT = 1.0.0;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
