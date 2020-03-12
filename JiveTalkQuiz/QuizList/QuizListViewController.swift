@@ -205,6 +205,7 @@ class QuizListViewController: UIViewController, View {
     storage.mute()
     muteButton?.setImage(muteImage, for: .normal)
     JiveTalkQuizAudioPlayer.shared.mute(storage.isMute)
+    JiveTalkQuizAudioPlayer.shared.playBackgroundSound()
   }
 }
 

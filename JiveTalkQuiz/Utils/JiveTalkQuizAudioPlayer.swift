@@ -14,14 +14,22 @@ class JiveTalkQuizAudioPlayer {
   
   private var backgroundPlayer: AVAudioPlayer?
   private var player: AVAudioPlayer?
-  private var volume: Float = 1.0
-  
-  init() {
-    
+  private var isMute: Bool = false
+
+  func mute(_ isMute: Bool) {
+    activeAudio(isMute)
+    self.isMute = isMute
   }
   
   func activeAudio(_ isMute: Bool) {
     do {
+      if isMute {
+        backgroundPlayer?.stop()
+        player?.stop()
+      } else {
+        backgroundPlayer?.play()
+        player?.play()
+      }
       try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
       try AVAudioSession.sharedInstance().setActive(!isMute)
     } catch let error {
@@ -30,7 +38,8 @@ class JiveTalkQuizAudioPlayer {
   }
   
   func playBackgroundSound() {
-    guard let url = Bundle.main.url(forResource: "bg",
+    guard isMute == false,
+      let url = Bundle.main.url(forResource: "bg",
                                     withExtension: "wav") else {
       return
     }
@@ -41,7 +50,6 @@ class JiveTalkQuizAudioPlayer {
       guard let player = backgroundPlayer else { return }
 
       player.numberOfLoops = -1
-      player.volume = volume
       
       player.play()
     } catch let error {
@@ -50,7 +58,8 @@ class JiveTalkQuizAudioPlayer {
   }
   
   func playSound(effect: JiveTalkSoundEffect) {
-    guard let url = Bundle.main.url(forResource: effect.rawValue,
+    guard isMute == false,
+      let url = Bundle.main.url(forResource: effect.rawValue,
                                     withExtension: "wav") else {
                                       return
     }
@@ -59,23 +68,10 @@ class JiveTalkQuizAudioPlayer {
       player = try AVAudioPlayer(contentsOf: url,
                                  fileTypeHint: AVFileType.mp3.rawValue)
       guard let player = player else { return }
-      player.volume = volume
       
       player.play()
     } catch let error {
       print(error.localizedDescription)
-    }
-  }
-  
-  func mute(_ isMute: Bool) {
-    activeAudio(isMute)
-    
-    if isMute {
-      volume = 0.0
-      backgroundPlayer?.setVolume(0.0, fadeDuration: .zero)
-    } else {
-      volume = 1.0
-      backgroundPlayer?.setVolume(1.0, fadeDuration: .zero)
     }
   }
 }
