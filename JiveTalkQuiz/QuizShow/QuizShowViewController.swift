@@ -433,7 +433,11 @@ extension QuizShowViewController {
 
   private func createBannerView() {
     bannerView = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: view.bounds.width, height: 50.0)))
+    #if DEBUG
     bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+    #else
+    bannerView.adUnitID = ""
+    #endif
     bannerView.rootViewController = self
     addBannerViewToView(bannerView)
     bannerView.load(GADRequest())
@@ -449,7 +453,11 @@ extension QuizShowViewController {
   }
   
   private func createAndLoadInterstitial() -> GADInterstitial {
+    #if DEBUG
     interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+    #else
+    interstitial = GADInterstitial(adUnitID: "")
+    #endif
     interstitial.delegate = self
     interstitial.load(GADRequest())
     return interstitial
