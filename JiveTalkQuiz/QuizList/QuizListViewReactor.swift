@@ -45,6 +45,17 @@ class QuizListViewReactor: Reactor {
       guard !self.currentState.isRefreshing else { return .empty() }
       let startRefreshing = Observable<Mutation>.just(.setRefreshing(true))
       let endRefreshing = Observable<Mutation>.just(.setRefreshing(false))
+      #if DEBUG
+      let setQuizs = currentState.storageService.requestLocalData()
+        .map { data -> Mutation in
+          guard let quiz = try? Quiz(data: data) else {
+            debugPrint(QuizError.invalidData)
+            return .setQuizs(nil)
+          }
+          
+          return .setQuizs(quiz)
+      }
+      #else
       let setQuizs = currentState.storageService.request()
         .map { data -> Mutation in
           guard let quiz = try? Quiz(data: data) else {
@@ -54,6 +65,8 @@ class QuizListViewReactor: Reactor {
           
           return .setQuizs(quiz)
       }
+      #endif
+
       return .concat([startRefreshing, setQuizs, endRefreshing])
     }
   }

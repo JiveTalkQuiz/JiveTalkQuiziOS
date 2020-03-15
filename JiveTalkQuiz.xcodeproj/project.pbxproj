@@ -10,7 +10,6 @@
 		2CD6508AD66515E0BDD62EFE /* Pods_JiveTalkQuiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FA75DB56977C7E2603C689 /* Pods_JiveTalkQuiz.framework */; };
 		A80024BC2411317200C419D6 /* QuizListViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AB23E70F9B00361723 /* QuizListViewReactor.swift */; };
 		A820D62823EC451400726E52 /* QuizListLevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820D62723EC451400726E52 /* QuizListLevelCell.swift */; };
-		A82C7B8123EFF22A00A24FF0 /* BMDOHYEON_otf.otf in Resources */ = {isa = PBXBuildFile; fileRef = A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */; };
 		A82C7B8423F0037A00A24FF0 /* QuizListTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */; };
 		A841DD25240D55D10085A2A7 /* QuizShowViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A841DD24240D55D00085A2A7 /* QuizShowViewReactor.swift */; };
 		A84643E42414044300A96AA4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A84643E32414044300A96AA4 /* AudioToolbox.framework */; };
@@ -20,6 +19,7 @@
 		A84643F02414180200A96AA4 /* incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = A84643EB2414180200A96AA4 /* incorrect.wav */; };
 		A84643F12414180200A96AA4 /* bg.wav in Resources */ = {isa = PBXBuildFile; fileRef = A84643EC2414180200A96AA4 /* bg.wav */; };
 		A84643F22414180200A96AA4 /* start.wav in Resources */ = {isa = PBXBuildFile; fileRef = A84643ED2414180200A96AA4 /* start.wav */; };
+		A8574412241E19D90062FAB7 /* quiz.json in Resources */ = {isa = PBXBuildFile; fileRef = A8574411241E19D90062FAB7 /* quiz.json */; };
 		A872088A23F806A00099826C /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A872088923F806A00099826C /* LocalStorage.swift */; };
 		A872088C23F810C00099826C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A872088B23F810C00099826C /* GoogleService-Info.plist */; };
 		A8723E0C23EFE3180042BD82 /* JiveTalkQuizColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */; };
@@ -49,7 +49,6 @@
 		735AED3ADF571742B76687B1 /* Pods-JiveTalkQuiz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveTalkQuiz.release.xcconfig"; path = "Target Support Files/Pods-JiveTalkQuiz/Pods-JiveTalkQuiz.release.xcconfig"; sourceTree = "<group>"; };
 		A0FA75DB56977C7E2603C689 /* Pods_JiveTalkQuiz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JiveTalkQuiz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A820D62723EC451400726E52 /* QuizListLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListLevelCell.swift; sourceTree = "<group>"; };
-		A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMDOHYEON_otf.otf; sourceTree = "<group>"; };
 		A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListTitleCell.swift; sourceTree = "<group>"; };
 		A841DD24240D55D00085A2A7 /* QuizShowViewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizShowViewReactor.swift; sourceTree = "<group>"; };
 		A84643E32414044300A96AA4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -59,6 +58,7 @@
 		A84643EB2414180200A96AA4 /* incorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = incorrect.wav; sourceTree = "<group>"; };
 		A84643EC2414180200A96AA4 /* bg.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bg.wav; sourceTree = "<group>"; };
 		A84643ED2414180200A96AA4 /* start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = start.wav; sourceTree = "<group>"; };
+		A8574411241E19D90062FAB7 /* quiz.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = quiz.json; sourceTree = "<group>"; };
 		A872088923F806A00099826C /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		A872088B23F810C00099826C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizColor.swift; sourceTree = "<group>"; };
@@ -124,12 +124,14 @@
 		A84643E7241417C400A96AA4 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				A84643E82414180200A96AA4 /* sound */,
+				A8574410241E18670062FAB7 /* Font */,
+				A84643E82414180200A96AA4 /* Sound */,
+				A8574411241E19D90062FAB7 /* quiz.json */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
 		};
-		A84643E82414180200A96AA4 /* sound */ = {
+		A84643E82414180200A96AA4 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
 				A84643E92414180200A96AA4 /* empty.wav */,
@@ -138,14 +140,20 @@
 				A84643EC2414180200A96AA4 /* bg.wav */,
 				A84643ED2414180200A96AA4 /* start.wav */,
 			);
-			path = sound;
+			path = Sound;
+			sourceTree = "<group>";
+		};
+		A8574410241E18670062FAB7 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				A87F59D923F4404300E6FA99 /* BMHANNAProOTF.otf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		A8723E0D23EFE9DF0042BD82 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				A82C7B8023EFF22A00A24FF0 /* BMDOHYEON_otf.otf */,
-				A87F59D923F4404300E6FA99 /* BMHANNAProOTF.otf */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -308,7 +316,7 @@
 				A84643EE2414180200A96AA4 /* empty.wav in Resources */,
 				A872088C23F810C00099826C /* GoogleService-Info.plist in Resources */,
 				A84643EF2414180200A96AA4 /* correct.wav in Resources */,
-				A82C7B8123EFF22A00A24FF0 /* BMDOHYEON_otf.otf in Resources */,
+				A8574412241E19D90062FAB7 /* quiz.json in Resources */,
 				A87F59DA23F4404300E6FA99 /* BMHANNAProOTF.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,6 +529,8 @@
 			baseConfigurationReference = 3A2300CDD65FCC9A2E1F89A0 /* Pods-JiveTalkQuiz.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUNDLE_IDENTIFIER = BWillOcean.JiveTalkQuiz.Debug;
+				BUNDLE_NAME = "신조어테스트.debug";
 				BUNDLE_VERSION = 10;
 				BUNDLE_VERSION_SHORT = 1.0.0.0;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -532,6 +542,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = BWillOcean.JiveTalkQuiz;
 				PRODUCT_NAME = "신조어테스트";
 				PROVISIONING_PROFILE_SPECIFIER = "JiveTalkQuiz-Dev";
@@ -545,6 +556,8 @@
 			baseConfigurationReference = 735AED3ADF571742B76687B1 /* Pods-JiveTalkQuiz.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUNDLE_IDENTIFIER = BWillOcean.JiveTalkQuiz;
+				BUNDLE_NAME = "신조어테스트";
 				BUNDLE_VERSION = 10;
 				BUNDLE_VERSION_SHORT = 1.0.0;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -556,6 +569,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = BWillOcean.JiveTalkQuiz;
 				PRODUCT_NAME = "신조어테스트";
 				PROVISIONING_PROFILE_SPECIFIER = "JiveTalkQuiz-Dev";

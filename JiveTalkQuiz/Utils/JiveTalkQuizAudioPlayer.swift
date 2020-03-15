@@ -15,7 +15,7 @@ class JiveTalkQuizAudioPlayer {
   private var backgroundPlayer: AVAudioPlayer?
   private var player: AVAudioPlayer?
   private var isMute: Bool = false
-
+  
   func mute(_ isMute: Bool) {
     activeAudio(isMute)
     self.isMute = isMute
@@ -40,15 +40,15 @@ class JiveTalkQuizAudioPlayer {
   func playBackgroundSound() {
     guard isMute == false,
       let url = Bundle.main.url(forResource: "bg",
-                                    withExtension: "wav") else {
-      return
+                                withExtension: "wav") else {
+                                  return
     }
     
     do {
       backgroundPlayer = try AVAudioPlayer(contentsOf: url,
                                            fileTypeHint: AVFileType.mp3.rawValue)
       guard let player = backgroundPlayer else { return }
-
+      
       player.numberOfLoops = -1
       
       player.play()
@@ -60,8 +60,8 @@ class JiveTalkQuizAudioPlayer {
   func playSound(effect: JiveTalkSoundEffect) {
     guard isMute == false,
       let url = Bundle.main.url(forResource: effect.rawValue,
-                                    withExtension: "wav") else {
-                                      return
+                                withExtension: "wav") else {
+                                  return
     }
     
     do {

@@ -13,15 +13,20 @@ import RxSwift
 
 protocol StorageServiceType {
   func request() -> Observable<Data>
+  func requestLocalData() -> Observable<Data>
 }
 
 class StorageService: StorageServiceType  {
-  private let reference = Storage.storage()
-    .reference(forURL: JiveTalkQuizAPI.quiz.route)
-    .rx
+  private var reference: Reactive<StorageReference>?
   private let disposeBag = DisposeBag()
   
-  init() { }
+  init() {
+    #if RELEASE
+    reference = Storage.storage()
+      .reference(forURL: JiveTalkQuizAPI.quiz.route)
+      .rx
+    #endif
+  }
   
   func request() -> Observable<Data> {
     return Observable<Data>.create { [weak self] observer in
@@ -29,13 +34,28 @@ class StorageService: StorageServiceType  {
         return Disposables.create()
       }
       
-      strongSelf.reference.getData(maxSize: 1 * 1024 * 1024)
+      strongSelf.reference?.getData(maxSize: 1 * 1024 * 1024)
         .subscribe(onNext: { data in
           observer.onNext(data)
           observer.onCompleted()
         }, onError: { error in
           observer.onError(error)
         }).disposed(by: strongSelf.disposeBag)
+      
+      return Disposables.create()
+    }
+  }
+  
+  func requestLocalData() -> Observable<Data> {
+    return Observable<Data>.create { observer in
+      guard let url = Bundle.main.url(forResource: "quiz",
+                                      withExtension: "json"),
+        let data = try? Data(contentsOf: url) else {
+          return Disposables.create()
+      }
+      
+      observer.onNext(data)
+      observer.onCompleted()
       
       return Disposables.create()
     }
