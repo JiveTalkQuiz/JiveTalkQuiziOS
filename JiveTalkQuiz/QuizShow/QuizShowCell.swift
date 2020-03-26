@@ -32,6 +32,11 @@ class QuizShowCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
+  func updateContents(numberString: String, problem: String) {
+    numberLabel.text = numberString
+    problemLabel.text = problem
+  }
+  
   override func layoutSubviews() {
     super.layoutSubviews()
     
