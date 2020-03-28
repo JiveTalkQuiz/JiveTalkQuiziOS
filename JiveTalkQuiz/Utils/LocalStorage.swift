@@ -78,6 +78,10 @@ class LocalStorage {
     Defaults.heartPoint += point
   }
   
+  func calculate(reward point: Int) {
+    Defaults.heartPoint += point
+  }
+  
   func setupLevel(_ level: JiveTalkQuizLevel) {
     Defaults.level = level
   }

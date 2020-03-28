@@ -36,8 +36,9 @@ class QuizShowViewController: UIViewController, View {
   var guideView = UIButton(frame: .zero)
   
   var bannerView: GADBannerView!
-  var interstitial: GADInterstitial!
-
+  var rewardedAdView: GADRewardedAd!
+  var failedAdView: GADRewardedAd!
+  
   var guidHintContraint: NSLayoutConstraint?
   var guidAdsContraint: NSLayoutConstraint?
   
@@ -59,7 +60,7 @@ class QuizShowViewController: UIViewController, View {
   // MARK: LifeCycle
   override func viewDidLoad() {
     defer {
-        setupConstraint()
+      setupConstraint()
     }
     
     navigationController?.interactivePopGestureRecognizer?.delegate = nil
@@ -78,7 +79,8 @@ class QuizShowViewController: UIViewController, View {
     initNavigationBar()
     
     createBannerView()
-    interstitial = createAndLoadInterstitial()
+    rewardedAdView = createAndLoadRewardedAd()
+    failedAdView = createAndLoadRewardedAd(isFailed: true)
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -89,7 +91,7 @@ class QuizShowViewController: UIViewController, View {
                    options: .curveEaseIn,
                    animations: { [weak self] in
                     self?.guideView.alpha = 1.0
-    }, completion: nil)
+      }, completion: nil)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -100,7 +102,7 @@ class QuizShowViewController: UIViewController, View {
                    options: .curveEaseIn,
                    animations: { [weak self] in
                     self?.guideView.alpha = 0
-    }, completion: nil)
+      }, completion: nil)
   }
   
   // MARK: Binding
@@ -181,7 +183,7 @@ class QuizShowViewController: UIViewController, View {
     guidHintContraint = guideView.heightAnchor
       .constraint(equalToConstant: 30.0)
     guidAdsContraint = guideView.heightAnchor
-    .constraint(equalToConstant: 42.0)
+      .constraint(equalToConstant: 42.0)
   }
   
   // MARK: NavigationBar
@@ -245,19 +247,19 @@ extension QuizShowViewController {
   private func touchedDownHeartButton() {
     guard let storage = reactor?.currentState.localStorage else { return }
     
-    if interstitial.isReady, storage.heartPoint <= 0 {
-      interstitial.present(fromRootViewController: self)
-      storage.calculate(point: .ad)
-        
-    } else if storage.heartPoint <= 0 {
-        storage.calculate(point: .adError)
+    if storage.heartPoint <= 0 {
+      if rewardedAdView.isReady {
+        rewardedAdView.present(fromRootViewController: self, delegate: self)
+      } else {
+        failedAdView.present(fromRootViewController: self, delegate: self)
+      }
     } else if let index = reactor?.currentState.number,
       let localIndex = storage.quizList[index]
         .isDimmed
         .enumerated()
         .filter({
           ($0.element == false)
-          && ($0.offset != storage.quizList[index].correctNumber)
+            && ($0.offset != storage.quizList[index].correctNumber)
         })
         .map({ $0.offset })
         .randomElement() {
@@ -271,16 +273,16 @@ extension QuizShowViewController {
                      delay: 0.5,
                      options: .curveEaseIn,
                      animations: { [weak self] in
-                        self?.collectionView.reloadData()
-      }, completion: nil)
-    }
-    
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-      self?.setupHeartPoint()
-      self?.observer.onNext(false)
+                      self?.collectionView.reloadData()
+        }, completion: nil)
+      
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        self?.setupHeartPoint()
+        self?.observer.onNext(false)
+      }
     }
   }
-
+  
   @objc
   private func touchedDownBackButton() {
     self.navigationController?.popViewController(animated: true)
@@ -324,7 +326,7 @@ extension QuizShowViewController {
                    delay: 0.5,
                    options: .curveEaseIn,
                    animations: {
-      popup.alpha = 0.0
+                    popup.alpha = 0.0
     }, completion: { _ in
       popup.removeFromSuperview()
     })
@@ -336,7 +338,7 @@ extension QuizShowViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView,
                       numberOfItemsInSection section: Int) -> Int {
-        let section = Section(rawValue: section)
+    let section = Section(rawValue: section)
     switch section {
     case .show:
       return 1
@@ -359,12 +361,12 @@ extension QuizShowViewController: UICollectionViewDataSource {
       case .show:
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizShowCell",
                                                             for: indexPath) as? QuizShowCell else {
-            return UICollectionViewCell()
+                                                              return UICollectionViewCell()
         }
         
         let number = reactor?.currentState.quiz?.id == nil ? -1 : reactor!.currentState.quiz!.id
         cell.updateContents(numberString: "\(number)장",
-                            problem: reactor?.currentState.quiz?.word ?? "")
+          problem: reactor?.currentState.quiz?.word ?? "")
         return cell
       case .example:
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "QuizExampleCell",
@@ -434,17 +436,20 @@ extension QuizShowViewController: UICollectionViewDelegateFlowLayout {
 extension QuizShowViewController {
 
   private func createBannerView() {
-    bannerView = GADBannerView(adSize: GADAdSizeFromCGSize(CGSize(width: view.bounds.width, height: 50.0)))
     #if DEBUG
-    bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+    let adUnitID = "ca-app-pub-3940256099942544/2934735716"
     #else
-    bannerView.adUnitID = ""
+    let adUnitID = ""
     #endif
+    
+    bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+    bannerView.adUnitID = adUnitID
     bannerView.rootViewController = self
     bannerView.delegate = self
     addBannerViewToView(bannerView)
     
     let request = GADRequest()
+    
     bannerView.load(request)
   }
   
@@ -456,87 +461,89 @@ extension QuizShowViewController {
     bannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     bannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
   }
-  
-  private func createAndLoadInterstitial() -> GADInterstitial {
+
+  private func createAndLoadRewardedAd(isFailed: Bool = false) -> GADRewardedAd {
     #if DEBUG
-    interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+    var adUnitID = "ca-app-pub-3940256099942544/1712485313"
     #else
-    interstitial = GADInterstitial(adUnitID: "")
+    var adUnitID = ""
+    if isFailed { adUnitID = "ca-app-pub-3940256099942544/1712485313" }
     #endif
-    interstitial.delegate = self
-    let request = GADRequest()
-    interstitial.load(request)
     
-    return interstitial
+    let adView = GADRewardedAd(adUnitID: adUnitID)
+    adView.load(GADRequest()) { error in
+      if let error = error {
+        print("Loading failed: \(error)")
+      } else {
+        print("Loading Succeeded")
+      }
+    }
+    return adView
   }
 }
 
+// MARK: - GADRewardedAdDelegate
+extension QuizShowViewController: GADRewardedAdDelegate {
+  /// Tells the delegate that the user earned a reward.
+  func rewardedAd(_ rewardedAd: GADRewardedAd, userDidEarn reward: GADAdReward) {
+    print("Reward received with currency: \(reward.type), amount \(reward.amount).")
+    if let storage = reactor?.currentState.localStorage {
+      storage.calculate(reward: reward.amount.intValue)
+      
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        self?.setupHeartPoint()
+        self?.observer.onNext(false)
+      }
+    }
+  }
+  /// Tells the delegate that the rewarded ad was presented.
+  func rewardedAdDidPresent(_ rewardedAd: GADRewardedAd) {
+    print("Rewarded ad presented.")
+  }
+  /// Tells the delegate that the rewarded ad was dismissed.
+  func rewardedAdDidDismiss(_ rewardedAd: GADRewardedAd) {
+    print("Rewarded ad dismissed.")
+    rewardedAdView = createAndLoadRewardedAd()
+    failedAdView = createAndLoadRewardedAd(isFailed: true)
+  }
+  /// Tells the delegate that the rewarded ad failed to present.
+  func rewardedAd(_ rewardedAd: GADRewardedAd, didFailToPresentWithError error: Error) {
+    print("Rewarded ad failed to present.")
+  }
+}
+
+// MARK: - GADBannerViewDelegate
 extension QuizShowViewController: GADBannerViewDelegate {
-    /// Tells the delegate an ad request loaded an ad.
-    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
-      print("adViewDidReceiveAd")
-    }
-
-    /// Tells the delegate an ad request failed.
-    func adView(_ bannerView: GADBannerView,
-        didFailToReceiveAdWithError error: GADRequestError) {
-      print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
-    }
-
-    /// Tells the delegate that a full-screen view will be presented in response
-    /// to the user clicking on an ad.
-    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
-      print("adViewWillPresentScreen")
-    }
-
-    /// Tells the delegate that the full-screen view will be dismissed.
-    func adViewWillDismissScreen(_ bannerView: GADBannerView) {
-      print("adViewWillDismissScreen")
-    }
-
-    /// Tells the delegate that the full-screen view has been dismissed.
-    func adViewDidDismissScreen(_ bannerView: GADBannerView) {
-      print("adViewDidDismissScreen")
-    }
-
-    /// Tells the delegate that a user click will open another app (such as
-    /// the App Store), backgrounding the current app.
-    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
-      print("adViewWillLeaveApplication")
-    }
-}
-
-// MARK: - GADInterstitialDelegate
-extension QuizShowViewController: GADInterstitialDelegate {
-  /// Tells the delegate an ad request succeeded.
-  func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-    print("interstitialDidReceiveAd")
+  /// Tells the delegate an ad request loaded an ad.
+  func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+    print("adViewDidReceiveAd")
   }
-
+  
   /// Tells the delegate an ad request failed.
-  func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-    print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+  func adView(_ bannerView: GADBannerView,
+              didFailToReceiveAdWithError error: GADRequestError) {
+    print("adView:didFailToReceiveAdWithError: \(error.localizedDescription)")
   }
-
-  /// Tells the delegate that an interstitial will be presented.
-  func interstitialWillPresentScreen(_ ad: GADInterstitial) {
-    print("interstitialWillPresentScreen")
+  
+  /// Tells the delegate that a full-screen view will be presented in response
+  /// to the user clicking on an ad.
+  func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+    print("adViewWillPresentScreen")
   }
-
-  /// Tells the delegate the interstitial is to be animated off the screen.
-  func interstitialWillDismissScreen(_ ad: GADInterstitial) {
-    print("interstitialWillDismissScreen")
+  
+  /// Tells the delegate that the full-screen view will be dismissed.
+  func adViewWillDismissScreen(_ bannerView: GADBannerView) {
+    print("adViewWillDismissScreen")
   }
-
-  /// Tells the delegate the interstitial had been animated off the screen.
-  func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-    print("interstitialDidDismissScreen")
-    interstitial = createAndLoadInterstitial()
+  
+  /// Tells the delegate that the full-screen view has been dismissed.
+  func adViewDidDismissScreen(_ bannerView: GADBannerView) {
+    print("adViewDidDismissScreen")
   }
-
-  /// Tells the delegate that a user click will open another app
-  /// (such as the App Store), backgrounding the current app.
-  func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
-    print("interstitialWillLeaveApplication")
+  
+  /// Tells the delegate that a user click will open another app (such as
+  /// the App Store), backgrounding the current app.
+  func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
+    print("adViewWillLeaveApplication")
   }
 }
