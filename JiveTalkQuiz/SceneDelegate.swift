@@ -10,6 +10,7 @@ import UIKit
 import RxGesture
 import Firebase
 import GoogleMobileAds
+import FBAudienceNetwork
 
 @available(iOS 13, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -23,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     FirebaseApp.configure()
     GADMobileAds.sharedInstance().start(completionHandler: nil)
+        FBAudienceNetworkAds.initialize()
     let win = UIWindow(windowScene: windowScene)
     
     win.makeKeyAndVisible()

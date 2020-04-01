@@ -10,6 +10,7 @@ import UIKit
 import RxGesture
 import Firebase
 import GoogleMobileAds
+import FBAudienceNetwork
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     } else {
       FirebaseApp.configure()
       GADMobileAds.sharedInstance().start(completionHandler: nil)
+    FBAudienceNetworkAds.initialize()
       self.window = UIWindow(frame: UIScreen.main.bounds)
       window?.makeKeyAndVisible()
       

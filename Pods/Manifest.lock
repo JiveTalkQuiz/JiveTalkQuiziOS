@@ -1,5 +1,8 @@
 PODS:
   - DeviceKit (2.3.0)
+  - FBAudienceNetwork (5.7.1):
+    - FBSDKCoreKit/Basics (>= 5.6.0)
+  - FBSDKCoreKit/Basics (6.2.0)
   - Firebase/AdMob (6.21.0):
     - Firebase/CoreOnly
     - Google-Mobile-Ads-SDK (~> 7.50)
@@ -155,6 +158,7 @@ PODS:
 
 DEPENDENCIES:
   - DeviceKit (~> 2.0)
+  - FBAudienceNetwork
   - Firebase/AdMob
   - Firebase/Analytics
   - Firebase/Crashlytics
@@ -173,6 +177,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - DeviceKit
+    - FBAudienceNetwork
+    - FBSDKCoreKit
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -218,6 +224,8 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   DeviceKit: da103891aa928d89f64ea8dd8aca738c5f3d8ac0
+  FBAudienceNetwork: 33fc8c8c07c1cdbf5279784b73729c6410809daa
+  FBSDKCoreKit: a7bb9f5ac56c1e11d5f8ae0b90a3610f8744b43a
   Firebase: f378c80340dd41c0ad0914af740c021eb282a04b
   FirebaseABTesting: 821a3a3e4a145987e80fee3657c4de1cb9adf693
   FirebaseAnalytics: a1a0b3327ceb5cd5b4bacffdb293f6c909aa087d
@@ -253,6 +261,6 @@ SPEC CHECKSUMS:
   Spring: 3d113f14575ef79aec9c5f906dfa4f5001c03254
   SwiftyUserDefaults: 33fcb42bd1feb53a37d873feb62c82967db5f7f6
 
-PODFILE CHECKSUM: dc6081ed0b1139d57dae8d026324dc9dfec94417
+PODFILE CHECKSUM: 359d1ff5f8edaac596a822778c170ff5369dd7c6
 
 COCOAPODS: 1.9.0

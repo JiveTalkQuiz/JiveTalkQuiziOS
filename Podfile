@@ -21,6 +21,8 @@ target 'JiveTalkQuiz' do
   pod 'Firebase/Performance'
   pod 'RxFirebase/Storage'
 
+  pod 'FBAudienceNetwork'
+  
   pod 'SwiftyUserDefaults', '~> 5.0'
   pod 'DeviceKit', '~> 2.0'
   pod 'Spring', :git => 'https://github.com/MengTo/Spring.git'
