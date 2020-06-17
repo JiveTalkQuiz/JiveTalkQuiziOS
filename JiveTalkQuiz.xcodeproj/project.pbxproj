@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2B739BC3C6521DD02F16C0FB /* Pods_JiveTalkQuiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9029B04679D04E4C0991C4C6 /* Pods_JiveTalkQuiz.framework */; };
+		8E6B3152249A68CC00025BA1 /* quiz.json in Resources */ = {isa = PBXBuildFile; fileRef = 8E6B3151249A68CC00025BA1 /* quiz.json */; };
 		A80024BC2411317200C419D6 /* QuizListViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87417AB23E70F9B00361723 /* QuizListViewReactor.swift */; };
 		A820D62823EC451400726E52 /* QuizListLevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A820D62723EC451400726E52 /* QuizListLevelCell.swift */; };
 		A82C7B8423F0037A00A24FF0 /* QuizListTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */; };
@@ -19,7 +20,6 @@
 		A84643F02414180200A96AA4 /* incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = A84643EB2414180200A96AA4 /* incorrect.wav */; };
 		A84643F12414180200A96AA4 /* bg.wav in Resources */ = {isa = PBXBuildFile; fileRef = A84643EC2414180200A96AA4 /* bg.wav */; };
 		A84643F22414180200A96AA4 /* start.wav in Resources */ = {isa = PBXBuildFile; fileRef = A84643ED2414180200A96AA4 /* start.wav */; };
-		A8574412241E19D90062FAB7 /* quiz.json in Resources */ = {isa = PBXBuildFile; fileRef = A8574411241E19D90062FAB7 /* quiz.json */; };
 		A872088A23F806A00099826C /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A872088923F806A00099826C /* LocalStorage.swift */; };
 		A8723E0C23EFE3180042BD82 /* JiveTalkQuizColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */; };
 		A873C85F23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873C85E23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift */; };
@@ -46,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		8A95254DC2F3E33C695D557D /* Pods-JiveTalkQuiz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveTalkQuiz.debug.xcconfig"; path = "Target Support Files/Pods-JiveTalkQuiz/Pods-JiveTalkQuiz.debug.xcconfig"; sourceTree = "<group>"; };
+		8E6B3151249A68CC00025BA1 /* quiz.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = quiz.json; sourceTree = "<group>"; };
 		9029B04679D04E4C0991C4C6 /* Pods_JiveTalkQuiz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JiveTalkQuiz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A820D62723EC451400726E52 /* QuizListLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListLevelCell.swift; sourceTree = "<group>"; };
 		A82C7B8323F0037A00A24FF0 /* QuizListTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListTitleCell.swift; sourceTree = "<group>"; };
@@ -57,7 +58,6 @@
 		A84643EB2414180200A96AA4 /* incorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = incorrect.wav; sourceTree = "<group>"; };
 		A84643EC2414180200A96AA4 /* bg.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bg.wav; sourceTree = "<group>"; };
 		A84643ED2414180200A96AA4 /* start.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = start.wav; sourceTree = "<group>"; };
-		A8574411241E19D90062FAB7 /* quiz.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = quiz.json; sourceTree = "<group>"; };
 		A872088923F806A00099826C /* LocalStorage.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; tabWidth = 2; };
 		A8723E0B23EFE3180042BD82 /* JiveTalkQuizColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizColor.swift; sourceTree = "<group>"; };
 		A873C85E23F7DEA6008E47C5 /* JiveTalkQuizAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JiveTalkQuizAPI.swift; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 			children = (
 				A8574410241E18670062FAB7 /* Font */,
 				A84643E82414180200A96AA4 /* Sound */,
-				A8574411241E19D90062FAB7 /* quiz.json */,
+				8E6B3151249A68CC00025BA1 /* quiz.json */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -322,9 +322,9 @@
 				A84643F22414180200A96AA4 /* start.wav in Resources */,
 				A84643F02414180200A96AA4 /* incorrect.wav in Resources */,
 				A84643EE2414180200A96AA4 /* empty.wav in Resources */,
+				8E6B3152249A68CC00025BA1 /* quiz.json in Resources */,
 				A84643EF2414180200A96AA4 /* correct.wav in Resources */,
 				A87CC64F242BA78900CAB3AF /* GoogleService-Info.plist in Resources */,
-				A8574412241E19D90062FAB7 /* quiz.json in Resources */,
 				A87F59DA23F4404300E6FA99 /* BMHANNAProOTF.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

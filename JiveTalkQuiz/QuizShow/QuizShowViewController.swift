@@ -9,7 +9,6 @@
 import UIKit
 import ReactorKit
 import GoogleMobileAds
-import FBAudienceNetwork
 import RxSwift
 import RxCocoa
 import AdSupport
@@ -39,7 +38,6 @@ class QuizShowViewController: UIViewController, View {
   
   var bannerView: GADBannerView!
   var googleRewardedAdView: GADRewardedAd!
-  var facebookRewardedAdView: FBRewardedVideoAd!
   var guidHintContraint: NSLayoutConstraint?
   var guidAdsContraint: NSLayoutConstraint?
   
@@ -81,7 +79,6 @@ class QuizShowViewController: UIViewController, View {
     
     createBannerView()
     googleRewardedAdView = createAndLoadRewardedAd()
-    facebookRewardedAdView = loadRewardedVideoAd()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -251,8 +248,6 @@ extension QuizShowViewController {
     if storage.heartPoint <= 0 {
       if googleRewardedAdView.isReady {
         googleRewardedAdView.present(fromRootViewController: self, delegate: self)
-      } else if facebookRewardedAdView.isAdValid {
-        facebookRewardedAdView.show(fromRootViewController: self)
       }
     } else if let index = reactor?.currentState.number,
       let localIndex = storage.quizList[index]
@@ -545,33 +540,5 @@ extension QuizShowViewController: GADBannerViewDelegate {
   /// the App Store), backgrounding the current app.
   func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
     print("adViewWillLeaveApplication")
-  }
-}
-
-// MARK: - Facebook Audience Network
-extension QuizShowViewController: FBRewardedVideoAdDelegate {
-  func loadRewardedVideoAd() -> FBRewardedVideoAd {
-    let placementId = ""
-    let adView = FBRewardedVideoAd(placementID: placementId)
-    adView.delegate = self
-    adView.load()
-    return adView
-  }
-
-  func rewardedVideoAdServerRewardDidFail(_ rewardedVideoAd: FBRewardedVideoAd) {
-    print("Rewarded video ad failed to load")
-  }
-  
-  func rewardedVideoAdVideoComplete(_ rewardedVideoAd: FBRewardedVideoAd) {
-    print("Rewarded Video ad video complete")
-    
-    if let storage = reactor?.currentState.localStorage {
-      storage.calculate(point: .ad)
-      
-      DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-        self?.setupHeartPoint()
-        self?.observer.onNext(false)
-      }
-    }
   }
 }

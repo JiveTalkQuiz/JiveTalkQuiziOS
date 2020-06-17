@@ -20,8 +20,6 @@ target 'JiveTalkQuiz' do
   pod 'Firebase/Crashlytics'
   pod 'Firebase/Performance'
   pod 'RxFirebase/Storage'
-
-  pod 'FBAudienceNetwork'
   
   pod 'SwiftyUserDefaults', '~> 5.0'
   pod 'DeviceKit', '~> 2.0'
